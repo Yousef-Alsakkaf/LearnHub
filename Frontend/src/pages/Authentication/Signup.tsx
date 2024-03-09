@@ -13,7 +13,7 @@ import {
   GoogleLoginButton,
   GithubLoginButton,
 } from "react-social-login-buttons";
-import '../App.scss'
+import '../../App.scss'
 import useLocalStorage from "use-local-storage";
 
 const SignupPage = () => {
