@@ -34,7 +34,6 @@ const SignupPage = () => {
     e.preventDefault();
 
     console.log(formData);
-    // Perform signup logic here
   };
 
   useEffect(() => {
@@ -58,7 +57,11 @@ const SignupPage = () => {
             animate={controls}
             transition={{ duration: 0.5 }}
           >
-            <Typography variant="h4" gutterBottom>
+            <Typography 
+            variant="h4" 
+            gutterBottom
+            color={isDark ? "whitesmoke" : ""}
+            >
               Sign Up
             </Typography>
             <form onSubmit={handleSubmit}>
@@ -71,6 +74,10 @@ const SignupPage = () => {
                 onChange={handleChange}
                 margin="normal"
                 required
+                sx={{
+                  color: isDark ? "whitesmoke" : "",
+                  background: isDark ? "#FFFFF0" : "",
+                }}
               />
               <TextField
                 fullWidth
@@ -81,6 +88,10 @@ const SignupPage = () => {
                 onChange={handleChange}
                 margin="normal"
                 required
+                sx={{
+                  color: isDark ? "whitesmoke" : "",
+                  background: isDark ? "#FFFFF0" : "",
+                }}
               />
               <TextField
                 fullWidth
@@ -91,17 +102,23 @@ const SignupPage = () => {
                 onChange={handleChange}
                 margin="normal"
                 required
+                sx={{
+                  color: isDark ? "whitesmoke" : "",
+                  background: isDark ? "#FFFFF0" : "",
+                }}
               />
-              <Box display="flex" justifyContent="space-between" mt={2}>
+              <Box display="flex" justifyContent="center" mt={2}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
+                  style={{ width: '100%' }}
                 >
                   <GoogleLoginButton onClick={() => console.log("Sign up with Google")} text="Sign up with Google" />
                 </motion.div>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
+                  style={{ width: '100%' }}
                 >
                   <GithubLoginButton onClick={() => console.log("Sign up with GitHub")} text="Sign up with GitHub" />
                 </motion.div>
@@ -113,13 +130,14 @@ const SignupPage = () => {
                 size="large"
                 fullWidth
                 style={{ marginTop: "20px" }}
+                
               >
                 Sign Up
               </Button>
               <Box mt={2}>
                 <Typography
                   variant="body2"
-                  color="textSecondary"
+                  color={isDark ? "whitesmoke" : ""}
                   align="center"
                 >
                   Already have an account?{" "}
@@ -148,7 +166,7 @@ const SignupPage = () => {
             cursor: "pointer",
           }}
         >
-          {isDark ? <BiSun size={24} /> : <BiMoon size={24} />}
+          {isDark ? <BiSun size={24} color={isDark ? "#FFFFF0" : ""} /> : <BiMoon size={24} />}
         </button>
       </Box>
     </>

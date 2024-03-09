@@ -65,7 +65,11 @@ const LoginPage = () => {
             animate={controls}
             transition={{ duration: 0.5 }}
           >
-            <Typography variant="h4" gutterBottom>
+            <Typography
+             variant="h4" 
+             gutterBottom
+             color={isDark ? "whitesmoke" : ""}
+             >
               Login
             </Typography>
             <form onSubmit={handleSubmit}>
@@ -78,6 +82,10 @@ const LoginPage = () => {
                 onChange={handleChange}
                 margin="normal"
                 required
+                sx={{
+                  color: isDark ? "whitesmoke" : "",
+                  background: isDark ? "#FFFFF0" : "",
+                }}
               />
               <TextField
                 fullWidth
@@ -88,17 +96,23 @@ const LoginPage = () => {
                 onChange={handleChange}
                 margin="normal"
                 required
+                sx={{
+                  color: isDark ? "whitesmoke" : "",
+                  background: isDark ? "#FFFFF0" : "",
+                }}
               />
-              <Box display="flex" justifyContent="space-between" mt={2}>
+              <Box display="flex" justifyContent="center" mt={2}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
+                  style={{ width: '100%' }}
                 >
                   <GoogleLoginButton onClick={handleGoogleLogin} />
                 </motion.div>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
+                  style={{ width: '100%' }}
                 >
                   <GithubLoginButton onClick={handleGitHubLogin} />
                 </motion.div>
@@ -121,7 +135,7 @@ const LoginPage = () => {
               <Box mt={2}>
                 <Typography
                   variant="body2"
-                  color="textSecondary"
+                  color={isDark ? "whitesmoke" : "textSecondary"}
                   align="center"
                 >
                   Don't have an account?{" "}
@@ -150,7 +164,7 @@ const LoginPage = () => {
             cursor: "pointer",
           }}
         >
-          {isDark ? <BiSun size={24} /> : <BiMoon size={24} />}
+          {isDark ? <BiSun size={24} color={isDark ? "#FFFFF0" : ""}/> : <BiMoon size={24} />}
         </button>
       </Box>
     </>
