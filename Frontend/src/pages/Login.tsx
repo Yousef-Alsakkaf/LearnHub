@@ -13,8 +13,11 @@ import {
   GithubLoginButton,
 } from "react-social-login-buttons";
 import { BiSun, BiMoon } from "react-icons/bi"; 
+import '../App.scss'
+import useLocalStorage from "use-local-storage";
 
-const LoginPage = ({ toggleTheme, darkMode }: any) => {
+const LoginPage = () => {
+    const [isDark, setIsDark] = useLocalStorage("isDark", false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -46,6 +49,7 @@ const LoginPage = ({ toggleTheme, darkMode }: any) => {
 
   return (
     <>
+    
       <div
         style={{
           position: "absolute",
@@ -53,6 +57,7 @@ const LoginPage = ({ toggleTheme, darkMode }: any) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
         }}
+        className="App" data-theme={isDark ? "dark" : "light"}
       >
         <Container maxWidth="sm">
           <motion.div
@@ -138,14 +143,14 @@ const LoginPage = ({ toggleTheme, darkMode }: any) => {
         }}
       >
         <button
-          onClick={toggleTheme}
+          onClick={() => setIsDark(!isDark)}
           style={{
             backgroundColor: "transparent",
             border: "none",
             cursor: "pointer",
           }}
         >
-          {darkMode ? <BiSun size={24} /> : <BiMoon size={24} />}
+          {isDark ? <BiSun size={24} /> : <BiMoon size={24} />}
         </button>
       </Box>
     </>

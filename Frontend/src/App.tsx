@@ -1,9 +1,12 @@
-import "./App.css";
+import "./App.scss";
 import Global from "./routes/global/Global";
 
 function App() {
   return (
-    <Global />
+    <div className="App">
+      <Global />
+    </div>
+    
   );
 }
 
