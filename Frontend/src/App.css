@@ -3,7 +3,14 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  --light-bg-color: #fff;
+  --dark-bg-color: #000;
+
 }
+.background {
+  background-color: var(--light-bg-color);
+}
+
 
 .logo {
   height: 6em;
