@@ -6,12 +6,10 @@ import SignupPage from "../../pages/Authentication/Signup";
 
 const Global = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />}></Route>
-      </Routes>
-    </Router>
+    <>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
+    </>
   );
 };
 
