@@ -13,7 +13,7 @@ import {
   GithubLoginButton,
 } from "react-social-login-buttons";
 import { BiSun, BiMoon } from "react-icons/bi"; 
-import '../../App.scss'
+// import '../../App.scss'
 import useLocalStorage from "use-local-storage";
 
 const LoginPage = () => {
