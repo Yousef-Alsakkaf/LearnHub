@@ -5,9 +5,9 @@ import SunIcon from "../assets/icons/sun.svg";
 import { ThemeContext } from "../context/ThemeContext";
 import { useContext, useEffect } from "react";
 import { DARK_THEME, LIGHT_THEME } from "../constants/themeConstants";
-import '../styles/Sidebar.scss';
-import '../styles/AreaTob.scss'
-import '../styles/App.scss'
+import "../styles/Sidebar.scss";
+import "../styles/AreaTob.scss";
+import "../styles/App.scss";
 
 const BaseLayout = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -17,9 +17,12 @@ const BaseLayout = () => {
   useEffect(() => {
     if (theme === DARK_THEME) {
       document.body.classList.add("dark-mode");
+      console.log("dark mode");
     } else {
       document.body.classList.remove("dark-mode");
+      console.log("light mode");
     }
+    console.log(theme);
   }, [theme]);
   return (
     <main className="page-wrapper">
