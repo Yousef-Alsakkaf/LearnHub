@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import { LIGHT_THEME } from "../../../../constants/themeConstants";
 import LogoBlue from "../../../../assets/images/logo_blue.png"
@@ -26,6 +26,11 @@ const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef<HTMLDivElement>(null);
+  const [activeLink, setActiveLink] = useState("");
+
+  const handleActiveLink = (link: string) =>{
+    setActiveLink(link);
+  }
 
   
   const handleClickOutside = (event: any) => {
@@ -63,7 +68,7 @@ const Sidebar = () => {
         <div className="sidebar-menu">
           <ul className="menu-list">
             <li className="menu-item">
-              <Link to="/" className="menu-link active">
+              <Link to="/" className={`menu-link ${activeLink === 'users' ? 'active' : ''}`} onClick={() => handleActiveLink('users')}>
                 <span className="menu-link-icon">
                   <SiStudyverse size={18} />
                 </span>
@@ -71,7 +76,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'course' ? 'active' : ''}`} onClick={() => handleActiveLink('course')}>
                 <span className="menu-link-icon">
                   <CiCalculator1 size={20} />
                 </span>
@@ -79,7 +84,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'grade' ? 'active' : ''}`} onClick={() => handleActiveLink('grade')}>
                 <span className="menu-link-icon">
                 <MdOutlineGrade size={18} />
                 </span>
@@ -87,7 +92,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'attendance' ? 'active' : ''}`} onClick={() => handleActiveLink('attendance')}>
                 <span className="menu-link-icon">
                   <MdOutlineCompress size={18} />
                 </span>
@@ -95,7 +100,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'progress' ? 'active' : ''}`} onClick={() => handleActiveLink('progress')}>
                 <span className="menu-link-icon">
                   <MdOutlineMessage size={18} />
                 </span>
@@ -103,7 +108,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/admin/Leaderboard" className={`menu-link ${activeLink === 'leader' ? 'active' : ''}`} onClick={() => handleActiveLink('leader')}>
                 <span className="menu-link-icon">
                   <MdOutlineLeaderboard size={20} />
                 </span>
@@ -111,7 +116,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'ana' ? 'active' : ''}`} onClick={() => handleActiveLink('ana')}>
                 <span className="menu-link-icon">
                   <MdOutlineAnalytics size={20} />
                 </span>
@@ -119,7 +124,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'system' ? 'active' : ''}`} onClick={() => handleActiveLink('system')}>
                 <span className="menu-link-icon">
                   <MdOutlineMessage size={18} />
                 </span>
@@ -127,7 +132,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/admin/ToDoList" className={`menu-link ${activeLink === 'todo' ? 'active' : ''}`} onClick={() => handleActiveLink('todo')}>
                 <span className="menu-link-icon">
                   <MdOutlineManageSearch size={18} />
                 </span>
@@ -135,7 +140,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'announce' ? 'active' : ''}`} onClick={() => handleActiveLink('announce')}>
                 <span className="menu-link-icon">
                   <MdOutlineAnnouncement size={18} />
                 </span>
@@ -149,7 +154,7 @@ const Sidebar = () => {
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/admin/settings" className={`menu-link ${activeLink === 'settings' ? 'active' : ''}`} onClick={() => handleActiveLink('settings')}>
                 <span className="menu-link-icon">
                   <MdOutlineManageAccounts size={20} />
                 </span>
@@ -157,7 +162,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === 'logout' ? 'active' : ''}`} onClick={() => handleActiveLink('logout')}>
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>

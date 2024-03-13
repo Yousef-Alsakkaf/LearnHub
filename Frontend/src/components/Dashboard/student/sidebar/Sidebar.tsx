@@ -9,9 +9,6 @@ import {
   MdOutlineMessage,
   MdOutlineLeaderboard,
   MdOutlineCompress,
-  MdOutlineManageSearch,
-  MdOutlineManageAccounts,
-  MdOutlineAnalytics,
   MdOutlineLibraryAdd,
   MdOutlineGrade,
   MdOutlineSettings
