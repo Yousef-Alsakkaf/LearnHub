@@ -8,6 +8,7 @@ import "./styles/AreaTob.scss";
 import "./index.css";
 import "./App.scss";
 import Global from "./routes/global/Global";
+import Student from "./routes/student/Student";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <SidebarProvider>
             <Routes>
               {Global()}
-
+              {Student()}
               {Admin()}
             </Routes>
           </SidebarProvider>

@@ -11,6 +11,7 @@ const Admin = () => {
         <Route element={<BaseLayout />}>
           <Route path="/admin" element={<DashboardScreen />} />
           <Route path="*" element={<PageNotFound />} />
+          
         </Route>
       </Route>
     </>

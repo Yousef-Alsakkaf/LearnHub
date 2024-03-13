@@ -81,7 +81,7 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                 <MdOutlineCompress size={18} />
                 </span>
-                <span className="menu-link-text">blank</span>
+                <span className="menu-link-text">test</span>
               </Link>
             </li>
             <li className="menu-item">
