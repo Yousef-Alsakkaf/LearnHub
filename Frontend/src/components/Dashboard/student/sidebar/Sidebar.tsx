@@ -79,7 +79,7 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                <MdOutlineCompress size={18} />
+                  <MdOutlineAttachMoney size={20} />
                 </span>
                 <span className="menu-link-text">blank</span>
               </Link>
