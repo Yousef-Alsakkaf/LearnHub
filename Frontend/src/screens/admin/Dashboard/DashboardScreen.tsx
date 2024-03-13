@@ -1,5 +1,5 @@
 import React from 'react'
-import AreaTop from '../../components/Dashboard/admin/areaTop/AreaTop'
+import AreaTop from '../../../components/Dashboard/admin/areaTop/AreaTop'
 
 const DashboardScreen = () => {
   return (

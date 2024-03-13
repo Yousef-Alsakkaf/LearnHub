@@ -1,7 +1,7 @@
 import { Outlet, Route } from "react-router-dom";
 
-import BaseLayout from "../../layout/BaseLayout";
-import DashboardScreen from "../../screens/Dashboard/DashboardScreen";
+import BaseLayout from "../../layout/admin/BaseLayout";
+import DashboardScreen from "../../screens/admin/Dashboard/DashboardScreen";
 import PageNotFound from "../../screens/error/PageNotFound";
 
 const Admin = () => {

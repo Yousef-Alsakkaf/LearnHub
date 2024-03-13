@@ -1,4 +1,4 @@
-import AreaTop from '../../../components/Dashboard/admin/areaTop/AreaTop'
+import AreaTop from '../../../components/Dashboard/student/areaTop/AreaTop'
 
 const DashboardScreen = () => {
   return (

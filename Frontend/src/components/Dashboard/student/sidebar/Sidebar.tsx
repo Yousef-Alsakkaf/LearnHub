@@ -4,18 +4,22 @@ import { LIGHT_THEME } from "../../../../constants/themeConstants";
 import LogoBlue from "../../../../assets/images/logo_blue.png"
 import LogoWhite from "../../../../assets/images/logo_white.png";
 import {
-  MdOutlineAttachMoney,
-  MdOutlineBarChart,
   MdOutlineClose,
-  MdOutlineCurrencyExchange,
-  MdOutlineGridView,
   MdOutlineLogout,
   MdOutlineMessage,
   MdOutlineLeaderboard,
-  MdOutlineSettings,
   MdOutlineCompress,
-  MdOutlineGolfCourse
+  MdOutlineManageSearch,
+  MdOutlineManageAccounts,
+  MdOutlineAnalytics,
+  MdOutlineLibraryAdd,
+  MdOutlineGrade,
+  MdOutlineSettings
 } from "react-icons/md";
+import {SiStudyverse} from 'react-icons/si'
+import {CiCalculator1} from 'react-icons/ci'
+
+
 import { Link } from "react-router-dom";
 import "../../../../styles/Sidebar.scss";
 import { SidebarContext } from "../../../../context/SidebarContext";
@@ -30,7 +34,7 @@ const Sidebar = () => {
     if (
       navbarRef.current &&
       !navbarRef.current.contains(event.target) &&
-      event.target.className !== "sidebar-oepn-btn"
+      event.target.className !== "sidebar-open-btn" // I am mistaken here, will be fixed here
     ) {
       closeSidebar();
     }
@@ -63,25 +67,25 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/" className="menu-link active">
                 <span className="menu-link-icon">
-                  <MdOutlineGridView size={18} />
+                  <SiStudyverse size={18} />
                 </span>
-                <span className="menu-link-text">Dashboard</span>
+                <span className="menu-link-text">Course Enrollment</span>
               </Link>
             </li>
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlineBarChart size={20} />
+                  <CiCalculator1 size={20} />
                 </span>
-                <span className="menu-link-text">Activities</span>
+                <span className="menu-link-text">Assignment Management</span>
               </Link>
             </li>
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlineAttachMoney size={20} />
+                  <MdOutlineGrade size={20} />
                 </span>
-                <span className="menu-link-text">test</span>
+                <span className="menu-link-text">Gradebook</span>
               </Link>
             </li>
             <li className="menu-item">
@@ -89,7 +93,7 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <MdOutlineCompress size={18} />
                 </span>
-                <span className="menu-link-text">don't know what to put</span>
+                <span className="menu-link-text">Course Materials</span>
               </Link>
             </li>
             <li className="menu-item">
@@ -97,15 +101,15 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <MdOutlineLeaderboard size={20} />
                 </span>
-                <span className="menu-link-text">Leaderboard</span>
+                <span className="menu-link-text">My progress</span>
               </Link>
             </li>
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlineGolfCourse size={20} />
+                  <MdOutlineLibraryAdd size={20} />
                 </span>
-                <span className="menu-link-text">Course management</span>
+                <span className="menu-link-text">Library</span>
               </Link>
             </li>
             <li className="menu-item">
