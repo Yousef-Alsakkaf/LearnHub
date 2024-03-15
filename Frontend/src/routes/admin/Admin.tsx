@@ -4,7 +4,7 @@ import BaseLayout from "../../layout/admin/BaseLayout";
 import DashboardScreen from "../../screens/admin/Dashboard/DashboardScreen";
 import PageNotFound from "../../screens/error/PageNotFound";
 
-import Leaderboard from "../../pages/admin/Leaderboard";
+import Leaderboard from "../../pages/admin/Leaderboard/Leaderboard";
 import TasksYaman from '../../pages/admin/ToDoList/TasksYaman';
 import Account from "../../pages/admin/settings/Account";
 
