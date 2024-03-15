@@ -1,6 +1,6 @@
 import React from 'react'
 import { Todo } from './model';
-import "../../styles/TodoList.css"
+import "../../../styles/TodoList.css"
 import SingleTodo from './SingleTodo';
 import { Droppable } from 'react-beautiful-dnd';
 

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Todo } from './model'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import { MdDone } from 'react-icons/md'
-import "../../styles/SingleTodo.css"
+import "../../../styles/SingleTodo.css"
 import { JSX } from 'react/jsx-runtime'
 import { Draggable } from 'react-beautiful-dnd'
 
