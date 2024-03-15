@@ -2,14 +2,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 
 :root {
-  
-  --blue-color: #475be8;
+  --blue-color: #3b82f6;
   --green-color: #4ce13f;
   --orange-color: #f29a2e;
   --red-color: #ef0606;
   --dark-color: #292929;
   --light-color: #ffffff;
-  
+
   --font-family-lato: "Lato", sans-serif;
   --font-family-manrope: "Manrope", sans-serif;
   --font-size: 16px;
@@ -17,14 +16,15 @@
   --font-weight: 400;
 
   --default-transition: all 300ms ease-in-out;
+  
+  --chart-primary-color: #475be8;
+  --chart-secondary-color: #e6e6e6;
 
-
- 
   --light-shadow1: rgba(0, 0, 0, 0.02) 0px 4px 12px;
 }
 
 @mixin lightMode {
-  --primary-color: #475be8;
+  --primary-color: #3b82f6;
   --secondary-color: #fff;
   --background-color: #fafafa;
   --side-link-hover-color: #f6f6f6;
@@ -46,9 +46,9 @@
 }
 
 @mixin darkMode {
-  --primary-color: #475be8;
-  --secondary-color: #2e2e48;
-  --background-color: #383854;
+  --primary-color: #465c65;
+  --secondary-color: #15182a;
+  --background-color: rgb(255, 255, 255);
   --side-link-hover-color: #525270;
   --side-text-color: #e1e1e1;
   --logo-color: #fff;
@@ -81,7 +81,6 @@ body {
 
   @include lightMode();
 
-
   &.dark-mode {
     @include darkMode();
   }
@@ -101,7 +100,6 @@ button {
 ul {
   list-style-type: none;
 }
-
 
 .theme-toggle-btn {
   background-color: var(--bg-color-inverted);
@@ -156,7 +154,6 @@ ul {
     padding: 16px;
   }
 }
-
 
 .content-area {
   & > section {
