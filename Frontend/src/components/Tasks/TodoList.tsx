@@ -1,6 +1,6 @@
 import React from 'react'
-import { Todo } from './model';
-import "../../styles/TodoList.css"
+import { Todo } from '../model';
+import "../Styles/TodoList.css"
 import SingleTodo from './SingleTodo';
 import { Droppable } from 'react-beautiful-dnd';
 
@@ -13,11 +13,9 @@ interface Props{
 const TodoList: React.FC<Props> = ({ todos, setTodos, doneTodos, setIsDoneTodos } : Props) => {
     return(
          <div className="container">
-            <Droppable droppableId="TodossListtt">
+            <Droppable droppableId="TodoList">
             {(provided) => (
-            <div className="todos"
-            ref={provided.innerRef}
-            {...provided.droppableProps}>
+            <div className="todos" ref={provided.innerRef}{...provided.droppableProps}>
             <span className="todosHeading">Current Tasks</span>
             {
                 todos.map((todo, index) => (
@@ -29,16 +27,13 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, doneTodos, setIsDoneTodos 
                     setTodos={setTodos}
                     />
                 ))}
-                {provided.placeholder}
             </div>
                 )}
             </Droppable>
             
-            <Droppable droppableId="DoneTodosListttt">
+            <Droppable droppableId="DoneTodos">
                 {(provided)=>(
-            <div className="todos delete"
-            ref={provided.innerRef}
-            {...provided.droppableProps}>
+            <div className="todos delete" ref={provided.innerRef}{...provided.droppableProps}>
             <span className="todosHeading">Completed</span>
             {
                 doneTodos.map((todo, index) => (
@@ -49,7 +44,6 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, doneTodos, setIsDoneTodos 
                     key={todo.id}
                     setTodos={setIsDoneTodos}/>
                 ))}
-                {provided.placeholder}
             </div>     
                     )}  
             </Droppable>

@@ -5,7 +5,8 @@ import DashboardScreen from "../../screens/admin/Dashboard/DashboardScreen";
 import PageNotFound from "../../screens/error/PageNotFound";
 import Settings from "../../pages/admin/Settings";
 import Leaderboard from "../../pages/admin/Leaderboard";
-import ToDoList from "../../pages/admin/ToDoList";
+import TodoList from "../../pages/admin/TodoList";
+import TasksYaman from "../../pages/admin/TasksYaman";
 
 const Admin = () => {
   return (
@@ -15,7 +16,7 @@ const Admin = () => {
           <Route path="/admin" element={<DashboardScreen />} />
           <Route path="/admin/settings" element={<Settings/>}></Route>
           <Route path="/admin/Leaderboard" element={<Leaderboard/>}></Route>
-          <Route path="/admin/ToDoList" element={<ToDoList/>}></Route>
+          <Route path="/admin/TasksYaman" element={<TasksYaman/>}></Route>
           <Route path="*" element={<PageNotFound />} />
           
         </Route>
