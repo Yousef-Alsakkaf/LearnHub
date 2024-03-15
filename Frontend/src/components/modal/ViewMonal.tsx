@@ -1,10 +1,10 @@
-interface BookModalProps {
+interface ModalProps {
   isVisible: boolean;
   onClose: () => void;
   children: any;
 }
 
-const ViewModal = ({ isVisible, onClose, children }: BookModalProps) => {
+const ViewModal = ({ isVisible, onClose, children }: ModalProps) => {
   if (!isVisible) return null;
 
   const handleClose = (e: any) => {

@@ -13,7 +13,8 @@ import {
   MdOutlineManageAccounts,
   MdOutlineAnalytics,
   MdOutlineGrade,
-  MdOutlineAnnouncement
+  MdOutlineAnnouncement,
+  MdOutlineLibraryBooks
 } from "react-icons/md";
 import {SiStudyverse} from 'react-icons/si'
 import {CiCalculator1} from 'react-icons/ci'
@@ -73,6 +74,14 @@ const Sidebar = () => {
                   <SiStudyverse size={18} />
                 </span>
                 <span className="menu-link-text">Users Management</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link to="/" className={`menu-link ${activeLink === 'library' ? 'active' : ''}`} onClick={() => handleActiveLink('library')}>
+                <span className="menu-link-icon">
+                  <MdOutlineLibraryBooks size={18} />
+                </span>
+                <span className="menu-link-text">Library Management</span>
               </Link>
             </li>
             <li className="menu-item">
