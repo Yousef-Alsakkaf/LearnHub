@@ -5,7 +5,7 @@ import DashboardScreen from "../../screens/admin/Dashboard/DashboardScreen";
 import PageNotFound from "../../screens/error/PageNotFound";
 
 import Leaderboard from "../../pages/admin/Leaderboard";
-import TasksYaman from "../../pages/admin/TasksYaman";
+import TasksYaman from '../../pages/admin/ToDoList/TasksYaman';
 import Account from "../../pages/admin/settings/Account";
 
 
