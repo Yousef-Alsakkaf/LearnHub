@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../styles/App22.css"
 import InputField from "./InputField";
 import {Todo} from "./model"
-import TodoList from "./TodoList";
+import TodoList from "./ToDoList";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 const App: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
