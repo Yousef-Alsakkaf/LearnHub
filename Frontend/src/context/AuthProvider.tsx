@@ -2,25 +2,25 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 
 interface AuthContextProps {
   username: string | undefined;
-  password: string | undefined;
+  accessToken: string | undefined; 
   setUsername: (username: string | undefined) => void;
-  setPassword: (password: string | undefined) => void;
+  setAccessToken: (accessToken: string | undefined) => void;
 }
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [username, setUsername] = useState<string | undefined>(undefined);
-  const [password, setPassword] = useState<string | undefined>(undefined);
+  const [accessToken, setAccessToken] = useState<string | undefined>(undefined); 
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
-    const storedPassword = localStorage.getItem("password");
+    const storedAccessToken = localStorage.getItem("accessToken"); 
     if (storedUsername) {
       setUsername(storedUsername);
     }
-    if (storedPassword) {
-      setPassword(storedPassword);
+    if (storedAccessToken) {
+      setAccessToken(storedAccessToken); 
     }
   }, []);
 
@@ -33,17 +33,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUsername(username);
   };
 
-  const updatePassword = (password: string | undefined) => {
-    if (password === undefined) {
-      localStorage.removeItem("password");
+  const updateAccessToken = (accessToken: string | undefined) => {
+    if (accessToken === undefined) {
+      localStorage.removeItem("accessToken"); 
     } else {
-      localStorage.setItem("password", password);
+      localStorage.setItem("accessToken", accessToken); 
     }
-    setPassword(password);
+    setAccessToken(accessToken); 
   };
 
   return (
-    <AuthContext.Provider value={{ username, password, setUsername: updateUsername, setPassword: updatePassword }}>
+    <AuthContext.Provider value={{ username, accessToken, setUsername: updateUsername, setAccessToken: updateAccessToken }}>
       {children}
     </AuthContext.Provider>
   );
