@@ -30,11 +30,7 @@ const SignupPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
 
-    console.log(formData);
-  };
 
   useEffect(() => {
     controls.start({ opacity: 1, y: 0 });
@@ -64,7 +60,7 @@ const SignupPage = () => {
             >
               Sign Up
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form>
               <TextField
                 fullWidth
                 label="Email"
@@ -107,22 +103,7 @@ const SignupPage = () => {
                   background: isDark ? "#FFFFF0" : "",
                 }}
               />
-              <Box display="flex" justifyContent="center" mt={2}>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  style={{ width: '100%' }}
-                >
-                  <GoogleLoginButton onClick={() => console.log("Sign up with Google")} text="Sign up with Google" />
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  style={{ width: '100%' }}
-                >
-                  <GithubLoginButton onClick={() => console.log("Sign up with GitHub")} text="Sign up with GitHub" />
-                </motion.div>
-              </Box>
+            
               <Button
                 type="submit"
                 variant="contained"

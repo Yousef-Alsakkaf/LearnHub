@@ -29,23 +29,13 @@ const LoginPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-
-    console.log(formData);
-  };
+  
 
   useEffect(() => {
     controls.start({ opacity: 1, y: 0 });
   }, [controls]);
 
-  const handleGoogleLogin = () => {
-    console.log("Login with Google");
-  };
-
-  const handleGitHubLogin = () => {
-    console.log("Login with GitHub");
-  };
+  
 
   return (
     <>
@@ -72,7 +62,7 @@ const LoginPage = () => {
              >
               Login
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form>
               <TextField
                 fullWidth
                 label="Email"
@@ -101,22 +91,7 @@ const LoginPage = () => {
                   background: isDark ? "#FFFFF0" : "",
                 }}
               />
-              <Box display="flex" justifyContent="center" mt={2}>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  style={{ width: '100%' }}
-                >
-                  <GoogleLoginButton onClick={handleGoogleLogin} />
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  style={{ width: '100%' }}
-                >
-                  <GithubLoginButton onClick={handleGitHubLogin} />
-                </motion.div>
-              </Box>
+           
               <Button
                 type="submit"
                 variant="contained"
