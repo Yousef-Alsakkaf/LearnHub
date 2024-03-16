@@ -1,6 +1,6 @@
 import { MdOutlineLogout, MdOutlineManageAccounts } from "react-icons/md";
 
-export const SidebarAdminItems = [
+export const SidebarSettingsItems = [
   {
     path: "/admin/settings",
     icon: <MdOutlineManageAccounts size={20} />,
