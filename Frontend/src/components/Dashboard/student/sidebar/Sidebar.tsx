@@ -1,32 +1,25 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import { LIGHT_THEME } from "../../../../constants/themeConstants";
-import LogoBlue from "../../../../assets/images/logo_blue.png"
+import LogoBlue from "../../../../assets/images/logo_blue.png";
 import LogoWhite from "../../../../assets/images/logo_white.png";
-import {
-  MdOutlineClose,
-  MdOutlineLogout,
-  MdOutlineMessage,
-  MdOutlineLeaderboard,
-  MdOutlineCompress,
-  MdOutlineLibraryAdd,
-  MdOutlineGrade,
-  MdOutlineSettings
-} from "react-icons/md";
-import {SiStudyverse} from 'react-icons/si'
-import {CiCalculator1} from 'react-icons/ci'
+import { MdOutlineClose } from "react-icons/md";
 
-
-import { Link } from "react-router-dom";
 import "../../../../styles/Sidebar.scss";
 import { SidebarContext } from "../../../../context/SidebarContext";
+import { sidebarStudentItems } from "../../../../constants/student/SidebarStudentItems";
+import SidebarMenuItem from "../../../../templates/sidebar/SidebarMenuItem";
+import { studentMenuItems } from "../../../../constants/student/StudentMenuItems";
 
 const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
+  const [activeLink, setActiveLink] = useState("");
   const navbarRef = useRef<HTMLDivElement>(null);
+  const handleActiveLink = (link: string) => {
+    setActiveLink(link);
+  };
 
-  
   const handleClickOutside = (event: any) => {
     if (
       navbarRef.current &&
@@ -51,7 +44,11 @@ const Sidebar = () => {
     >
       <div className="sidebar-top">
         <div className="sidebar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" style={{'width': '2rem'}}/>
+          <img
+            src={theme === LIGHT_THEME ? LogoBlue : LogoWhite}
+            alt=""
+            style={{ width: "2rem" }}
+          />
           <span className="sidebar-brand-text">LearnHub</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
@@ -61,83 +58,31 @@ const Sidebar = () => {
       <div className="sidebar-body">
         <div className="sidebar-menu">
           <ul className="menu-list">
-            <li className="menu-item">
-              <Link to="/" className="menu-link active">
-                <span className="menu-link-icon">
-                  <SiStudyverse size={18} />
-                </span>
-                <span className="menu-link-text">Course Enrollment</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <CiCalculator1 size={20} />
-                </span>
-                <span className="menu-link-text">Assignment Management</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineGrade size={20} />
-                </span>
-                <span className="menu-link-text">Gradebook</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineCompress size={18} />
-                </span>
-                <span className="menu-link-text">Course Materials</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineLeaderboard size={20} />
-                </span>
-                <span className="menu-link-text">My progress</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineLibraryAdd size={20} />
-                </span>
-                <span className="menu-link-text">Library</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineMessage size={18} />
-                </span>
-                <span className="menu-link-text">To do list</span>
-              </Link>
-            </li>
+            {sidebarStudentItems.map((item) => (
+              <SidebarMenuItem
+                key={item.key}
+                path={item.path}
+                icon={item.icon}
+                activeLink={activeLink}
+                onClick={handleActiveLink}
+                text={item.text}
+              />
+            ))}
           </ul>
         </div>
 
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineSettings size={20} />
-                </span>
-                <span className="menu-link-text">Settings</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineLogout size={20} />
-                </span>
-                <span className="menu-link-text">Logout</span>
-              </Link>
-            </li>
+          {studentMenuItems.map((item) => (
+              <SidebarMenuItem
+                key={item.key}
+                path={item.path}
+                icon={item.icon}
+                activeLink={activeLink}
+                onClick={handleActiveLink}
+                text={item.text}
+              />
+            ))}
           </ul>
         </div>
       </div>
