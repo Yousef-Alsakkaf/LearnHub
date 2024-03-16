@@ -30,11 +30,7 @@ const SignupPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
 
-    console.log(formData);
-  };
 
   useEffect(() => {
     controls.start({ opacity: 1, y: 0 });
@@ -64,7 +60,7 @@ const SignupPage = () => {
             >
               Sign Up
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form>
               <TextField
                 fullWidth
                 label="Email"
