@@ -9,7 +9,7 @@ import "../../../../styles/Sidebar.scss";
 import { SidebarContext } from "../../../../context/SidebarContext";
 import SidebarMenuItem from "../../../../templates/sidebar/SidebarMenuItem";
 import { sidebarAdminItems } from "../../../../constants/Admin/SidebarAdminItems";
-import { SidebarAdminItems } from "../../../../constants/Admin/AdminMenuItems";
+import { SidebarSettingsItems } from "../../../../constants/Admin/AdminMenuItems";
 
 const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
@@ -74,7 +74,7 @@ const Sidebar = () => {
 
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
-            {SidebarAdminItems.map((item) => (
+            {SidebarSettingsItems.map((item) => (
               <SidebarMenuItem
                 key={item.key}
                 path={item.path}
