@@ -12,8 +12,8 @@ class MySqlDB implements Database {
   private username: string;
   private password: string;
   private type: number;
-
   state: DatabaseState = DatabaseState.CONNECTING;
+
   constructor(host: string, name: string, username: string, password: string, type: number) {
     this.host = host;
     this.name = name;
@@ -138,7 +138,7 @@ GROUP BY
 
   async returnBook(barcode: number, borrower: number): Promise<void> {
     await this.connection.execute("UPDATE inventory SET borrower = NULL WHERE barcode = ? AND borrower = ?", [barcode, borrower]);
-    this.createLog({ event: "return", details: `User ${borrower} returned book ${barcode}`, initiator: borrower })
+    this.createLog({ event: "return", details: `User ${borrower} returned book ${barcode}`, initiator: borrower });
   }
 
   async acceptRequest(barcode: number, borrower: number): Promise<void> {
@@ -437,8 +437,9 @@ GROUP BY
       console.log(error);
     }
   }
-  async viewAllBookDetails({barcode}:{barcode:number}): Promise<Object>{
-    const results = await this.connection.execute(`SELECT DISTINCT title, author, language, year_of_prod, 
+  async viewAllBookDetails({ barcode }: { barcode: number }): Promise<Object> {
+    const results = await this.connection.execute(
+      `SELECT DISTINCT title, author, language, year_of_prod, 
     publisher, subjects, no_of_pages, price, rack, 
     borrower, image, type, borrow_date, isbn,quantity,barcode  
     FROM (
@@ -455,7 +456,9 @@ GROUP BY
     book.isbn,title, author, language, 
     year_of_prod, publisher, subjects, no_of_pages, 
     price, rack, borrower, image, type, borrow_date
-    ) AS T1 NATURAL JOIN book WHERE barcode=?`,[barcode]);
+    ) AS T1 NATURAL JOIN book WHERE barcode=?`,
+      [barcode]
+    );
 
     if (results[0].length === 0) {
       return null;
@@ -464,8 +467,9 @@ GROUP BY
     }
   }
 
-  async viewAllMagazineDetails({barcode}:{barcode:number}): Promise<Object>{
-    const results = await this.connection.execute(`SELECT  barcode, title, author, language, year_of_prod,
+  async viewAllMagazineDetails({ barcode }: { barcode: number }): Promise<Object> {
+    const results = await this.connection.execute(
+      `SELECT  barcode, title, author, language, year_of_prod,
     publisher, subjects, no_of_pages, price,rack,borrower,
     image, type, borrow_date, edition_num, editor,quantity  
        FROM (
@@ -482,7 +486,9 @@ GROUP BY
        title, author, language, year_of_prod,
     publisher, subjects, no_of_pages, price,rack,borrower,
     image, type, borrow_date, edition_num, editor
-       ) AS T1 NATURAL JOIN magazine WHERE barcode=?;`,[barcode]);
+       ) AS T1 NATURAL JOIN magazine WHERE barcode=?;`,
+      [barcode]
+    );
 
     if (results[0].length === 0) {
       return null;
@@ -854,10 +860,13 @@ GROUP BY
     return results[0];
   }
 
-      async getMyInfo({id}:{id:number}): Promise<Object>{
-        const results = await this.connection.execute(`SELECT username, first_name, last_name, email_address, mobile_number, City, Street_name FROM users INNER JOIN Address ON users.id=userID WHERE users.id=?`,[id]);
-        return results[0][0];
-      }
+  async getMyInfo({ id }: { id: number }): Promise<Object> {
+    const results = await this.connection.execute(
+      `SELECT username, first_name, last_name, email_address, mobile_number, City, Street_name FROM users INNER JOIN Address ON users.id=userID WHERE users.id=?`,
+      [id]
+    );
+    return results[0][0];
+  }
 }
 
 export default MySqlDB;
