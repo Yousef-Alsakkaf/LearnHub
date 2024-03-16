@@ -9,5 +9,5 @@
         "esModuleInterop": true,
         "baseUrl": "./"
     },
-    "include": ["Routes2/**/*", "Applications/**/*", "src/**/*",  "Components/**/*", "Route/UserActions"]
+    "include": ["Routes2/**/*", "Applications/**/*", "src/**/*",  "Components/**/*", "Routes/UserActions"]
 }

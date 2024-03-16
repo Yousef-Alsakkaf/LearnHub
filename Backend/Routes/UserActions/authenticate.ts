@@ -1,7 +1,7 @@
 import { error } from "ajv/dist/vocabularies/applicator/dependencies.js";
 import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 const command = new ServerCommandBuilder("authenticate")
   .setAccessLevel(UserAccessLevels.UNAUTHENTICATED)
@@ -32,16 +32,15 @@ const command = new ServerCommandBuilder("authenticate")
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const { username, password, accessToken } = Data;
   let UserData: any;
 
-  if (Data.accessToken) {
-    UserData = await Database.getUserByAccessToken(accessToken);
+  if (Data?.accessToken) {
+    UserData = await Database.getUserByAccessToken({ accessToken: Data.accessToken });
   } else {
-    UserData = await Database.authenticateUser({ username, password });
+    UserData = await Database.authenticateUser({ username: Data.username, password: Data.password });
 
     if (UserData) {
-      const newAccessToken = uuidv4();
+      const newAccessToken = uuid();
       await Database.addAccessToken({ id: UserData.id, newAccessToken });
       UserData.accessToken = newAccessToken;
     }
@@ -55,8 +54,7 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
       },
       error: "Invalid username or password!",
     };
-  }
-  else if(UserData.active==0){
+  } else if (UserData.active == 0) {
     return {
       notification: {
         type: "error",
@@ -65,10 +63,9 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
     };
   }
 
-  Client.setName(UserData.username);
-  Client.setId(UserData.id);
-  Client.setAccessLevelByHumanName(UserData.user_type);
-  console.log(Client.getAccessLevel())
+  Client.setName(UserData?.username);
+  Client.setId(UserData?.id);
+  Client.setAccessLevelByHumanName(UserData?.type);
   return UserData;
 }
 

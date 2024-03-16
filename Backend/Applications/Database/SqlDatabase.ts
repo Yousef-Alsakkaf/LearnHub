@@ -44,29 +44,37 @@ class MySqlDB implements Database {
     return this.state;
   }
 
-  async authenticateUser({ username, password }: { username: string; password: string }): Promise<Object> {
-    const results = await this.connection.execute(`SELECT * FROM users WHERE Username=? AND Password=?`, [username, password]);
+  async executeQuery(query: string, inputs: any[]): Promise<Object> {
+    const results = await this.connection.execute(query, inputs);
 
-    if (results[0].length === 0) {
+    return results[0];
+  }
+
+  async authenticateUser({ username, password }: { username: string; password: string }): Promise<Object> {
+    let result = await this.connection.execute(`SELECT * FROM users WHERE username=? AND password=?`, [username, password]);
+
+    if (result[0].length === 0) {
       return false;
-    } else {
-      this.createLog({ event: "login", details: `User ${username} logged in`, initiator: results[0][0].id });
-      return results[0][0];
     }
+
+    this.createLog({ event: "login", details: `User ${username} logged in`, initiator: result[0][0].id });
+    return result[0][0];
   }
 
   async getUserByAccessToken({ accessToken }: { accessToken: string }) {
-    const results = await this.connection.execute(`SELECT * FROM access_tokens WHERE token=?`, [accessToken]);
+    let result = await this.connection.execute(`SELECT * FROM access_tokens WHERE token=?`, [accessToken]);
 
-    if (results[0].length === 0) {
+    if (result[0].length === 0) {
       return false;
-    } else {
-      const id = results[0][0].id;
-      console.log(`id ${id}`);
-      const user = await this.connection.execute(`SELECT * FROM users WHERE id=?`, [id]);
-      console.log(user[0][0]);
-      return user[0][0];
     }
+
+    result = await this.connection.execute(`SELECT * FROM users WHERE id=?`, [result[0][0].id]);
+
+    if (result[0].length === 0) {
+      return false;
+    }
+
+    return result[0][0];
   }
 
   async dropSearch(): Promise<void> {
@@ -720,6 +728,7 @@ GROUP BY
   }
 
   async createLog({ event, details, initiator }: { event: string; details: string; initiator: number }): Promise<void> {
+    return;
     await this.connection.execute(`INSERT INTO Logs (event,details,initiator) VALUES (?,?,?)`, [event, details, initiator]);
   }
 

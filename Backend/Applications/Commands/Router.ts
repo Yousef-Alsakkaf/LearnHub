@@ -10,6 +10,7 @@ import {
 } from "../../Components/Notification/Notification.js";
 import { createValidationService } from "../Validation/Validation.js";
 import Client from "../../Components/Client/Client.js";
+import { Logger } from "Applications/Logger/Logger.js";
 
 class CommandRouter {
   private Command: Command;
@@ -19,19 +20,22 @@ class CommandRouter {
   private ValidationService: any;
   private Database: any;
   private CommandExecutionFunction: Function;
+  private Logger: Logger;
 
   constructor(
     Command: Command,
     Socket: any,
     Client: Client,
     Data: any,
-    DBRouter: any
+    DBRouter: any,
+    Logger: Logger
   ) {
     this.Command = Command;
     this.Socket = Socket;
     this.Client = Client;
     this.Data = Data;
     this.ValidationService = createValidationService();
+    this.Logger = Logger;
     this.CommandExecutionFunction = Command.getCommand();
     this.Database = DBRouter.getRoutedDatabaseConnection(
       Client.getAccessLevel().toString()
@@ -39,16 +43,20 @@ class CommandRouter {
   }
 
   async route() {
-    const validateIncomingData = this.validateIncomingData();
-    if (!validateIncomingData) {
-      console.log(
-        "Invalid incoming data" + JSON.stringify(this.Data),
-        validateIncomingData.errors
-      );
+    const validateIncomingData = await this.validateIncomingData();
+    console.log(validateIncomingData)
+
+    if (!validateIncomingData.isValid) {
+      this.Logger.error(
+        `Invalid incoming data ${JSON.stringify(this.Data)} ${JSON.stringify(validateIncomingData.errors)}`
+      )
+
       return this.sendErrorMessageToClient(
         StaticCommandErrorNames.INVALID_CLIENT_INCOMING_DATA
       );
     }
+
+    this.Logger.info(JSON.stringify(this.Data));
 
     if (this.validateCommandUserAccessLevel()) {
       return this.sendErrorMessageToClient(
@@ -59,25 +67,25 @@ class CommandRouter {
     const CommandData = await this.executeCommand();
     this.emitNotificationIfCommandRequires(CommandData);
 
-    if (!this.validateOutgoingData(CommandData)) {
-      return this.sendErrorMessageToClient(StaticCommandErrorNames.INVALID_CLIENT_OUTGOING_DATA);
-    }
-
-    console.log("outgoingData", CommandData);
+    // if (!this.validateOutgoingData(CommandData)) {
+    //   return this.sendErrorMessageToClient(StaticCommandErrorNames.INVALID_CLIENT_OUTGOING_DATA);
+    // }
+    
+    this.Logger.info(JSON.stringify(CommandData));
     this.Socket.emit(this.Command.getOutgoingChannel(), CommandData);
   }
 
 
-  private validateIncomingData(): { isValid: Boolean; errors?: any } {
+  private async validateIncomingData(): Promise<{ isValid: Boolean; errors?: any }> {
     if (this.Data == undefined) {
       return { isValid: true };
     }
 
-    const incomingDataValidate = this.ValidationService.compile(
+    const incomingDataValidate = await this.ValidationService.compile(
       this.Command.getIncomingValidationSchema()
     );
 
-    const isValid = incomingDataValidate(this.Data);
+    const isValid = await incomingDataValidate(this.Data);
 
     return { isValid, errors: incomingDataValidate.errors };
   }

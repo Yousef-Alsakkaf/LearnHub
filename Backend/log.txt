@@ -1,0 +1,2 @@
+[34m[INFO] {"Hello":"hi","aoiwjd":"hi"}[39m
+[34m[INFO] "{\n    \"Hello\": \"hi\",\n    \"aoiwjd\": \"hi\"\n}"[39m

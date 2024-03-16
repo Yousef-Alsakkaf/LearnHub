@@ -273,6 +273,7 @@ abstract class Database {
   abstract getOverdueBooks(): Promise<Object>;
   abstract roomsSearch({ search }: { search: string }): Promise<Object>;
   abstract getMyInfo({ id }: { id: number }): Promise<Object>;
+  abstract executeQuery(query: string, inputs: any[]): Promise<Object>
 }
 
 enum DatabaseState {

@@ -5,10 +5,12 @@ import { Server } from "socket.io";
 import Client from "../Components/Client/Client.js";
 import CommandRouter from "../Applications/Commands/Router.js";
 import DatabaseRouter from "../Applications/Database/Router.js";
+import { WinstonLogger } from "../Applications/Logger/WinstonLogger.js";
 
 const app = express();
 const DBRouter = new DatabaseRouter();
 const webServer = http.createServer(app);
+const logger = new WinstonLogger();
 
 const io = new Server(webServer, {
   cors: {
@@ -25,7 +27,7 @@ io.on("connection", (socket) => {
       return console.error(`Command not found! ${event}`);
     }
    
-    new CommandRouter(commands[event], socket, client, args, DBRouter).route();
+    new CommandRouter(commands[event], socket, client, args, DBRouter, logger).route();
   });
 
   socket.on("disconnect", () => {
