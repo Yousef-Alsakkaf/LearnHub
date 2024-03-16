@@ -3,7 +3,7 @@ import {
   StaticCommandNames,
   StaticCommandErrorNames,
   CommandExecuteArguments,
-} from "../../Applications/Commands/Context.js";
+} from "./Context.js";
 import {
   Notification,
   NotificationTypes,
