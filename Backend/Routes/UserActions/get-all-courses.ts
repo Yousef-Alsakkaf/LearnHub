@@ -16,7 +16,7 @@ const command = new ServerCommandBuilder("get-all-courses")
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const courses = Database.executeQuery("SELECT * FROM courses");
+  const courses = Database.executeQuery("SELECT * FROM courses",[]);
   return courses;
 }
 
