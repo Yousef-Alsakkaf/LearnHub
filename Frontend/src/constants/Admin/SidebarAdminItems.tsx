@@ -12,7 +12,7 @@ import { SiStudyverse } from "react-icons/si";
 import { CiCalculator1 } from "react-icons/ci";
 export const sidebarAdminItems = [
   {
-    path: "/",
+    path: "/admin/users",
     icon: <SiStudyverse size={18} />,
     text: "Users Management",
     key: "users",

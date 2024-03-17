@@ -1,17 +1,6 @@
 import React, { useState } from "react";
 import Users from "../../../templates/users/Users";
-interface User {
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  city: string;
-  street_name: string;
-  emailAddress: string;
-  phoneNum: string;
-  userType: string;
-}
-function AddStudents() {
+function AddUsers() {
   return (
     <Users data-name="add-students">
       <div className="pt-4 div" data-name="add-book-admin">
@@ -19,7 +8,7 @@ function AddStudents() {
       </div>
       <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" }}>
         <h3 className="text-xl font-semibold text-gray-900 mb-5">
-          Add a new student
+          Add a new user
         </h3>
         <form>
           <div className="mb-4">
@@ -163,7 +152,7 @@ function AddStudents() {
           <div className="mb-4 button">
             <button
               type="submit"
-              className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test"
+              className="hover:bg-blue-700 bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test"
             >
               Add user
             </button>
@@ -174,4 +163,4 @@ function AddStudents() {
   );
 }
 
-export default AddStudents;
+export default AddUsers;
