@@ -40,9 +40,6 @@ function Courses({ children }: CoursesProps) {
             </li>
 
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View undertaken courses
-            </li>
-            <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
               Add courses
             </li>
           </ul>
@@ -53,9 +50,7 @@ function Courses({ children }: CoursesProps) {
             <li className="mt-5 cursor-pointer border-l-2 border-l-blue-700 px-2 py-2 font-semibold text-blue-700 transition hover:border-l-blue-700 hover:text-blue-700">
               View all courses
             </li>
-            <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              view undertaken courses
-            </li>
+
             <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
               Add courses
             </li>

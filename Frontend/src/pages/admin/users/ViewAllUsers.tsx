@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Users from "../../../templates/users/Users";
 import UsersData from "../../../temp/ViewAllUsers";
+import socket from "../../../socket";
 
 interface UserData {
   UID: string;
@@ -18,6 +19,13 @@ interface UserData {
 
 function AllUsers() {
   const [students, setStudents] = useState<UserData[]>(UsersData);
+
+  useEffect(()=>{
+    socket.emit("get-all-users", {});
+    socket.on("get-all-users-response", (response) => {
+      console.log("This is the response from the get-all-users command", response);
+    })
+  }, [])
 
   return (
     <Users>
