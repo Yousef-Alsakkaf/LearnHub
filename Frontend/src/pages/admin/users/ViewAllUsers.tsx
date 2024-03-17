@@ -18,7 +18,7 @@ interface UserData {
 }
 
 function AllUsers() {
-  const [students, setStudents] = useState<UserData[]>(UsersData);
+  const [students, setStudents] = useState<UserData[]>();
 
   useEffect(()=>{
     socket.emit("get-all-users", {});
@@ -63,7 +63,7 @@ function AllUsers() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {students.map((student) => (
+        {students && students.map((student) => (
           <div key={student.id} className="max-w-sm">
             <div className="group rounded-lg border bg-white p-4 shadow-lg transition-transform transform hover:-translate-y-1 hover:shadow-xl">
               <div className="relative mx-auto w-36 h-36 rounded-full overflow-hidden">
