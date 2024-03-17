@@ -22,8 +22,10 @@ function AllUsers() {
 
   useEffect(()=>{
     socket.emit("get-all-users", {});
-    socket.on("get-all-users-response", (response) => {
+    socket.on("get-all-users-response", (response: UserData[]) => {
       console.log("This is the response from the get-all-users command", response);
+
+      setStudents(prevStudents => [...prevStudents, ...response]);
     })
   }, [])
 
@@ -98,7 +100,7 @@ function AllUsers() {
                   <span className="ml-auto">{student.username}</span>
                 </li>
                 <li className="flex items-center py-1 text-sm">
-                  <span>Access Token:</span>
+                  <span>ID:</span>
                   <span className="ml-auto">{student.UID}</span>
                 </li>
                 <li className="flex items-center py-1 text-sm">
