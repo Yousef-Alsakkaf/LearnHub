@@ -274,6 +274,7 @@ abstract class Database {
   abstract roomsSearch({ search }: { search: string }): Promise<Object>;
   abstract getMyInfo({ id }: { id: number }): Promise<Object>;
   abstract executeQuery(query: string, inputs: any[]): Promise<Object>;
+  abstract generateUID(type:string): Promise<string>;
  
 }
 

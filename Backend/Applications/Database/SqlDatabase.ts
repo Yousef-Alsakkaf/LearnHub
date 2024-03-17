@@ -876,6 +876,29 @@ GROUP BY
     );
     return results[0][0];
   }
+  
+  async generateUID(type:string): Promise<string> {
+
+    const maxID = await this.connection.execute(`SELECT MAX(id) AS max FROM users`);
+    let id = maxID[0][0].max;
+    id++;
+    if(type=="student")
+    type="U";
+    else if(type=="instuctor")
+    type="I";
+    else if(type=="admin")
+    type="A";
+    else new Error("Invalid type");
+    let year = new Date().getFullYear();
+    year=year % 100;
+    let uid = type[0] + year+"0"+ + id;
+    return uid;
+
+
+  }
+
+    
+
 }
 
 export default MySqlDB;
