@@ -19,7 +19,7 @@ function ViewAllCourses() {
         "This is the response from the get-all-courses command",
         response
       );
-      setCourses(prevCourses => [...prevCourses, ...response]); // this is just to ensure that my old array is not being overwritten
+      setCourses(response); 
     });
   }, []);
   
