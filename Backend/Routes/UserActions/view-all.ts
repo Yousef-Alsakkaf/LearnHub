@@ -16,7 +16,7 @@ const command = new ServerCommandBuilder("get-all-users")
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const users = Database.executeQuery("SELECT * FROM users");
+  const users = Database.executeQuery("SELECT * FROM users", []);
   return users;
 }
 
