@@ -7,7 +7,8 @@ CREATE TABLE `users` (
   `UID` varchar(8),
   `type` ENUM('student','instructor','admin'),
   `email` varchar(255),
-  `active` BOOLEAN
+  `active` BOOLEAN,
+  `picture` VARCHAR(255)
 );
 
 CREATE TABLE access_tokens (
@@ -72,4 +73,14 @@ CREATE TABLE `requests` (
   `name` varchar(50),
   `letter` varchar(255),
   FOREIGN KEY (`major`) REFERENCES `majors` (`name`)
+);
+
+CREATE TABLE `Logs` (
+  `logId` int,
+  `event` varchar(20),
+  `details` varchar(255),
+  `initiator` int,
+  `date` date,
+  PRIMARY KEY (`logId`),
+  FOREIGN KEY (`initiator`) REFERENCES `users`(`id`)
 );
