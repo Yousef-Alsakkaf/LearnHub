@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Courses from "../../../templates/courses/Courses";
 import socket from "../../../socket";
 import { coursesInfo } from "../../../temp/ViewAllCourses";
+import CoursesInfo from "../../../templates/courses/CoursesInfo";
 
 interface Course {
   title: string;
@@ -25,6 +26,7 @@ function ViewAllCourses() {
   
 
   return (
+    <>
     <Courses>
       <div className="mx-auto my-10 grid max-w-screen-xl gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
         {courses.map((course, index) => (
@@ -56,7 +58,12 @@ function ViewAllCourses() {
           </div>
         ))}
       </div>
+
+      
     </Courses>
+    <CoursesInfo/>
+    </>
+    
   );
 }
 
