@@ -84,3 +84,13 @@ CREATE TABLE `Logs` (
   PRIMARY KEY (`logId`),
   FOREIGN KEY (`initiator`) REFERENCES `users`(`id`)
 );
+
+CREATE TABLE announcments(
+id INT AUTO_INCREMENT PRIMARY KEY,
+course_id INT,
+subject varchar(50),
+message varchar(1000),
+sender_id INT,
+FOREIGN KEY (course_id) REFERENCES courses(id),
+FOREIGN KEY (sender_id) REFERENCES users(id)
+);

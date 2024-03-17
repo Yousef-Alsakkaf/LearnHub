@@ -10,7 +10,7 @@ const command = new ServerCommandBuilder("get-courses-info")
         type: "object",
         additionalProperties: false,
         properties: {
-            id: { type: "number" },
+            id: { type: "number" },// course id
         },required:["id"]       
       })
   .setExecute(callback)
