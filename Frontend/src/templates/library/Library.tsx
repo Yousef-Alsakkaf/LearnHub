@@ -1,11 +1,14 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
+
 interface SettingsProps {
   children: ReactNode;
 }
+
 function Library({ children }: SettingsProps) {
   return (
     <div className="mx-4 min-h-screen max-w-screen-xl sm:mx-8 xl:mx-auto">
-      <h1 className="border-b py-6 text-4xl font-semibold">Settings</h1>
+      <h1 className="border-b py-6 text-4xl font-semibold">Library Management</h1>
       <div className="grid grid-cols-8 pt-3 sm:grid-cols-10">
         <div className="relative my-4 w-56 sm:hidden">
           <input
@@ -26,24 +29,24 @@ function Library({ children }: SettingsProps) {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M19 9l-7 7-7-7"
             />
           </svg>
           <ul className="max-h-0 select-none flex-col overflow-hidden rounded-b-lg shadow-md transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3">
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View Items
+              <Link to="/admin/ViewItems">View Items</Link>
             </li>
 
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              Add Items
+              <Link to="/admin/AddItems">Add Items</Link>
             </li>
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View Requested Items
+              <Link to="/admin/ViewRequestedItems">View Requested Items</Link>
             </li>
           </ul>
         </div>
@@ -51,13 +54,13 @@ function Library({ children }: SettingsProps) {
         <div className="col-span-2 hidden sm:block">
           <ul>
             <li className="mt-5 cursor-pointer border-l-2 border-l-blue-700 px-2 py-2 font-semibold text-blue-700 transition hover:border-l-blue-700 hover:text-blue-700">
-              View Items
+              <Link to="/admin/ViewItems">View Items</Link>
             </li>
             <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              Add Items
+              <Link to="/admin/AddItems">Add Items</Link>
             </li>
             <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              view Requested Items
+              <Link to="/admin/ViewRequestedItems">View Requested Items</Link>
             </li>
           </ul>
         </div>

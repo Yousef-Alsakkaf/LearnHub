@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 
 const command = new ServerCommandBuilder("authenticate")
   .setAccessLevel(UserAccessLevels.UNAUTHENTICATED)
-  .setOutgoingChannel("autheticate-response")
+  .setOutgoingChannel("authenticate-response")
   .setIncomingValidationSchema({
     oneOf: [
       {

@@ -1,8 +1,11 @@
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
+
 interface SettingsProps {
   children: ReactNode;
 }
-function Settings({ children }: SettingsProps) {
+
+function Users({ children }: SettingsProps) {
   return (
     <div className="mx-4 min-h-screen max-w-screen-xl sm:mx-8 xl:mx-auto">
       <h1 className="border-b py-6 text-4xl font-semibold">
@@ -28,30 +31,20 @@ function Settings({ children }: SettingsProps) {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M19 9l-7 7-7-7"
             />
           </svg>
           <ul className="max-h-0 select-none flex-col overflow-hidden rounded-b-lg shadow-md transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3">
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View all users
-            </li>
-
-            <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View all students
+              <Link to="/admin/users">View all users</Link>
             </li>
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View enrolled students
-            </li>
-            <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View unenrolled students
-            </li>
-            <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              Add users
+              <Link to="/admin/AddUsers">Add users</Link>
             </li>
           </ul>
         </div>
@@ -59,19 +52,10 @@ function Settings({ children }: SettingsProps) {
         <div className="col-span-2 hidden sm:block">
           <ul>
             <li className="mt-5 cursor-pointer border-l-2 border-l-blue-700 px-2 py-2 font-semibold text-blue-700 transition hover:border-l-blue-700 hover:text-blue-700">
-              View all users
+              <Link to="/admin/users">View all users</Link>
             </li>
             <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              View all students
-            </li>
-            <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              View all enrolled students
-            </li>
-            <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              View all unenrolled students
-            </li>
-            <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              Add users
+              <Link to="/admin/AddUsers">Add users</Link>
             </li>
           </ul>
         </div>
@@ -84,4 +68,4 @@ function Settings({ children }: SettingsProps) {
   );
 }
 
-export default Settings;
+export default Users;
