@@ -24,7 +24,7 @@ export const sidebarAdminItems = [
     key: "library",
   },
   {
-    path: "/",
+    path: "/admin/courses",
     icon: <CiCalculator1 size={20} />,
     text: "Course Management",
     key: "course",

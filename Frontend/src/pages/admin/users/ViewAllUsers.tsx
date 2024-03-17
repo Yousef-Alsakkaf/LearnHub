@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Users from "../../../templates/users/Users";
 import UsersData from "../../../temp/ViewAllUsers";
+import socket from "../../../socket";
 
 interface UserData {
   UID: string;
@@ -17,7 +18,16 @@ interface UserData {
 }
 
 function AllUsers() {
-  const [students, setStudents] = useState<UserData[]>(UsersData);
+  const [students, setStudents] = useState<UserData[]>();
+
+  useEffect(()=>{
+    socket.emit("get-all-users", {});
+    socket.on("get-all-users-response", (response: UserData[]) => {
+      console.log("This is the response from the get-all-users command", response);
+
+      setStudents(response);
+    })
+  }, [])
 
   return (
     <Users>
@@ -53,7 +63,7 @@ function AllUsers() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {students.map((student) => (
+        {students && students.map((student) => (
           <div key={student.id} className="max-w-sm">
             <div className="group rounded-lg border bg-white p-4 shadow-lg transition-transform transform hover:-translate-y-1 hover:shadow-xl">
               <div className="relative mx-auto w-36 h-36 rounded-full overflow-hidden">
@@ -90,7 +100,7 @@ function AllUsers() {
                   <span className="ml-auto">{student.username}</span>
                 </li>
                 <li className="flex items-center py-1 text-sm">
-                  <span>Access Token:</span>
+                  <span>ID:</span>
                   <span className="ml-auto">{student.UID}</span>
                 </li>
                 <li className="flex items-center py-1 text-sm">
