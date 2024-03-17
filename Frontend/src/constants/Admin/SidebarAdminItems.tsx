@@ -18,7 +18,7 @@ export const sidebarAdminItems = [
     key: "users",
   },
   {
-    path: "/",
+    path: "/admin/ViewItems",
     icon: <MdOutlineLibraryBooks size={18} />,
     text: "Library Management",
     key: "library",
