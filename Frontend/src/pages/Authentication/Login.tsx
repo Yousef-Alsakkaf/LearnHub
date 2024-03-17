@@ -6,10 +6,11 @@ import {
   Button,
   Typography,
   Box,
-  Link,
+ 
 } from "@mui/material";
 import { BiSun, BiMoon } from "react-icons/bi";
 // import '../../App.scss'
+import { Link } from "react-router-dom"; 
 import useLocalStorage from "use-local-storage";
 import socket from "../../socket";
 
@@ -30,7 +31,8 @@ const LoginPage = () => {
     controls.start({ opacity: 1, y: 0 });
   }, [controls]);
 
-  const handleAuthentication = () => {
+  const handleAuthentication = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     socket.emit("authenticate", {
       username: formData.username,
       password: formData.password,
@@ -66,7 +68,7 @@ const LoginPage = () => {
             >
               Login
             </Typography>
-            <form>
+            <form onSubmit={handleAuthentication}>
               <TextField
                 fullWidth
                 label="Username"
@@ -103,12 +105,11 @@ const LoginPage = () => {
                 size="large"
                 fullWidth
                 style={{ marginTop: "20px" }}
-                onClick={handleAuthentication}
               >
                 Login
               </Button>
               <Box mt={2}>
-                <Link href="#" variant="body2">
+                <Link to="#">
                   Forgot Password?
                 </Link>
               </Box>
@@ -119,7 +120,7 @@ const LoginPage = () => {
                   align="center"
                 >
                   Don't have an account?{" "}
-                  <Link href="signup" variant="body2">
+                  <Link to="/signup" >
                     Sign Up
                   </Link>
                 </Typography>
