@@ -14,8 +14,23 @@ import { Link } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 import socket from "../../socket";
 
+import { useNavigate } from "react-router-dom";
+interface UserData {
+  UID: string;
+  accessToken: string;
+  active: number;
+  email: string;
+  fName: string;
+  id: number;
+  lName: string;
+  password: string;
+  type: string;
+  username: string;
+}
+
 const LoginPage = () => {
   const [isDark, setIsDark] = useLocalStorage("isDark", false);
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -33,13 +48,24 @@ const LoginPage = () => {
 
   const handleAuthentication = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log( {
+      username: formData.username,
+      password: formData.password,
+    })
     socket.emit("authenticate", {
       username: formData.username,
       password: formData.password,
     });
 
-    socket.on("authenticate-response", (response) => {
-      console.log(response);
+    socket.on("authenticate-response", (response: UserData) => {
+      if (response.type === "student") {
+        console.log('entered')
+        navigate('/student');
+      } else if(response.type === "admin") {
+        navigate('/admin');
+      } else if(response.type === "instructor"){
+        navigate('/instructor');
+      }
     });
   };
 
