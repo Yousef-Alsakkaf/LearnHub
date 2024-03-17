@@ -9,7 +9,7 @@ interface CourseInfo {
 function CoursesInfo() {
   return (
     <ViewModal
-    isVisible={true}
+    isVisible={false}
     onClose={() => {}}
     >
       <div className="flex flex-col h-screen">
