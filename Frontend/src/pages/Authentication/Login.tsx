@@ -6,20 +6,18 @@ import {
   Button,
   Typography,
   Box,
-  Link,
+ 
 } from "@mui/material";
-import {
-  GoogleLoginButton,
-  GithubLoginButton,
-} from "react-social-login-buttons";
-import { BiSun, BiMoon } from "react-icons/bi"; 
+import { BiSun, BiMoon } from "react-icons/bi";
 // import '../../App.scss'
+import { Link } from "react-router-dom"; 
 import useLocalStorage from "use-local-storage";
+import socket from "../../socket";
 
 const LoginPage = () => {
-    const [isDark, setIsDark] = useLocalStorage("isDark", false);
+  const [isDark, setIsDark] = useLocalStorage("isDark", false);
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const controls = useAnimation();
@@ -29,17 +27,24 @@ const LoginPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  
-
   useEffect(() => {
     controls.start({ opacity: 1, y: 0 });
   }, [controls]);
 
-  
+  const handleAuthentication = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    socket.emit("authenticate", {
+      username: formData.username,
+      password: formData.password,
+    });
+
+    socket.on("authenticate-response", (response) => {
+      console.log(response);
+    });
+  };
 
   return (
     <>
-    
       <div
         style={{
           position: "absolute",
@@ -47,7 +52,8 @@ const LoginPage = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
         }}
-        className="App" data-theme={isDark ? "dark" : "light"}
+        className="App"
+        data-theme={isDark ? "dark" : "light"}
       >
         <Container maxWidth="sm">
           <motion.div
@@ -56,19 +62,19 @@ const LoginPage = () => {
             transition={{ duration: 0.5 }}
           >
             <Typography
-             variant="h4" 
-             gutterBottom
-             color={isDark ? "whitesmoke" : ""}
-             >
+              variant="h4"
+              gutterBottom
+              color={isDark ? "whitesmoke" : ""}
+            >
               Login
             </Typography>
-            <form>
+            <form onSubmit={handleAuthentication}>
               <TextField
                 fullWidth
-                label="Email"
-                name="email"
-                type="email"
-                value={formData.email}
+                label="Username"
+                name="username"
+                type="text"
+                value={formData.username}
                 onChange={handleChange}
                 margin="normal"
                 required
@@ -91,7 +97,7 @@ const LoginPage = () => {
                   background: isDark ? "#FFFFF0" : "",
                 }}
               />
-           
+
               <Button
                 type="submit"
                 variant="contained"
@@ -103,7 +109,7 @@ const LoginPage = () => {
                 Login
               </Button>
               <Box mt={2}>
-                <Link href="#" variant="body2">
+                <Link to="#">
                   Forgot Password?
                 </Link>
               </Box>
@@ -114,7 +120,7 @@ const LoginPage = () => {
                   align="center"
                 >
                   Don't have an account?{" "}
-                  <Link href="signup" variant="body2">
+                  <Link to="/signup" >
                     Sign Up
                   </Link>
                 </Typography>
@@ -139,7 +145,11 @@ const LoginPage = () => {
             cursor: "pointer",
           }}
         >
-          {isDark ? <BiSun size={24} color={isDark ? "#FFFFF0" : ""}/> : <BiMoon size={24} />}
+          {isDark ? (
+            <BiSun size={24} color={isDark ? "#FFFFF0" : ""} />
+          ) : (
+            <BiMoon size={24} />
+          )}
         </button>
       </Box>
     </>
