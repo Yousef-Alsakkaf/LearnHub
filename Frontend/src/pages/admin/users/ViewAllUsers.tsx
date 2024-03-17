@@ -18,7 +18,7 @@ interface UserData {
 }
 
 function AllUsers() {
-  const [students, setStudents] = useState<UserData[]>(UsersData);
+  const [students, setStudents] = useState<UserData[]>();
 
   useEffect(()=>{
     socket.emit("get-all-users", {});
