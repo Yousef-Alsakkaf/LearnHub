@@ -9,5 +9,5 @@
         "esModuleInterop": true,
         "baseUrl": "./"
     },
-    "include": ["Routes2/**/*", "Applications/**/*", "src/**/*",  "Components/**/*", "Routes/UserActions", "Routes/courses/get-course-instuctors.ts", "Routes/courses/get-all-courses.ts"]
+    "include": ["Routes/**/*", "Applications/**/*", "src/**/*",  "Components/**/*", "Routes/UserActions", "Routes/courses/get-course-instuctors.ts", "Routes/courses/get-all-courses.ts"]
 }
