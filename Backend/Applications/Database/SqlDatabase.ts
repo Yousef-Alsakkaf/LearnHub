@@ -728,8 +728,8 @@ GROUP BY
   }
 
   async createLog({ event, details, initiator }: { event: string; details: string; initiator: number }): Promise<void> {
-    return;
     await this.connection.execute(`INSERT INTO Logs (event,details,initiator) VALUES (?,?,?)`, [event, details, initiator]);
+    return;
   }
 
   async adduser({
@@ -895,6 +895,20 @@ GROUP BY
     return uid;
 
 
+  }
+
+  async doesCourseExist(id: number): Promise<boolean> {
+    const results = await this.connection.execute(`SELECT * FROM courses WHERE id=?`, [id]);
+    return results[0].length > 0;
+  }
+  async doesMaterialExist(id: number): Promise<boolean> {
+    const results = await this.connection.execute(`SELECT * FROM material WHERE id=?`, [id]);
+    return results[0].length > 0;
+  }
+
+  async isMaterialUsed(id: number): Promise<boolean> {
+    const results = await this.connection.execute(`SELECT * FROM m_grade WHERE material_id=?`, [id]);
+    return results[0].length > 0;
   }
 
     

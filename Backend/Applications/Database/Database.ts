@@ -275,7 +275,9 @@ abstract class Database {
   abstract getMyInfo({ id }: { id: number }): Promise<Object>;
   abstract executeQuery(query: string, inputs: any[]): Promise<Object>;
   abstract generateUID(type:string): Promise<string>;
- 
+  abstract doesCourseExist(id: number): Promise<boolean>;
+  abstract doesMaterialExist(id: number): Promise<boolean>;
+  abstract isMaterialUsed(id: number): Promise<boolean>;
 }
 
 enum DatabaseState {
