@@ -26,7 +26,7 @@ function AddUsers() {
   };
 
   return (
-    <Users data-name="add-students">
+    <Users name="add-users" data-name="add-students">
       <div className="pt-4 div" data-name="add-book-admin">
         <h1 className="py-2 text-2xl font-semibold">Add users settings</h1>
       </div>
