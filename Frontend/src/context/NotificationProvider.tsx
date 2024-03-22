@@ -32,6 +32,7 @@ function showNotification(notification: Notification) {
     toast.error(notification.message, options);
   }
 }
+
 function NotificationProvider() {
   socket.on("show-notification", (notification: Notification) => {
     showNotification(notification);
@@ -40,4 +41,4 @@ function NotificationProvider() {
   return <ToastContainer />;
 }
 
-export { showNotification };
+export { NotificationProvider };
