@@ -29,11 +29,11 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
         const user=Client.getName();
         const {title,course_code,academic_year,image,description}=Data;
         await Database.executeQuery('UPDATE courses SET title=?,course_code=?,academic_year=?,image=?,description=? WHERE id=?',[title,course_code,academic_year,image,description,Data.id]);
-        await Database.createLog({ event: "Add course", details: `User ${user} added course ${title}`, initiator: Userid });
+        await Database.createLog({ event: "edit course", details: `User ${user} edited course ${title}`, initiator: Userid });
         return{
               notification: {
                 type: "success",
-                message: "Course Added successfully!",
+                message: "Course updated successfully!",
                 },
               error: false,
         };
