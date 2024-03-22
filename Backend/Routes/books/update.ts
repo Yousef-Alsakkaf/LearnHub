@@ -20,7 +20,7 @@ const command = new ServerCommandBuilder("update-book")
             subjects: {type: "string"},
             no_of_pages: {type: "number"},
             price: {type: "number"},
-            rack: {type: "string"},
+            rack: {type: "number"},
             image: {type: "string"},
         },required: ["title", "author", "barcode", "language", "year_of_prod", "publisher", "subjects", "no_of_pages", "price", "rack", "image"]   
       })
