@@ -38,7 +38,7 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
     return {
         notification: {
             type: "success",
-            message: "Book Added successfully!",
+            message: "Book Updated successfully!",
         },
         error: false,
     };

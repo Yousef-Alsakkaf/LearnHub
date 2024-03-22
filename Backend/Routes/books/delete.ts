@@ -19,6 +19,13 @@ const command = new ServerCommandBuilder("delete-book")
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
   await this.Database.executeQuery('DELETE FROM books WHERE barcode=?',[Data.barcode]);
+    return {
+        notification: {
+            type: "success",
+            message: "Book Deleted successfully!",
+        },
+        error: false,
+    };
 }
 
 export default command;
