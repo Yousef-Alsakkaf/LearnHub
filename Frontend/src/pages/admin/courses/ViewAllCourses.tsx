@@ -3,6 +3,7 @@ import Courses from "../../../templates/courses/Courses";
 import socket from "../../../socket";
 import { coursesInfo } from "../../../temp/ViewAllCourses";
 import CoursesInfo from "../../../templates/courses/CoursesInfo";
+import Roster from "../../../templates/courses/Roster";
 
 interface Course {
   title: string;
@@ -18,7 +19,8 @@ function ViewAllCourses() {
   const [courses, setCourses] = useState<Course[] | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showModal, setShowModal] = useState(false);
-
+  const [showRoster, setShowRoster] = useState(false);
+// so what? where 
 useEffect(() => {
   socket.emit("get-all-courses", {});
   socket.on("get-all-courses-response", (response: Course[]) => {
@@ -65,6 +67,7 @@ const handleView = (CourseChosen: Course) => {
                 >
                   <span className="underline" onClick={() => handleView(course)}>View course</span>
                 </a>
+                
                 <div className="max-w-full flex-none lg:px-4"></div>
               </div>
             </div>
@@ -75,6 +78,7 @@ const handleView = (CourseChosen: Course) => {
       
     </Courses>
           <CoursesInfo courses={selectedCourse} onClose={() => setShowModal(false)} isVisible={showModal}/>
+          
     </>
     
   );
