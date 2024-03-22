@@ -8,28 +8,41 @@ interface Course {
   title: string;
   description: string;
   image: string;
+  academic_year: number;
+  course_code: string;
+  no_of_enrolled: number;
+  id: number;
 }
 
 function ViewAllCourses() {
-  const [courses, setCourses] = useState<Course []>(coursesInfo);
+  const [courses, setCourses] = useState<Course[] | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    socket.emit("get-all-courses", {});
-    socket.on("get-all-courses-response", (response: Course[]) => {
-      console.log(
-        "This is the response from the get-all-courses command",
-        response
-      );
-      setCourses(response); 
-    });
-  }, []);
-  
+useEffect(() => {
+  socket.emit("get-all-courses", {});
+  socket.on("get-all-courses-response", (response: Course[]) => {
+    console.log(
+      "This is the response from the get-all-courses command",
+      response
+    );
+    setCourses(response); 
+  });
 
+  return () => {
+    socket.off("get-all-courses-response");
+  };
+}, []);
+
+const handleView = (CourseChosen: Course) => {
+  setSelectedCourse(CourseChosen);
+  setShowModal(true);
+}
   return (
     <>
     <Courses>
       <div className="mx-auto my-10 grid max-w-screen-xl gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-        {courses.map((course, index) => (
+        {courses && courses .length > 0 && courses.map((course, index) => (
           <div key={index} className="group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4">
             <div className="flex h-48 flex-col justify-between overflow-hidden"> 
               <img
@@ -50,7 +63,7 @@ function ViewAllCourses() {
                   href="#"
                   className="group text-lg font-bold focus:text-indigo-600 hover:text-indigo-600"
                 >
-                  <span className="underline">View course</span>
+                  <span className="underline" onClick={() => handleView(course)}>View course</span>
                 </a>
                 <div className="max-w-full flex-none lg:px-4"></div>
               </div>
@@ -61,7 +74,7 @@ function ViewAllCourses() {
 
       
     </Courses>
-    <CoursesInfo/>
+          <CoursesInfo courses={selectedCourse} onClose={() => setShowModal(false)} isVisible={showModal}/>
     </>
     
   );

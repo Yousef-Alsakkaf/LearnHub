@@ -1,7 +1,10 @@
 import { ReactNode } from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+
 interface CoursesProps {
   children: ReactNode;
 }
+
 function Courses({ children }: CoursesProps) {
   return (
     <div className="mx-4 min-h-screen max-w-screen-xl sm:mx-8 xl:mx-auto">
@@ -26,21 +29,21 @@ function Courses({ children }: CoursesProps) {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2" 
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
               d="M19 9l-7 7-7-7"
             />
           </svg>
           <ul className="max-h-0 select-none flex-col overflow-hidden rounded-b-lg shadow-md transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3">
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              View all courses
+              <Link to="/admin/courses">View all courses</Link> 
             </li>
 
             <li className="cursor-pointer px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white">
-              Add courses
+              <Link to="/admin/addCourse">Add courses</Link> 
             </li>
           </ul>
         </div>
@@ -48,11 +51,11 @@ function Courses({ children }: CoursesProps) {
         <div className="col-span-2 hidden sm:block">
           <ul>
             <li className="mt-5 cursor-pointer border-l-2 border-l-blue-700 px-2 py-2 font-semibold text-blue-700 transition hover:border-l-blue-700 hover:text-blue-700">
-              View all courses
+              <Link to="/admin/courses">View all courses</Link> 
             </li>
 
             <li className="mt-5 cursor-pointer border-l-2 border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700">
-              Add courses
+              <Link to="/admin/addCourse">Add courses</Link> 
             </li>
           </ul>
         </div>

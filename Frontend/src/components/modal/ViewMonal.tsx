@@ -9,8 +9,8 @@ interface ModalProps {
 const ViewModal: React.FC<ModalProps> = ({ isVisible, onClose, children }: ModalProps) => {
   if (!isVisible) return null;
 
-  const handleClose = () => {
-    onClose();
+  const handleClose = (e: any) => {
+    if (e.target.id === "wrapper") onClose();
   };
 
   return (
@@ -22,7 +22,7 @@ const ViewModal: React.FC<ModalProps> = ({ isVisible, onClose, children }: Modal
       <div className="bg-white p-4 rounded-lg relative" style={{ width: '70%', height: '80%' }}>
         <button
           className="text-gray-600 text-xl absolute top-2 right-2"
-          onClick={handleClose}
+          onClick={() => onClose()}
         >
           X
         </button>

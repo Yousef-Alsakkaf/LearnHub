@@ -1,16 +1,25 @@
 import React from "react";
 import ViewModal from "../../components/modal/ViewMonal";
 
-interface CourseInfo {
+interface Course {
   title: string;
   description: string;
+  image: string;
+  academic_year: number;
+  course_code: string;
   no_of_enrolled: number;
+  id: number;
 }
-function CoursesInfo() {
+interface Props {
+  courses: Course | null;
+  isVisible: boolean;
+  onClose: () => void;
+}
+function CoursesInfo({courses, isVisible, onClose} : Props) {
   return (
     <ViewModal
-    isVisible={false}
-    onClose={() => {}}
+    isVisible={isVisible}
+    onClose={onClose}
     >
       <div className="flex flex-col h-screen">
         <div className="flex-grow overflow-hidden">
