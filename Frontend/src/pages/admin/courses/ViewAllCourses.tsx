@@ -8,10 +8,10 @@ interface Course {
   title: string;
   description: string;
   image: string;
-  academic_year: number;
+  academic_year: string;
   course_code: string;
-  no_of_enrolled: number;
-  id: number;
+  id: string;
+  no_of_enrolled: string;
 }
 
 function ViewAllCourses() {

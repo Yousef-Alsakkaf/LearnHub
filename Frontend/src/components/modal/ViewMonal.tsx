@@ -1,35 +1,33 @@
-import React from "react";
 
-interface ModalProps {
+interface BookModalProps {
   isVisible: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  children: any;
 }
 
-const ViewModal: React.FC<ModalProps> = ({ isVisible, onClose, children }: ModalProps) => {
+const BookModal = ({ isVisible, onClose, children }: BookModalProps) => {
   if (!isVisible) return null;
 
   const handleClose = (e: any) => {
     if (e.target.id === "wrapper") onClose();
   };
-
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center lg:ml-[200px]"
+      className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
       id="wrapper"
       onClick={handleClose}
     >
-      <div className="bg-white p-4 rounded-lg relative" style={{ width: '70%', height: '80%' }}>
+      <div className="w-[600px] flex flex-col">
         <button
-          className="text-gray-600 text-xl absolute top-2 right-2"
+          className="text-white text-xl place-self-end"
           onClick={() => onClose()}
         >
           X
         </button>
-        {children}
+        <div className="bg-white p-2 rounded">{children}</div>
       </div>
     </div>
   );
 };
 
-export default ViewModal;
+export default BookModal;
