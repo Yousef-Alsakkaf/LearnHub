@@ -12,7 +12,7 @@ const app = express();
 const DBRouter = new DatabaseRouter();
 const webServer = http.createServer(app);
 const logger = new WinstonLogger();
-const email = new emailProvider("learnhub@resend.dev", "re_2HDtRDrg_KMGDUJZtH7oQZJnRPjfBruA3");
+const email = new emailProvider("learnhub84@gmail.com", "ougm jpou gxat gsrz");
 
 const io = new Server(webServer, {
   cors: {
