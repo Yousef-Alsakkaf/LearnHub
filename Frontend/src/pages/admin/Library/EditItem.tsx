@@ -18,7 +18,7 @@ type Book = {
     type: string;
     no_of_pages: number;
     isbn: string;
-    rack: number;
+    rack: string;
   };
 type BookModalProps = {
     isVisible: boolean;
@@ -30,6 +30,7 @@ const EditItem: React.FC<BookModalProps> = ({
     onClose,
     selectedBook,
   }) => {
+    
     let [updateData, setUpdateData] = useState({
         title: selectedBook?.title,
         author: selectedBook?.author,
@@ -86,7 +87,7 @@ const EditItem: React.FC<BookModalProps> = ({
         updateData.year_of_prod = Number(updateData.year_of_prod);
         updateData.no_of_pages = Number(updateData.no_of_pages);
         updateData.price = Number(updateData.price);
-        updateData.rack = Number(updateData.rack);
+        updateData.rack = updateData.rack?.toString();
       
         console.log("this is what the update request get when updating", updateData);
         socket.emit("update-book", updateData);

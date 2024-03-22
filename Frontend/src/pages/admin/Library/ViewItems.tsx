@@ -9,24 +9,22 @@ import EditItem from "./EditItem";
 
 type Book = {
   id: number;
-  image: string;
-  genre: string;
-  title: string;
-  copies: number;
-  author: string;
-  barcode: number;
-  language: string;
-  year_of_prod: number;
-  publisher: string;
-  subjects: string;
-  price: number;
-  type: string;
-  no_of_pages: number;
-  isbn: string;
-  rack: number;
-  editor: string;
-  edition_num: number;
-  quantity: number;
+    image: string;
+    genre: string;
+    title: string;
+    copies: number;
+    author: string;
+    barcode: number;
+    language: string;
+    year_of_prod: number;
+    publisher: string;
+    subjects: string;
+    price: number;
+    type: string;
+    no_of_pages: number;
+    isbn: string;
+    rack: string;
+
 };
 
 function ViewItems() {
