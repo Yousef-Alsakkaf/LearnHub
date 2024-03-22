@@ -16,7 +16,7 @@ type Book = {
   type: string;
   no_of_pages: number;
   isbn: string;
-  rack: number;
+  rack: string;
   editor: string;
   edition_num: number;
   quantity: number;

@@ -87,7 +87,8 @@ const EditItem: React.FC<BookModalProps> = ({
         updateData.year_of_prod = Number(updateData.year_of_prod);
         updateData.no_of_pages = Number(updateData.no_of_pages);
         updateData.price = Number(updateData.price);
-        updateData.rack = updateData.rack?.toString();
+        updateData.rack = (updateData.rack)?.toString();
+        
       
         console.log("this is what the update request get when updating", updateData);
         socket.emit("update-book", updateData);
