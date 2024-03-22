@@ -24,17 +24,15 @@ const command = new ServerCommandBuilder("handle-application")
 async function callback({ Client,Data,Database,EmailProvider }: CommandExecuteArguments) {
     try {
         const{id,response} = Data;
-    if(response){
         let application:any = await Database.executeQuery('SELECT * FROM requests WHERE id = ?', [id]);
         application = application[0];
-        console.log(application);
+    if(response){
         let password = uuid();
         password=password.substring(0,8);
-        console.log(password)
         const UID=await Database.generateUID("student"); 
-        console.log(UID);  
         await Database.executeQuery('INSERT INTO users(username, password, fName, lName, UID, type, email) Values (?,?,?,?,?,?,?)',[application?.username, password, application?.fName, application?.lName,UID,"student", application?.email]);
-        await EmailProvider.sendEmail({to:[ application?.email], subject: "Application Accepted", htmlContent: `Congratulations! Your application has been accepted. Your username is ${application?.username} your password is ${password} Your id is ${UID}. Please login to your account and change your password.`});
+        await EmailProvider.sendEmail({to:[ application?.email], subject: "Application Accepted", text: `Congratulations! Your application has been accepted. Your username is ${application?.username} your password is ${password} Your id is ${UID}. Please login to your account and change your password.`});
+        await Database.executeQuery('DELETE FROM requests WHERE id = ?', [id]);
         return{
             notification: {
             type: "success",
@@ -44,7 +42,7 @@ async function callback({ Client,Data,Database,EmailProvider }: CommandExecuteAr
         }
     }
     else{
-        //email the student that they got rejected
+        await EmailProvider.sendEmail({to:[ application?.email], subject: "Application Rejected", text: `We are sorry' your application has been rejected.`})
         await Database.executeQuery('DELETE FROM request WHERE id = ?', [id]);
         
     }
@@ -52,6 +50,15 @@ async function callback({ Client,Data,Database,EmailProvider }: CommandExecuteAr
         
     } catch (error) {
         console.log(error); 
+        if(error.code === 'ER_DUP_ENTRY'){
+            return{
+                notification: {
+                type: "error",
+                message: "an account with the same username already exists!",
+                },
+                error: true,
+            }
+        }
         return{
             notification: {
             type: "error",

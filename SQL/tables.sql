@@ -93,3 +93,14 @@ sender_id INT,
 FOREIGN KEY (course_id) REFERENCES courses(id),
 FOREIGN KEY (sender_id) REFERENCES users(id)
 );
+
+CREATE TABLE `requests` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `username` varchar(50),
+  `email` varchar(50),
+  `major` varchar(50),
+  `fName` varchar(50),
+  `lName` varchar(50),
+  `letter` varchar(255),
+  FOREIGN KEY (`major`) REFERENCES `majors` (`name`)
+)auto_increment=1;
