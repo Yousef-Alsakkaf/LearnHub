@@ -27,7 +27,7 @@ type Book = {
 
 function ViewRequestedItems() {
   return (
-    <Library>
+    <Library name="ViewRequestedItems">
       <div className="m-5">
         {books.map((book) => (
           <div
@@ -79,13 +79,13 @@ function ViewRequestedItems() {
                 </div>
                 <a
                   href="#"
-                  className="my-5 rounded-md px-5 py-2 text-center transition hover:scale-105 bg-orange-600 text-white sm:ml-auto"
+                  className="my-5 rounded-md px-5 py-2 text-center transition hover:scale-105 bg-green-600 text-white sm:ml-auto"
                 >
                   Accept
                 </a>
                 <a
                   href="#"
-                  className="my-5 rounded-md px-5 py-2 text-center transition hover:scale-105 bg-orange-600 text-white sm:ml-auto"
+                  className="my-5 rounded-md px-5 py-2 text-center transition hover:scale-105 bg-red-600 text-white sm:ml-auto"
                 >
                   Reject
                 </a>

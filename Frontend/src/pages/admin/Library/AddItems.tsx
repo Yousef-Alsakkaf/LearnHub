@@ -3,7 +3,7 @@ import Library from "../../../templates/library/Library";
 
 function AddItems() {
   return (
-    <Library>
+    <Library name="AddItems">
       <div className="pt-4 div" data-name="add-book-admin">
         <h1 className="py-2 text-2xl font-semibold">
           Book management settings
