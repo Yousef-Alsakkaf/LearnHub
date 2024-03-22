@@ -66,10 +66,10 @@ export const sidebarAdminItems = [
     text: "Announcements",
     key: "announcement",
   },
-  // {
-  //   path: "/admin/TasksYaman",
-  //   icon: <MdOutlineManageSearch size={18} />,
-  //   text: "To do list",
-  //   key: "todo",
-  // },
+  {
+    path: "/admin/TasksYaman",
+    icon: <MdOutlineManageSearch size={18} />,
+    text: "To do list",
+    key: "todo",
+  },
 ];
