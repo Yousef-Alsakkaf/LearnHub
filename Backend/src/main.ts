@@ -6,13 +6,13 @@ import Client from "../Components/Client/Client.js";
 import CommandRouter from "../Applications/Commands/Router.js";
 import DatabaseRouter from "../Applications/Database/Router.js";
 import { WinstonLogger } from "../Applications/Logger/WinstonLogger.js";
-import emailProvider from "Applications/Email/emailProvider.js";
+import emailProvider from "../Applications/Email/emailProvider.js";
 
 const app = express();
 const DBRouter = new DatabaseRouter();
 const webServer = http.createServer(app);
 const logger = new WinstonLogger();
-const email = new emailProvider("learnhub@updates.com", "re_2HDtRDrg_KMGDUJZtH7oQZJnRPjfBruA3");
+const email = new emailProvider("learnhub@resend.dev", "re_2HDtRDrg_KMGDUJZtH7oQZJnRPjfBruA3");
 
 const io = new Server(webServer, {
   cors: {
