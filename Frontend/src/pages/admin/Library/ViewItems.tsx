@@ -5,6 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import socket from "../../../socket";
 import ViewItem from "./ViewItem";
+import EditItem from "./EditItem";
 
 type Book = {
   id: number;
@@ -32,6 +33,7 @@ function ViewItems() {
   const [books, setBooks] = useState<Book[]>([]);
 
  const [showModal, setShowModal] = useState(false);
+ const [showKhra, setShowKhra] = useState(false);
  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   useEffect(() => {
@@ -85,7 +87,14 @@ function ViewItems() {
                   >
                     View
                   </a>
-                  <EditIcon style={{ color: "blue", marginLeft: "10px", cursor: "pointer" }} />
+                  <EditIcon 
+                  onClick={() => {
+                    setShowKhra(true)
+                    setSelectedBook(book)
+                  }}
+                  style={{ color: "blue", marginLeft: "10px", cursor: "pointer" }} 
+                 
+                  />
                   <DeleteIcon
                     onClick={() => {
                       if (window.confirm("Are you sure you want to delete this book?")) {
@@ -103,6 +112,7 @@ function ViewItems() {
         )}
       </div>
       < ViewItem isVisible={showModal} selectedBook={selectedBook} onClose={() => setShowModal(false)} />
+        < EditItem isVisible={showKhra} selectedBook={selectedBook} onClose={() => setShowKhra(false)}/>
     </Library>
   );
 }
