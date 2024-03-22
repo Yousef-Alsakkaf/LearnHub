@@ -2,7 +2,7 @@ import { MdOutlineLogout, MdOutlineSettings } from "react-icons/md";
 
 export const studentMenuItems = [
   {
-    path: "/",
+    path: "/student/settings",
     icon: <MdOutlineSettings size={20} />,
     text: "Settings",
     key: "settings",
