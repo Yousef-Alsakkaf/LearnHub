@@ -60,6 +60,9 @@ const DataTable = () => {
         socket.on("get-leaderboard-response", (response)=> {
         setRows(response);
         })
+        return () => {
+          socket.off("get-leaderboard-response");
+        }
       })
       
     //   const rows = [
