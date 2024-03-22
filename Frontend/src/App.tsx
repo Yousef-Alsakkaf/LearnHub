@@ -10,6 +10,7 @@ import "./App.scss";
 import Global from "./routes/global/Global";
 import Student from "./routes/student/Student";
 import Instructor from "./routes/Instructor/Instructor";
+import { AuthProvider } from "./context/AuthProvider";
 
 function App() {
   return (
@@ -17,12 +18,15 @@ function App() {
       <BrowserRouter>
         <ThemeProvider>
           <SidebarProvider>
+            <AuthProvider>
             <Routes>
               {Global()}
               {Student()}
               {Admin()}
               {Instructor()}
+              
             </Routes>
+            </AuthProvider>
           </SidebarProvider>
         </ThemeProvider>
       </BrowserRouter>
