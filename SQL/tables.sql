@@ -19,7 +19,7 @@ FOREIGN KEY (`id`) REFERENCES `users` (`id`)
 
 CREATE TABLE `courses` (
   `id` INT AUTO_INCREMENT PRIMARY KEY ,
-  `Name` varchar(50),
+  `title` varchar(50),
   `course_code` VARCHAR(10),
   `academic_year` YEAR
 );
@@ -76,14 +76,13 @@ CREATE TABLE `requests` (
 );
 
 CREATE TABLE `Logs` (
-  `logId` int,
+  `logId` INT AUTO_INCREMENT PRIMARY KEY,
   `event` varchar(20),
   `details` varchar(255),
   `initiator` int,
   `date` date,
-  PRIMARY KEY (`logId`),
   FOREIGN KEY (`initiator`) REFERENCES `users`(`id`)
-);
+)AUTO_INCREMENT=1;
 
 CREATE TABLE announcments(
 id INT AUTO_INCREMENT PRIMARY KEY,
