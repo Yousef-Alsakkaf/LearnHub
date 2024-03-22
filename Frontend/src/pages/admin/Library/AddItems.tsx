@@ -1,7 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import Library from "../../../templates/library/Library";
+import socket from "../../../socket";
 
 function AddItems() {
+  const [formDataObject, setFormData] = useState({
+    title: "",
+    author: "",
+    language: "",
+    year_of_prod: 0,
+    publisher: "",
+    subjects: "",
+    no_of_pages: 0,
+    price: 0,
+    rack: 0,
+    image: "",
+
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formDataObject, [name]: value });
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const title = formData.get("title") as string;
+    const author = formData.get("author") as string;
+    const language = formData.get("language") as string;
+    const year_of_prod = formData.get("year_of_prod") as string;
+    const publisher = formData.get("publisher") as string;
+    const subjects = formData.get("subjects") as string;
+    const no_of_pages = formData.get("no_of_pages") as string;
+    const price = formData.get("price") as string;
+    const rack = formData.get("rack") as string;
+    const image = formData.get("image") as string;
+    
+
+    if (
+      !title ||
+      !author ||
+      !language ||
+      !year_of_prod ||
+      !publisher ||
+      !subjects ||
+      !no_of_pages ||
+      !price ||
+      !rack ||
+      !image 
+     
+    ) {
+      console.log("fields' values are missing");
+      return;
+    }
+    console.log(formDataObject);
+    formDataObject.price = Number(formDataObject.price);
+    formDataObject.no_of_pages = Number(formDataObject.no_of_pages);
+    formDataObject.year_of_prod = Number(formDataObject.year_of_prod);
+    formDataObject.rack = Number(formDataObject.rack);
+
+    console.log(formDataObject);
+    socket.emit("add-book", formDataObject);
+
+    socket.once("add-book-response", (response) => {
+      console.log(
+        "This is the response that I am getting from add-book",
+        response
+      );
+    });
+  };
   return (
     <Library name="AddItems">
       <div className="pt-4 div" data-name="add-book-admin">
@@ -13,7 +80,7 @@ function AddItems() {
         <h3 className="text-xl font-semibold text-gray-900 mb-5">
           Add New Book
         </h3>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="title"
@@ -26,6 +93,7 @@ function AddItems() {
               id="title"
               name="title"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
           {/* author */}
@@ -42,6 +110,7 @@ function AddItems() {
               id="author"
               name="author"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -58,6 +127,7 @@ function AddItems() {
               id="language"
               name="language"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -75,6 +145,7 @@ function AddItems() {
               id="year_of_prod"
               name="year_of_prod"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -92,6 +163,7 @@ function AddItems() {
               id="publisher"
               name="publisher"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -109,6 +181,7 @@ function AddItems() {
               id="subjects"
               name="subjects"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -126,6 +199,7 @@ function AddItems() {
               id="no_of_pages"
               name="no_of_pages"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -143,6 +217,7 @@ function AddItems() {
               id="price"
               name="price"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -160,6 +235,7 @@ function AddItems() {
               id="rack"
               name="rack"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
@@ -177,24 +253,11 @@ function AddItems() {
               id="image"
               name="image"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChange}
             />
           </div>
 
-          {/* isbn */}
-          <div className="mb-4">
-            <label
-              htmlFor="isbn"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              ISBN
-            </label>
-            <input
-              type="text"
-              id="isbn"
-              name="isbn"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
+         
 
           <div className="mb-4 button">
             <button

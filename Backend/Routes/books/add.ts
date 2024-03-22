@@ -18,7 +18,7 @@ const command = new ServerCommandBuilder("add-book")
             subjects: {type: "string"},
             no_of_pages: {type: "number"},
             price: {type: "number"},
-            rack: {type: "string"},
+            rack: {type: "number"},
             image: {type: "string"},
         },required: ["title", "author", "language", "year_of_prod", "publisher", "subjects", "no_of_pages", "price", "rack", "image"]       
       })
@@ -30,7 +30,7 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
     const { title, author,language, year_of_prod, publisher, subjects, no_of_pages, price, rack, image } = Data;
     const user = Client.getName();
     const id= Client.getId();
-    await Database.executeQuery('INSERT INTO books (title, author, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, borrower, image) VALUES (?,?,?,?,?,?,?,?,?,?)',[title, author, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, image]);
+    await Database.executeQuery('INSERT INTO books (title, author, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, image) VALUES (?,?,?,?,?,?,?,?,?,?)',[title, author, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, image]);
     await Database.createLog({ event: "Add book", details: `User ${user} added book ${title}`, initiator:id });
     return {
         notification: {
