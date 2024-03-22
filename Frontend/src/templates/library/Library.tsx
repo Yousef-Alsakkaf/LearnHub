@@ -35,12 +35,7 @@ function Library({ children, name }: SettingsProps) {
 
             <li className={`cursor-pointer ${name == "AddItems" ? "border-l-2 border-l-blue-700" : ""} px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white`}>
               <Link className="pt-5 pb-5" to="/admin/AddItems">
-                Add Books
-              </Link>
-            </li>
-            <li className={`cursor-pointer ${name == "ViewRequestedItems" ? "border-l-2 border-l-blue-700" : ""} px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white`}>
-              <Link className="pt-5 pb-5" to="/admin/ViewRequestedItems">
-                View Requested Books
+                Add Book
               </Link>
             </li>
           </ul>
@@ -63,16 +58,7 @@ function Library({ children, name }: SettingsProps) {
               } border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700`}
             >
               <Link className="pt-5 pb-5" to="/admin/AddItems">
-                Add Books
-              </Link>
-            </li>
-            <li
-              className={`mt-5 cursor-pointer block ${
-                name == "ViewRequestedItems" ? "border-l-2 border-l-blue-700" : ""
-              } border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700`}
-            >
-              <Link className="pt-5 pb-5" to="/admin/ViewRequestedItems">
-                View Requested Books
+                Add Book
               </Link>
             </li>
           </ul>
