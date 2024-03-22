@@ -9,7 +9,7 @@ const command = new ServerCommandBuilder("update-book")
   .setIncomingValidationSchema({
         type: "object",
         additionalProperties: false,
-        //title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, borrower, image
+  
         properties: {
             title: {type: "string"},
             author: {type: "string"},
@@ -21,19 +21,18 @@ const command = new ServerCommandBuilder("update-book")
             no_of_pages: {type: "number"},
             price: {type: "number"},
             rack: {type: "string"},
-            borrower: {type: "string"},
             image: {type: "string"},
-        },required: ["title", "author", "barcode", "language", "year_of_prod", "publisher", "subjects", "no_of_pages", "price", "rack", "borrower", "image"]   
+        },required: ["title", "author", "barcode", "language", "year_of_prod", "publisher", "subjects", "no_of_pages", "price", "rack", "image"]   
       })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-    const { title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, borrower, image } = Data;
+    const { title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, image } = Data;
     const user = Client.getName();
     const id= Client.getId();
-    await Database.executeQuery(`UPDATE books SET title=?, author=?, barcode=?, language=?, year_of_prod=?, publisher=?, subjects=?, no_of_pages=?, price=?, rack=?, borrower=?, image=? WHERE barcode=?`,[title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, borrower, image, barcode])
+    await Database.executeQuery(`UPDATE books SET title=?, author=?, barcode=?, language=?, year_of_prod=?, publisher=?, subjects=?, no_of_pages=?, price=?, rack=?, image=? WHERE barcode=?`,[title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, image, barcode])
     await Database.createLog({ event: "Add book", details: `User ${user} added book ${title}`, initiator:id });
     return {
         notification: {
