@@ -11,21 +11,46 @@ import Global from "./routes/global/Global";
 import Student from "./routes/student/Student";
 import Instructor from "./routes/Instructor/Instructor";
 import { AuthProvider } from "./context/AuthProvider";
+import socket from "./socket";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [isConnected, setIsConnected] = useState(socket.connected);
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server!");
+      setIsConnected(true);
+    });
+
+    socket.on("disconnect", () => setIsConnected(false));
+
+    // Clean up the event listeners when the component is unmounted
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+    };
+  }, []);
+
+  if (!isConnected) {
+    return (
+      <div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <BrowserRouter>
         <ThemeProvider>
           <SidebarProvider>
             <AuthProvider>
-            <Routes>
-              {Global()}
-              {Student()}
-              {Admin()}
-              {Instructor()}
-              
-            </Routes>
+              <Routes>
+                {Global()}
+                {Student()}
+                {Admin()}
+                {Instructor()}
+              </Routes>
             </AuthProvider>
           </SidebarProvider>
         </ThemeProvider>
@@ -33,4 +58,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
