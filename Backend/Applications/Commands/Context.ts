@@ -1,5 +1,6 @@
 import Client from "Components/Client/Client.js"
 import { Database } from "Applications/Database/Database.js"
+import emailProvider from "Applications/Email/emailProvider.js"
 enum UserAccessLevels {
     UNAUTHENTICATED = 0,
     STUDENT = 1,
@@ -31,6 +32,7 @@ type CommandExecuteArguments = {
     Client?: Client,
     Data?: any,
     Database?: Database
+    EmailProvider?: emailProvider
 }
 
 export {
