@@ -1,155 +1,240 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ViewModal from "../../components/modal/ViewMonal";
+import socket from "../../socket";
 
-interface CourseInfo {
+interface Course {
   title: string;
   description: string;
-  no_of_enrolled: number;
+  image: string;
+  academic_year: string;
+  course_code: string;
+  id: string;
+  no_of_enrolled: string;
 }
-function CoursesInfo() {
+interface Props {
+  courses: Course | null;
+  isVisible: boolean;
+  onClose: () => void;
+}
+function CoursesInfo({ courses, isVisible, onClose }: Props) {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+
+  console.log("This is the course", courses);
+  let [updateData, setUpdateData] = useState({
+    title: courses?.title,
+    description: courses?.description,
+    academic_year: courses?.academic_year,
+    course_code: courses?.course_code,
+    id: courses?.id,
+    image: courses?.image,
+  });
+
+
+  const handleUpdatingData = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setUpdateData({
+      title: courses?.title,
+    description: courses?.description,
+    academic_year: courses?.academic_year,
+    course_code: courses?.course_code,
+    id: courses?.id,
+    image: courses?.image,
+    })
+    console.log("title", updateData.title);
+    console.log("description", updateData.description);
+    console.log("academic_year", updateData.academic_year);
+    console.log("course_code", updateData.course_code);
+    console.log("fields' values are missing");
+    console.log("This is the data to be updated", updateData);
+    if(updateData.academic_year && updateData.id) {
+      updateData.academic_year = updateData.academic_year?.toString();
+     
+    }
+    
+    socket.emit("edit-course", updateData);
+
+    socket.once("edit-course-response", (response) => {
+      console.log(
+        "This is the response from the edit-course command",
+        response
+      );
+
+      setShowModal(false);
+    });
+  };
+
+  const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdateData({
+      ...updateData,
+      [event.target.name]: event.target.value,
+    });
+  }
+
   return (
-    <ViewModal
-    isVisible={false}
-    onClose={() => {}}
-    >
-      <div className="flex flex-col h-screen">
-        <div className="flex-grow overflow-hidden">
-        <div className="mx-auto max-w-screen-lg px-3 py-10">
-          <div className="space-y-3">
-            <h1 className="text-3xl font-semibold">
-              here is where the title is rendered
-            </h1>
-            <p className="">here is where the description is rendered</p>
+    <>
+      <ViewModal isVisible={isVisible} onClose={onClose}>
+        {courses && (
+          <div
+            className="p-6"
+            style={{ maxHeight: "500px", overflowY: "auto" }}
+          >
+            <h3 className="text-xl font-semibold text-gray-900 mb-5">
+              Course Info
+            </h3>
 
-            <ul className="flex gap-4">
-              <li className="flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mr-2 w-4 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </li>
-            </ul>
+            <div className="mb-4">
+              <label
+                htmlFor="title"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Title
+              </label>
+              <p>{courses.title}</p>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="description"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                description
+              </label>
+              <p>{courses.description}</p>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="barcode"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Academic year
+              </label>
+              <p>{courses.academic_year}</p>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="language"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                course_id
+              </label>
+              <p>{courses.course_code}</p>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="year_of_prod"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Number of enrolled students
+              </label>
+              <p>{courses.no_of_enrolled}</p>
+            </div>
+
+            <div className="mb-4 button">
+              <button
+                type="submit"
+                className="hover:bg-green-700 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test"
+                onClick={() => {
+                  setShowModal(true);
+                  setSelectedCourse(courses);
+                }}
+              >
+                Update
+              </button>
+            </div>
           </div>
+        )}
+      </ViewModal>
+      <ViewModal onClose={() => setShowModal(false)} isVisible={showModal}>
+        <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" }}>
+          <h3 className="text-xl font-semibold text-gray-900 mb-5">
+            Update a course
+          </h3>
+          <form onSubmit={handleUpdatingData}>
+            <div className="mb-4">
+              <label
+                htmlFor="title"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                defaultValue={selectedCourse ? selectedCourse.title : ""}
+                onChange={handleUpdate}
+              />
+            </div>
 
-          <div className="mt-10 bg-white py-2">
-  <nav className="flex justify-center gap-4">
-    <a
-      href="#"
-      className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-purple-600 hover:text-purple-600"
-    >
-      Announcements
-    </a>
+            <div className="mb-4">
+              <label
+                htmlFor="author"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                description
+              </label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                onChange={handleUpdate}
+                defaultValue={selectedCourse?.description}
+              />
+            </div>
 
-    <a
-      href="#"
-      className="inline-flex whitespace-nowrap border-b-2 border-transparent border-b-purple-600 py-2 px-3 text-sm font-semibold text-purple-600 transition-all duration-200 ease-in-out"
-    >
-      Curriculum
-    </a>
+            <div className="mb-4">
+              <label
+                htmlFor="academic_year"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                academic_year
+              </label>
+              <input
+                type="text"
+                id="academic_year"
+                name="academic_year"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                onChange={handleUpdate}
+                defaultValue={selectedCourse?.academic_year}
+              />
+            </div>
 
-    <a
-      href="#"
-      className="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-purple-600 hover:text-purple-600"
-    >
-      Roster
-    </a>
-  </nav>
-</div>
+            <div className="mb-4">
+              <label
+                htmlFor="course_code"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                course_code
+              </label>
+              <input
+                type="text"
+                id="course_code"
+                name="course_code"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                onChange={handleUpdate}
+                defaultValue={selectedCourse?.course_code}
+              />
+            </div>
 
-
-          <ul className="mt-2 space-y-4">
-   <li className="text-left">
-      <label htmlFor="accordion-2" className="relative flex flex-col rounded-md border border-gray-100 shadow-md">
-        <input className="peer hidden" type="checkbox" id="accordion-2" />
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-0 top-4 ml-auto mr-5 h-4 text-gray-500 transition peer-checked:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-        <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-          <h3 className="text-base font-bold text-gray-600 lg:text-base">blank for now</h3>
+            <div className="mb-4">
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Update
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-          
-          
-            <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-            
-            </ul>
-          
-        </div>
-      </label>
-    </li>
-    <li className="text-left">
-      <label htmlFor="accordion-2" className="relative flex flex-col rounded-md border border-gray-100 shadow-md">
-        <input className="peer hidden" type="checkbox" id="accordion-2" />
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-0 top-4 ml-auto mr-5 h-4 text-gray-500 transition peer-checked:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-        <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-          <h3 className="text-base font-bold text-gray-600 lg:text-base">blank</h3>
-        </div>
-        <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-          
-          
-            <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-            
-            </ul>
-          
-        </div>
-      </label>
-    </li>
-    <li className="text-left">
-      <label htmlFor="accordion-3" className="relative flex flex-col rounded-md border border-gray-100 shadow-md">
-        <input className="peer hidden" type="checkbox" id="accordion-3" />
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-0 top-4 ml-auto mr-5 h-4 text-gray-500 transition peer-checked:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-        <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-          <h3 className="text-base font-bold text-gray-600 lg:text-base">blank</h3>
-        </div>
-        <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-          
-          
-            <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-             
-            </ul>
-          
-        </div>
-      </label>
-    </li>
-    <li className="text-left">
-      <label htmlFor="accordion-4" className="relative flex flex-col rounded-md border border-gray-100 shadow-md">
-        <input className="peer hidden" type="checkbox" id="accordion-4" />
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-0 top-4 ml-auto mr-5 h-4 text-gray-500 transition peer-checked:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-        <div className="relative ml-4 cursor-pointer select-none items-center py-4 pr-2">
-          <h3 className="text-base font-bold text-gray-600 lg:text-base">blank</h3>
-        </div>
-        <div className="max-h-0 overflow-hidden transition-all duration-500 peer-checked:max-h-96">
-          
-          
-            <ul className="space-y-1 font-semibold text-gray-600 mb-6">
-              
-            </ul>
-          
-        </div>
-      </label>
-    </li>
-  </ul>
-        </div>
-        </div>
-        
-      </div>
-    </ViewModal>
+      </ViewModal>
+    </>
   );
 }
 
