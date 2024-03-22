@@ -11,6 +11,7 @@ import {
 import { createValidationService } from "../Validation/Validation.js";
 import Client from "../../Components/Client/Client.js";
 import { Logger } from "Applications/Logger/Logger.js";
+import emailProvider from "Applications/Email/emailProvider.js";
 
 class CommandRouter {
   private Command: Command;
@@ -21,6 +22,7 @@ class CommandRouter {
   private Database: any;
   private CommandExecutionFunction: Function;
   private Logger: Logger;
+  private email: emailProvider;
 
   constructor(
     Command: Command,
@@ -28,7 +30,8 @@ class CommandRouter {
     Client: Client,
     Data: any,
     DBRouter: any,
-    Logger: Logger
+    Logger: Logger,
+    email: emailProvider
   ) {
     this.Command = Command;
     this.Socket = Socket;
@@ -37,6 +40,7 @@ class CommandRouter {
     this.ValidationService = createValidationService();
     this.Logger = Logger;
     this.CommandExecutionFunction = Command.getCommand();
+    this.email = email;
     this.Database = DBRouter.getRoutedDatabaseConnection(
       Client.getAccessLevel().toString()
     );
@@ -109,6 +113,7 @@ class CommandRouter {
       Client: this.Client,
       Data: this.Data,
       Database: this.Database,
+      EmailProvider: this.email
     };
 
     return await this.CommandExecutionFunction(ExecuteArguments);

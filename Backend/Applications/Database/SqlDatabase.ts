@@ -49,7 +49,6 @@ class MySqlDB implements Database {
     return results[0];
   }
 
-
   async authenticateUser({ username, password }: { username: string; password: string }): Promise<Object> {
     let result = await this.connection.execute(`SELECT * FROM users WHERE username=? AND password=?`, [username, password]);
 

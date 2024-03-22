@@ -6,11 +6,13 @@ import Client from "../Components/Client/Client.js";
 import CommandRouter from "../Applications/Commands/Router.js";
 import DatabaseRouter from "../Applications/Database/Router.js";
 import { WinstonLogger } from "../Applications/Logger/WinstonLogger.js";
+import emailProvider from "Applications/Email/emailProvider.js";
 
 const app = express();
 const DBRouter = new DatabaseRouter();
 const webServer = http.createServer(app);
 const logger = new WinstonLogger();
+const email = new emailProvider("learnhub@updates.com", "re_2HDtRDrg_KMGDUJZtH7oQZJnRPjfBruA3");
 
 const io = new Server(webServer, {
   cors: {
@@ -27,7 +29,7 @@ io.on("connection", (socket) => {
       return console.error(`Command not found! ${event}`);
     }
    
-    new CommandRouter(commands[event], socket, client, args, DBRouter, logger).route();
+    new CommandRouter(commands[event], socket, client, args, DBRouter, logger, email).route();
   });
 
   socket.on("disconnect", () => {
