@@ -33,6 +33,7 @@ function ViewItems() {
 
  const [showModal, setShowModal] = useState(false);
  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+
   useEffect(() => {
     socket.emit("get-books");
     console.log("sending")
@@ -50,6 +51,10 @@ function ViewItems() {
     setBooks(books.filter((book) => book.barcode !== barcode));
 
     socket.emit("delete-book", { barcode });
+    socket.on("delete-book-response", (response) => {
+      console.log(response);
+    
+    })
   };
 
   return (
