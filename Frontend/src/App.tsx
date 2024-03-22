@@ -12,6 +12,7 @@ import Student from "./routes/student/Student";
 import Instructor from "./routes/Instructor/Instructor";
 import { AuthProvider } from "./context/AuthProvider";
 import socket from "./socket";
+import { NotificationProvider } from "./context/NotificationProvider";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -33,10 +34,7 @@ function App() {
   }, []);
 
   if (!isConnected) {
-    return (
-      <div>
-      </div>
-    );
+    return <div></div>;
   }
 
   return (
@@ -45,6 +43,7 @@ function App() {
         <ThemeProvider>
           <SidebarProvider>
             <AuthProvider>
+              <NotificationProvider />
               <Routes>
                 {Global()}
                 {Student()}
