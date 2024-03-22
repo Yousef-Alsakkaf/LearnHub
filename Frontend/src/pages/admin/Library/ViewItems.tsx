@@ -4,6 +4,7 @@ import { ViewAllItems } from "../../../temp/ViewAllItems";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import socket from "../../../socket";
+import ViewItem from "./ViewItem";
 
 type Book = {
   id: number;
@@ -30,6 +31,8 @@ type Book = {
 function ViewItems() {
   const [books, setBooks] = useState<Book[]>([]);
 
+ const [showModal, setShowModal] = useState(false);
+ const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   useEffect(() => {
     socket.emit("get-books");
     console.log("sending")
@@ -69,7 +72,12 @@ function ViewItems() {
                   <i className="fa-solid fa-star-half-stroke"></i>
                 </div>
                 <div className="actionButtons mt-2">
-                  <a href="#" className="borrowBtn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-transform duration-300 ease-in-out transform hover:scale-105">
+                  <a href="#" className="borrowBtn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-transform duration-300 ease-in-out transform hover:scale-105"
+                  onClick={() => {
+                    setShowModal(true)
+                    setSelectedBook(book)
+                  }}
+                  >
                     View
                   </a>
                   <EditIcon style={{ color: "blue", marginLeft: "10px", cursor: "pointer" }} />
@@ -89,6 +97,7 @@ function ViewItems() {
           <p>No books found.</p>
         )}
       </div>
+      < ViewItem isVisible={showModal} selectedBook={selectedBook} onClose={() => setShowModal(false)} />
     </Library>
   );
 }

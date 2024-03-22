@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
- 
-} from "@mui/material";
+import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import { BiSun, BiMoon } from "react-icons/bi";
 // import '../../App.scss'
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 import socket from "../../socket";
-
 import { useNavigate } from "react-router-dom";
+
 interface UserData {
   UID: string;
   accessToken: string;
@@ -30,13 +23,13 @@ interface UserData {
 
 const LoginPage = () => {
   const [isDark, setIsDark] = useLocalStorage("isDark", false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const controls = useAnimation();
 
+  const controls = useAnimation();
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -48,10 +41,11 @@ const LoginPage = () => {
 
   const handleAuthentication = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log( {
+    console.log({
       username: formData.username,
       password: formData.password,
-    })
+    });
+
     socket.emit("authenticate", {
       username: formData.username,
       password: formData.password,
@@ -59,13 +53,15 @@ const LoginPage = () => {
 
     socket.on("authenticate-response", (response: UserData) => {
       if (response.type === "student") {
-        console.log('entered')
-        navigate('/student');
-      } else if(response.type === "admin") {
-        navigate('/admin');
-      } else if(response.type === "instructor"){
-        navigate('/instructor');
+        console.log("entered");
+        navigate("/student");
+      } else if (response.type === "admin") {
+        navigate("/admin");
+      } else if (response.type === "instructor") {
+        navigate("/instructor");
       }
+
+      localStorage.setItem("accessToken", response.accessToken);
     });
   };
 
@@ -82,16 +78,8 @@ const LoginPage = () => {
         data-theme={isDark ? "dark" : "light"}
       >
         <Container maxWidth="sm">
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={controls}
-            transition={{ duration: 0.5 }}
-          >
-            <Typography
-              variant="h4"
-              gutterBottom
-              color={isDark ? "whitesmoke" : ""}
-            >
+          <motion.div initial={{ opacity: 0, y: -50 }} animate={controls} transition={{ duration: 0.5 }}>
+            <Typography variant="h4" gutterBottom color={isDark ? "whitesmoke" : ""}>
               Login
             </Typography>
             <form onSubmit={handleAuthentication}>
@@ -124,31 +112,15 @@ const LoginPage = () => {
                 }}
               />
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                fullWidth
-                style={{ marginTop: "20px" }}
-              >
+              <Button type="submit" variant="contained" color="primary" size="large" fullWidth style={{ marginTop: "20px" }}>
                 Login
               </Button>
               <Box mt={2}>
-                <Link to="#">
-                  Forgot Password?
-                </Link>
+                <Link to="#">Forgot Password?</Link>
               </Box>
               <Box mt={2}>
-                <Typography
-                  variant="body2"
-                  color={isDark ? "whitesmoke" : "textSecondary"}
-                  align="center"
-                >
-                  Don't have an account?{" "}
-                  <Link to="/signup" >
-                    Sign Up
-                  </Link>
+                <Typography variant="body2" color={isDark ? "whitesmoke" : "textSecondary"} align="center">
+                  Don't have an account? <Link to="/signup">Sign Up</Link>
                 </Typography>
               </Box>
             </form>
@@ -171,11 +143,7 @@ const LoginPage = () => {
             cursor: "pointer",
           }}
         >
-          {isDark ? (
-            <BiSun size={24} color={isDark ? "#FFFFF0" : ""} />
-          ) : (
-            <BiMoon size={24} />
-          )}
+          {isDark ? <BiSun size={24} color={isDark ? "#FFFFF0" : ""} /> : <BiMoon size={24} />}
         </button>
       </Box>
     </>
