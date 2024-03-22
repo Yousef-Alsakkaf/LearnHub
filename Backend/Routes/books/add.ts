@@ -2,7 +2,6 @@ import { error } from "ajv/dist/vocabularies/applicator/dependencies.js";
 import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
 
-
 const command = new ServerCommandBuilder("add-book")
   .setAccessLevel(UserAccessLevels.ADMIN)
   .setOutgoingChannel("add-book-response")
