@@ -1,5 +1,5 @@
 import React from 'react'
-import "../../../styles/AdminDashBoard.css"
+import "../../../styles/AdminDashBoard.scss"
 import TopBox from './topBox'
 import ChartBox2 from "./ChartBox2"
 import ChartBox3 from "./ChartBox3"
