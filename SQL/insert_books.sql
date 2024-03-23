@@ -1,4 +1,4 @@
-INSERT INTO books (title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, borrower, image)
+	INSERT INTO books (title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, borrower, image)
 VALUES 
 ('The Hitchhiker\'s Guide to the Galaxy', 'Douglas Adams', 1021, 'English', 1979, 'Pan Books', 'Science Fiction, Comedy', 208, 11.99, 121, NULL, 'https://www.dymocks.com.au/Pages/ImageHandler.ashx?q=9781529034523&w=&h=570'),
 ('The Road', 'Cormac McCarthy', 1022, 'English', 2006, 'Alfred A. Knopf', 'Post-apocalyptic Fiction', 287, 14.49, 122, NULL, 'https://images.penguinrandomhouse.com/cover/9780307387899'),
