@@ -21,6 +21,7 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
   u.UID AS id,
   u.lName AS lastName,
   u.fname AS firstName,
+  image AS img,
   (
       SELECT 
           SUM(
