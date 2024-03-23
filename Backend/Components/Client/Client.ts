@@ -42,6 +42,7 @@ class Client {
     const accessLevels = {
       student: 1,
       librarian: 2,
+      instructor: 2,
       admin: 3,
     };
 
