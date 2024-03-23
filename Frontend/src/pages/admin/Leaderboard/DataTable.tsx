@@ -59,7 +59,7 @@ const DataTable = () => {
   useEffect(() => {
     socket.emit("get-leaderboard");
     socket.on("get-leaderboard-response", (response) => {
-      setRows(response);
+      setRows(response.map((row:any) => ({ ...row, CGPA: row.CGPA==null?"N/A":row.CGPA })));
     });
     return () => {
       socket.off("get-leaderboard-response");
