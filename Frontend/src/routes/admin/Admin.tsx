@@ -15,6 +15,7 @@ import ViewAllCourses from "../../pages/admin/courses/ViewAllCourses";
 import AddCourse from "../../pages/admin/courses/AddCourse";
 import Analytics from "../../pages/admin/analytics/CharBar";
 import CourseDetails from "../../templates/courses/CourseDetails";
+import { CourseManagementDashboard } from "@/pages/admin/courses/courseManagement";
 
 const Admin = () => {
   return (
@@ -37,6 +38,7 @@ const Admin = () => {
 
 
           <Route path="/admin/Analytics" element={<Analytics/>}></Route>
+          <Route path="/admin/courseManagement" element={<CourseManagementDashboard/>}></Route>
 
           {/* <Route path="/admin/courseDetails" element={<CourseDetails courses={null}/>}></Route> */}
           <Route path="*" element={<PageNotFound />} />
