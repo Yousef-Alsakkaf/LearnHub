@@ -5,8 +5,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-
+import { AuthProvider, useAuth } from "../../../../context/AuthProvider";
+import { useState } from "react";
+import AnnoucementPopUp from "./AnnoucementPopUp";
 function CourseDashboard() {
+  const [showModal, setShowModal] = useState(false);
+ 
+  const tempAnnounce = {
+    sender: "yousef",
+  message: "nothing to write in here for now",
+  email: "yousefmohammadalsakkaf",
+  userType: "student",
+  username: "yousef",
+  attendance: 7,
+  courses: 3,
+  }
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
@@ -70,7 +83,8 @@ function CourseDashboard() {
             <CardTitle>Recent Messages</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-8">
-            <div className="flex items-center gap-4">
+            {/* here is the component for each message */}
+            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/01.png" alt="Avatar" />
                 <AvatarFallback>OM</AvatarFallback>
@@ -80,7 +94,11 @@ function CourseDashboard() {
                 <p className="text-sm text-muted-foreground">olivia.martin@email.com</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+
+
+            {/* here where we do call it */}
+            < AnnoucementPopUp isVisible={showModal} onClose={() => setShowModal(false)} selectedAnnouncement={tempAnnounce}/>
+            <div className="flex items-center gap-4" >
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/02.png" alt="Avatar" />
                 <AvatarFallback>JL</AvatarFallback>
@@ -90,7 +108,7 @@ function CourseDashboard() {
                 <p className="text-sm text-muted-foreground">jackson.lee@email.com</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/03.png" alt="Avatar" />
                 <AvatarFallback>IN</AvatarFallback>
@@ -100,7 +118,7 @@ function CourseDashboard() {
                 <p className="text-sm text-muted-foreground">isabella.nguyen@email.com</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/04.png" alt="Avatar" />
                 <AvatarFallback>WK</AvatarFallback>
@@ -110,7 +128,7 @@ function CourseDashboard() {
                 <p className="text-sm text-muted-foreground">will@email.com</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/05.png" alt="Avatar" />
                 <AvatarFallback>SD</AvatarFallback>

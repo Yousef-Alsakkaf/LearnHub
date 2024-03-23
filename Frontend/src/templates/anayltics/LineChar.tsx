@@ -22,4 +22,6 @@ export default function ChartLine(): JSX.Element {
       }}
     />
   );
+
 }
+
