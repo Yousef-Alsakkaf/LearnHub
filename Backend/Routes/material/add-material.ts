@@ -14,7 +14,8 @@ const command = new ServerCommandBuilder("add-course-material")
             course_id: { type: "number"},
             weight: { type: "number"},
             title: { type: "string"},
-            deadline: { type: "string"}
+            deadline: { type: "string"},
+            description: { type: "string"}
         },required:["course_id","weight","title","deadline"]       
       })
   .setExecute(callback)
@@ -22,7 +23,7 @@ const command = new ServerCommandBuilder("add-course-material")
   .build();
 
 async function callback({ Client, Data,EmailProvider, Database }: CommandExecuteArguments) {
-    const{course_id, weight, title, deadline}=Data;
+    const{course_id, weight, title, deadline,description}=Data;
     const id=Client.getId();
     const user=Client.getName();
  try {
@@ -45,10 +46,10 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         if(date<new Date())
             throw new Error("Invalid deadline");
-        await Database.executeQuery('INSERT INTO material (course_id, weight, title, deadline) VALUES (?,?,?,?)',[course_id, weight, title, formattedDate]);
+        await Database.executeQuery('INSERT INTO material (course_id, weight, title, deadline,description) VALUES (?,?,?,?,?)',[course_id, weight, title, formattedDate,description]);
         }
         else if(deadline==null||deadline==undefined||deadline==""){
-            await Database.executeQuery('INSERT INTO material (course_id, weight, title) VALUES (?,?,?)',[course_id, weight, title]);
+            await Database.executeQuery('INSERT INTO material (course_id, weight, title,description) VALUES (?,?,?,?)',[course_id, weight, title,description]);
         }
         const course = await Database.executeQuery('SELECT title FROM courses WHERE id=?',[course_id]);
         const courseName = course[0].title;
