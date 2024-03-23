@@ -66,15 +66,6 @@ CREATE TABLE `majors` (
    PRIMARY KEY  (`name`)
 );
 
-CREATE TABLE `requests` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `email` varchar(50),
-  `major` varchar(50),
-  `name` varchar(50),
-  `letter` varchar(255),
-  FOREIGN KEY (`major`) REFERENCES `majors` (`name`)
-);
-
 CREATE TABLE `Logs` (
   `logId` INT AUTO_INCREMENT PRIMARY KEY,
   `event` varchar(20),
@@ -104,3 +95,19 @@ CREATE TABLE `requests` (
   `letter` varchar(255),
   FOREIGN KEY (`major`) REFERENCES `majors` (`name`)
 )auto_increment=1;
+
+CREATE TABLE `books` (
+  `title` varchar(255),
+  `author` varchar(255),
+  `barcode` INT AUTO_INCREMENT PRIMARY KEY,
+  `language` varchar(20),
+  `year_of_prod` INT,
+  `publisher` varchar(255),
+  `subjects` varchar(255),
+  `no_of_pages` int,
+  `price` float,
+  `rack` int,
+  `borrower` int,
+  `image` varchar(1000),
+  FOREIGN KEY (`borrower`) REFERENCES `users`(`id`)
+)AUTO_INCREMENT=1040;

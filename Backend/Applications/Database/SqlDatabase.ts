@@ -910,6 +910,17 @@ GROUP BY
     return results[0].length > 0;
   }
 
+  async getCourseStudents(id:number): Promise<string[]> {
+      const results= await this.connection.execute(`SELECT email From users JOIN studies ON users.id=studies.student_id WHERE course_id=?`,[id]);
+      return results[0];
+  }
+
+  async getStudentEmail(id:number): Promise<string> {
+    const results= await this.connection.execute(`SELECT email From users WHERE id=?`,[id]);
+    return results[0][0].email;
+  }
+
+
     
 
 }

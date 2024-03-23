@@ -278,6 +278,8 @@ abstract class Database {
   abstract doesCourseExist(id: number): Promise<boolean>;
   abstract doesMaterialExist(id: number): Promise<boolean>;
   abstract isMaterialUsed(id: number): Promise<boolean>;
+  abstract getCourseStudents(id:number): Promise<string[]>;
+  abstract getStudentEmail(id:number): Promise<string>;
 }
 
 enum DatabaseState {

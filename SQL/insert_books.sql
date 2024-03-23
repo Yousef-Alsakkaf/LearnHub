@@ -1,0 +1,22 @@
+INSERT INTO books (title, author, barcode, language, year_of_prod, publisher, subjects, no_of_pages, price, rack, borrower, image)
+VALUES 
+('The Hitchhiker\'s Guide to the Galaxy', 'Douglas Adams', 1021, 'English', 1979, 'Pan Books', 'Science Fiction, Comedy', 208, 11.99, 121, NULL, 'https://www.dymocks.com.au/Pages/ImageHandler.ashx?q=9781529034523&w=&h=570'),
+('The Road', 'Cormac McCarthy', 1022, 'English', 2006, 'Alfred A. Knopf', 'Post-apocalyptic Fiction', 287, 14.49, 122, NULL, 'https://images.penguinrandomhouse.com/cover/9780307387899'),
+('The Picture of Dorian Gray', 'Oscar Wilde', 1023, 'English', 1890, 'Lippincott\'s Monthly Magazine', 'Philosophical fiction', 254, 9.99, 123, NULL, 'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781847493729.jpg'),
+('Brave New World', 'Aldous Huxley', 1024, 'English', 1932, 'Chatto & Windus', 'Science Fiction, Dystopian Fiction', 311, 12.99, 124, NULL, 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/bfffaf13630039.562761884989f.jpg'),
+('Sapiens: A Brief History of Humankind', 'Yuval Noah Harari', 1025, 'English', 2011, 'Harper', 'Anthropology', 443, 18.99, 125, NULL, 'https://m.media-amazon.com/images/I/713jIoMO3UL._AC_UF894,1000_QL80_.jpg'),
+('The Alchemist', 'Paulo Coelho', 1026, 'Portuguese', 1988, 'HarperTorch', 'Fantasy Fiction', 208, 10.99, 126, NULL, 'https://m.media-amazon.com/images/I/81FPzmB5fgL._AC_UF1000,1000_QL80_.jpg'),
+('The Catcher in the Rye', 'J.D. Salinger', 1027, 'English', 1951, 'Little, Brown and Company', 'Bildungsroman', 277, 12.50, 127, NULL, 'https://m.media-amazon.com/images/I/91HPG31dTwL._AC_UF1000,1000_QL80_.jpg'),
+('To Kill a Mockingbird', 'Harper Lee', 1028, 'English', 1960, 'J. B. Lippincott & Co.', 'Southern Gothic, Bildungsroman', 281, 12.99, 128, NULL, 'amazon.com/images/M/MV5BNmVmYzcwNzMtMWM1NS00MWIyLThlMDEtYzUwZDgzODE1NmE2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg'),
+('One Hundred Years of Solitude', 'Gabriel García Márquez', 1029, 'Spanish', 1967, 'Editorial Sudamericana', 'Magic Realism', 417, 14.99, 129, NULL, 'https://m.media-amazon.com/images/I/81oAEEwxBWL._AC_UF894,1000_QL80_.jpg'),
+('Crime and Punishment', 'Fyodor Dostoevsky', 1030, 'Russian', 1866, 'The Russian Messenger', 'Philosophical Novel', 671, 16.99, 130, NULL, 'https://m.media-amazon.com/images/I/71O2XIytdqL._AC_UF894,1000_QL80_.jpg'),
+('The Secret History', 'Donna Tartt', 1031, 'English', 1992, 'Alfred A. Knopf', 'Mystery Fiction', 559, 13.99, 131, NULL, 'https://m.media-amazon.com/images/I/71ZkdyGX0HL._AC_UF1000,1000_QL80_.jpg'),
+('The Bell Jar', 'Sylvia Plath', 1032, 'English', 1963, 'Heinemann', 'Autobiographical Fiction', 244, 10.49, 132, NULL, 'https://s26162.pcdn.co/wp-content/uploads/2018/01/The_Bell_Jar.jpg'),
+('The Name of the Wind', 'Patrick Rothfuss', 1033, 'English', 2007, 'DAW Books', 'Fantasy Fiction', 662, 15.99, 133, NULL, 'https://www.gollancz.co.uk/wp-content/uploads/2018/07/hbg-title-9781473224087-156.jpg'),
+('The Power of Habit', 'Charles Duhigg', 1034, 'English', 2012, 'Random House', 'Self-help book', 371, 11.75, 134, NULL, 'https://m.media-amazon.com/images/I/71wm29Etl4L._AC_UF1000,1000_QL80_.jpg'),
+('The Girl with the Dragon Tattoo', 'Stieg Larsson', 1035, 'Swedish', 2005, 'Norstedts förlag', 'Mystery Fiction', 672, 14.95, 135, NULL, 'https://m.media-amazon.com/images/I/61Qs-hoZ-TL._AC_UF894,1000_QL80_.jpg'),
+('The Night Circus', 'Erin Morgenstern', 1036, 'English', 2011, 'Doubleday', 'Fantasy Fiction', 387, 12.99, 136, NULL, 'https://ahscatseye.com/wp-content/uploads/2023/10/thenightcircuscover.jpg'),
+('Educated', 'Tara Westover', 1037, 'English', 2018, 'Random House', 'Autobiography', 334, 17.49, 137, NULL, 'https://cdn2.penguin.com.au/covers/original/9780099511021.jpg'),
+('The Goldfinch', 'Donna Tartt', 1038, 'English', 2013, 'Little, Brown and Company', 'Novel', 771, 18.99, 138, NULL, 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1378710146i/17333223.jpg'),
+('Where the Crawdads Sing', 'Delia Owens', 1039, 'English', 2018, 'G.P. Putnam\'s Sons', 'Mystery Fiction', 384, 16.49, 139, NULL, 'https://m.media-amazon.com/images/I/81e+mSqZvnL._AC_UF1000,1000_QL80_.jpg'),
+('The Martian', 'Andy Weir', 1040, 'English', 2011, 'Crown Publishing Group', 'Science Fiction', 369, 10.99, 140, NULL, 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1413706054i/18007564.jpg');

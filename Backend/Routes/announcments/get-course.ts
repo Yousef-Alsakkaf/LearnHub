@@ -19,7 +19,7 @@ const command = new ServerCommandBuilder("get-announcements")
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const announcements = await Database.executeQuery(`SELECT announcments.id, course_id, subject, message, sender_id,CONCAT(fName,' ',lName) AS name FROM announcments JOIN users ON users.id=sender_id WHERE course_id=?`,[Data.course_id]);
+  const announcements = await Database.executeQuery(`SELECT announcments.id, course_id, subject, message, sender_id,CONCAT(fName,' ',lName) AS name,image FROM announcments JOIN users ON users.id=sender_id WHERE course_id=?`,[Data.course_id]);
   return announcements;
 }
 

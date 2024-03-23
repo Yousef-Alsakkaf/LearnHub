@@ -31,7 +31,7 @@ async function callback({ Client,Data,Database,EmailProvider }: CommandExecuteAr
         password=password.substring(0,8);
         const UID=await Database.generateUID("student"); 
         await Database.executeQuery('INSERT INTO users(username, password, fName, lName, UID, type, email) Values (?,?,?,?,?,?,?)',[application?.username, password, application?.fName, application?.lName,UID,"student", application?.email]);
-        await EmailProvider.sendEmail({to:[ application?.email], subject: "Application Accepted", text: `Congratulations! Your application has been accepted. Your username is ${application?.username} your password is ${password} Your id is ${UID}. Please login to your account and change your password.`});
+        await EmailProvider.sendEmail({to:application?.email, subject: "Application Accepted", text: `Congratulations! Your application has been accepted. Your username is ${application?.username} your password is ${password} Your id is ${UID}. Please login to your account and change your password.`});
         await Database.executeQuery('DELETE FROM requests WHERE id = ?', [id]);
         return{
             notification: {
@@ -42,7 +42,7 @@ async function callback({ Client,Data,Database,EmailProvider }: CommandExecuteAr
         }
     }
     else{
-        await EmailProvider.sendEmail({to:[ application?.email], subject: "Application Rejected", text: `We are sorry' your application has been rejected.`})
+        await EmailProvider.sendEmail({to: application?.email, subject: "Application Rejected", text: `We are sorry' your application has been rejected.`})
         await Database.executeQuery('DELETE FROM request WHERE id = ?', [id]);
         
     }

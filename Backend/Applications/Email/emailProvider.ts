@@ -26,7 +26,7 @@ class emailProvider {
     });
   }
 
-  async sendEmail({ to, subject, text }: { to: string[]; subject: string; text: string }) {
+  async sendEmail({ to, subject, text }: { to: string; subject: string; text: string }) {
     const mailOptions = {
       from: this.emailSender,
       to: to,

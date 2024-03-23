@@ -22,7 +22,7 @@ const command = new ServerCommandBuilder("edit-course-material")
   .setOutgoingValidationSchema({})
   .build();
 
-async function callback({ Client, Data, Database }: CommandExecuteArguments) {
+async function callback({ Client, Data,EmailProvider, Database }: CommandExecuteArguments) {
     const{id,course_id, weight, title, deadline}=Data;
     const ClientId=Client.getId();
     const ClientName=Client.getName();
@@ -55,8 +55,14 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
         else if(deadline==null||deadline==undefined||deadline==""){
            await Database.executeQuery('UPDATE material SET  weight=?, title=? WHERE id=?',[weight, title, id]);
         }
-        console.log("Material Updated successfully");
+        const course = await Database.executeQuery('SELECT title FROM courses WHERE id=?',[course_id]);
+        const courseName = course[0].title;
         Database.createLog({ event: "Edit Material", details: `User ${ClientName} edited material ${title} in course ${course_id}`, initiator: ClientId });
+        const students = await Database.getCourseStudents(course_id)
+        for(const student of students){
+        const email = student["email"];
+        await EmailProvider.sendEmail({to:email,subject:"material updated", text:`${title} has been updated From course ${courseName}`});
+        }  
         return {
             notification: {
               type: "success",
