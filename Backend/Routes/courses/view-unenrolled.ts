@@ -21,7 +21,7 @@ const command = new ServerCommandBuilder("get-unenrolled-students")
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
   const course_id = Data.course_id;
   const roaster = await Database.executeQuery(
-    "SELECT fName,lName,image,type,UID from users where type='student' and users.id NOT IN (select student_id from studies where course_id=?)",
+    "SELECT fName,lName,image,type,UID,users.id from users where type='student' and users.id NOT IN (select student_id from studies where course_id=?)",
     [course_id]
   );
   
