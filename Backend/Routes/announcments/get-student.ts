@@ -3,9 +3,9 @@ import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
 
 
-const command = new ServerCommandBuilder("get-announcements")
+const command = new ServerCommandBuilder("get-student-announcements")
   .setAccessLevel(UserAccessLevels.STUDENT)
-  .setOutgoingChannel("get-announcements-response")
+  .setOutgoingChannel("get-student-announcements-response")
   .setIncomingValidationSchema({
         type: "object",
         additionalProperties: false,
