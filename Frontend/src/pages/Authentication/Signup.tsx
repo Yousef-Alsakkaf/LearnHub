@@ -1,154 +1,90 @@
-import React, { useState, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Link,
-} from "@mui/material";
-import { BiSun, BiMoon } from "react-icons/bi";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import socket from "@/socket";
+import { useEffect, useState } from "react";
+import * as React from "react";
 
-// import '../../App.scss'
-import useLocalStorage from "use-local-storage";
+interface LoginPageProps {
+  changeState: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const SignupPage = () => {
-  const [isDark, setIsDark] = useLocalStorage("isDark", false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const controls = useAnimation();
+function SignUp({ changeState }: LoginPageProps) {
+  const [selectionMajors, setSelectionMajors] = useState<{ name: string }[] | null>([]);
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [letter, setLetter] = useState("");
 
   useEffect(() => {
-    controls.start({ opacity: 1, y: 0 });
-  }, [controls]);
+    socket.emit("get-all-majors");
+
+    socket.on("get-all-majors-response", (majors: { name: string }[]) => {
+      majors.map((major) => console.log(major.name));
+      setSelectionMajors(majors);
+    });
+
+    return () => {
+      socket.off("get-all-majors-response");
+    };
+  }, []);
+
+  const signUp = (e: any) => {
+    e.preventDefault();
+
+    socket.emit("apply", {
+      email,
+      username,
+      major: "major",
+      fName,
+      lName,
+      letter,
+    });
+
+    setTimeout(() => {
+      changeState("login");
+    }, 500);
+  };
 
   return (
-    <>
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-        className="App" data-theme={isDark ? "dark" : "light"}
-      >
-        <Container maxWidth="sm">
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={controls}
-            transition={{ duration: 0.5 }}
-          >
-            <Typography 
-            variant="h4" 
-            gutterBottom
-            color={isDark ? "whitesmoke" : ""}
-            >
-              Sign Up
-            </Typography>
-            <form>
-              <TextField
-                fullWidth
-                label="Email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                margin="normal"
-                required
-                sx={{
-                  color: isDark ? "whitesmoke" : "",
-                  background: isDark ? "#FFFFF0" : "",
-                }}
-              />
-              <TextField
-                fullWidth
-                label="Password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                margin="normal"
-                required
-                sx={{
-                  color: isDark ? "whitesmoke" : "",
-                  background: isDark ? "#FFFFF0" : "",
-                }}
-              />
-              <TextField
-                fullWidth
-                label="Confirm Password"
-                name="confirmPassword"
-                type="password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                margin="normal"
-                required
-                sx={{
-                  color: isDark ? "whitesmoke" : "",
-                  background: isDark ? "#FFFFF0" : "",
-                }}
-              />
-            
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                fullWidth
-                style={{ marginTop: "20px" }}
-                
-              >
-                Sign Up
-              </Button>
-              <Box mt={2}>
-                <Typography
-                  variant="body2"
-                  color={isDark ? "whitesmoke" : ""}
-                  align="center"
-                >
-                  Already have an account?{" "}
-                  <Link href="/" variant="body2">
-                    Login
-                  </Link>
-                </Typography>
-              </Box>
-            </form>
-          </motion.div>
-        </Container>
-      </div>
-      <Box
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          zIndex: 999,
-        }}
-      >
-        <button
-          onClick={() => setIsDark(!isDark)}
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          {isDark ? <BiSun size={24} color={isDark ? "#FFFFF0" : ""} /> : <BiMoon size={24} />}
-        </button>
-      </Box>
-    </>
-  );
-};
+    <div className="flex items-center justify-center py-12">
+      <div className="mx-auto grid w-[350px] gap-6">
+        <div className="grid gap-2 text-center">
+          <h1 className="text-3xl font-bold">Sign Up</h1>
+          <p className="text-balance text-muted-foreground">Enter your details below to create a new account</p>
+        </div>
+        <div className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" type="email" placeholder="learnhub@example.com" onChange={(e) => setEmail(e.target.value)} required />
 
-export default SignupPage;
+            <Label htmlFor="username">Username</Label>
+            <Input id="username" type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} required />
+
+            <Label htmlFor="fName">First Name</Label>
+            <Input id="fName" type="text" placeholder="First Name" onChange={(e) => setFName(e.target.value)} required />
+
+            <Label htmlFor="lName">Last Name</Label>
+            <Input id="lName" type="text" placeholder="Last Name" onChange={(e) => setLName(e.target.value)} required />
+
+            <Label htmlFor="letter">Letter</Label>
+            <Input id="letter" type="text" placeholder="Letter" onChange={(e) => setLetter(e.target.value)} required />
+          </div>
+          <Button type="submit" onClick={signUp} className="w-full">
+            Sign up!
+          </Button>
+
+          <Button type="submit" onClick={() => changeState("login")} className="w-full">
+            Go back
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SignUp;

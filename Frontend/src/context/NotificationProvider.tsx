@@ -1,6 +1,7 @@
 import { toast, Slide, ToastPosition, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import socket from "../socket";
+import { useEffect } from "react";
 
 export type Notification = {
   type: "success" | "warning" | "error";
@@ -34,11 +35,21 @@ function showNotification(notification: Notification) {
 }
 
 function NotificationProvider() {
-  socket.on("show-notification", (notification: Notification) => {
-    showNotification(notification);
-  });
+  useEffect(() => {
+    socket.on("show-notification", (notification: Notification) => {
+      showNotification(notification);
+    });
 
-  return <ToastContainer />;
+    return () => {
+      socket.off("show-notification");
+    };
+  }, []);
+
+  return (
+    <>
+      <ToastContainer />
+    </>
+  );
 }
 
 export { NotificationProvider };

@@ -1,6 +1,11 @@
-import React from "react";
+import socket from "@/socket";
+import React, { useEffect } from "react";
 
+type BookProps  = {
+    id: number; 
+}
 const CourseRoster = () => {
+    
   return (
     <div className="w-screen mr-[500px]">
       <div className="mx-auto mt-8 max-w-screen-lg mr-[450px]">

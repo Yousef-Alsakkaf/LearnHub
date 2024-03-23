@@ -16,13 +16,15 @@ import AddCourse from "../../pages/admin/courses/AddCourse";
 import Analytics from "../../pages/admin/analytics/CharBar";
 import CourseDetails from "../../templates/courses/CourseDetails";
 import { CourseManagementDashboard } from "@/pages/admin/courses/management/courseManagement";
+import MainAdmin from '../../pages/admin/Main/MainAdmin'
 
 const Admin = () => {
   return (
     <>
       <Route element={<Outlet />}>
         <Route element={<BaseLayout />} path="/admin">
-          <Route path="/admin" element={<DashboardScreen />} />
+          {/* <Route path="/admin" element={<DashboardScreen />} /> */}
+          <Route path="/admin" element={<MainAdmin></MainAdmin>}></Route>
           <Route path="/admin/users" element={<AllUsers />}></Route>
           <Route path="/admin/AddUsers" element={<AddUsers />}></Route>
 
