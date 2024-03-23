@@ -59,7 +59,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (!isLogged) {
       navigate("/");
     }
-
   }, [isLogged]);
 
   const updateUsername = (username: string | undefined) => {
@@ -82,7 +81,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setAccessToken(accessToken);
   };
 
-  return <AuthContext.Provider value={{ username, accessToken, setUsername: updateUsername, setAccessToken: updateAccessToken }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ username, accessToken, setUsername: updateUsername, setAccessToken: updateAccessToken }}>{isLogged ? children: ""}</AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextProps => {

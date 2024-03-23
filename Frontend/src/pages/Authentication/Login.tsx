@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { Container, TextField, Typography, Box, Button } from "@mui/material";
-import { BiSun, BiMoon } from "react-icons/bi";
-import '../../App.scss'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
-import useLocalStorage from "use-local-storage";
-import socket from "../../socket";
+import socket from "@/socket";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
 
 interface UserData {
   UID: string;
@@ -25,25 +19,19 @@ interface UserData {
   username: string;
 }
 
-const LoginPage = () => {
-  const [isDark, setIsDark] = useLocalStorage("isDark", false);
-  const navigate = useNavigate();
+interface LoginPageProps {
+  changeState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function Login({ changeState }: LoginPageProps) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  const controls = useAnimation();
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    controls.start({ opacity: 1, y: 0 });
-  }, [controls]);
-
-  const handleAuthentication = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAuthentication = (e: any) => {
     e.preventDefault();
     console.log({
       username: formData.username,
@@ -70,88 +58,39 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-        className="App"
-        data-theme={isDark ? "dark" : "light"}
-      >
-        <Container maxWidth="sm">
-          <motion.div initial={{ opacity: 0, y: -50 }} animate={controls} transition={{ duration: 0.5 }}>
-            <Typography variant="h4" gutterBottom color={isDark ? "whitesmoke" : ""}>
-              Login
-            </Typography>
-            <form onSubmit={handleAuthentication}>
-              <TextField
-                fullWidth
-                label="Username"
-                name="username"
-                type="text"
-                value={formData.username}
-                onChange={handleChange}
-                margin="normal"
-                required
-                sx={{
-                  color: isDark ? "whitesmoke" : "",
-                  background: isDark ? "#FFFFF0" : "",
-                }}
-              />
-              <TextField
-                fullWidth
-                label="Password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                margin="normal"
-                required
-                sx={{
-                  color: isDark ? "whitesmoke" : "",
-                  background: isDark ? "#FFFFF0" : "",
-                }}
-              />
-
-              <Button type="submit" variant="contained" color="primary" size="large" fullWidth style={{ marginTop: "20px" }}>
-                Login
-              </Button>
-              <Box mt={2}>
-                <Link to="#">Forgot Password?</Link>
-              </Box>
-              <Box mt={2}>
-                <Typography variant="body2" color={isDark ? "whitesmoke" : "textSecondary"} align="center">
-                  Don't have an account? <Link to="/signup">Sign Up</Link>
-                </Typography>
-              </Box>
-            </form>
-          </motion.div>
-        </Container>
+    <div className="flex items-center justify-center py-12">
+      <div className="mx-auto grid w-[350px] gap-6">
+        <div className="grid gap-2 text-center">
+          <h1 className="text-3xl font-bold">Login</h1>
+          <p className="text-balance text-muted-foreground">Enter your email below to login to your account</p>
+        </div>
+        <div className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" type="email" placeholder="m@example.com" onChange={(e) => setFormData({ ...formData, username: e.target.value })} required />
+          </div>
+          <div className="grid gap-2">
+            <div className="flex items-center">
+              <Label htmlFor="password">Password</Label>
+              <a onClick={() => changeState("forgot-password")} className="ml-auto inline-block text-sm underline cursor-pointer">
+                Forgot your password?
+              </a>
+            </div>
+            <Input id="password" type="password" required onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+          </div>
+          <Button type="submit" onClick={handleAuthentication} className="w-full">
+            Login
+          </Button>
+        </div>
+        <div className="mt-4 text-center text-sm">
+          Don&apos;t have an account?{" "}
+          <a onClick={() => changeState("signup")} className="underline cursor-pointer">
+            Apply for our university
+          </a>
+        </div>
       </div>
-      <Box
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          zIndex: 999,
-        }}
-      >
-        <button
-          onClick={() => setIsDark(!isDark)}
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          {isDark ? <BiSun size={24} color={isDark ? "#FFFFF0" : ""} /> : <BiMoon size={24} />}
-        </button>
-      </Box>
-    </>
+    </div>
   );
-};
+}
 
-export default LoginPage;
+export default Login;
