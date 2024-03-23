@@ -34,7 +34,7 @@ const DataTable = () => {
       description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 160,
-      valueGetter: (value, row) => `${row.firstName || ""} ${row.lastName || ""}`,
+      valueGetter: (value, row) => value || `${row.firstName || ""} ${row.lastName || ""}`,
     },
     {
       field: "Major",
@@ -59,7 +59,7 @@ const DataTable = () => {
   useEffect(() => {
     socket.emit("get-leaderboard");
     socket.on("get-leaderboard-response", (response) => {
-      setRows(response);
+      setRows(response.map((row:any) => ({ ...row, CGPA: row.CGPA==null?"N/A":row.CGPA })));
     });
     return () => {
       socket.off("get-leaderboard-response");

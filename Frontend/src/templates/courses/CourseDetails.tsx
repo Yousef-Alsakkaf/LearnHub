@@ -16,7 +16,7 @@ interface Props {
   isVisible: boolean;
   onClose: () => void;
 }
-function CourseDetails({courses, isVisible, onClose} : Props) {
+function CourseDetails({isVisible, onClose} : Props) {
   const [activeLink, setActiveLink] = useState('Announcements');
   const handleClick = (link: string) => {
     setActiveLink(link);

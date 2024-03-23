@@ -1,31 +1,59 @@
 import { ArrowUpRight, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Link } from "react-router-dom";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { AuthProvider, useAuth } from "../../../../context/AuthProvider";
-import { useState } from "react";
+import React, { useState } from "react";
 import AnnoucementPopUp from "./AnnoucementPopUp";
-function CourseDashboard() {
+import ViewAllStudents from "./viewAllStudents";
+
+type id = {
+  id: number,
+}
+const CourseDashboard: React.FC<id> = ({id}) => {
   const [showModal, setShowModal] = useState(false);
- 
+
+  console.log("This is the id from dash", id)
   const tempAnnounce = {
     sender: "yousef",
-  message: "nothing to write in here for now",
-  email: "yousefmohammadalsakkaf",
-  userType: "student",
-  username: "yousef",
-  attendance: 7,
-  courses: 3,
-  }
+    message: "nothing to write in here for now",
+    email: "yousefmohammadalsakkaf",
+    userType: "student",
+    username: "yousef",
+    attendance: 7,
+    courses: 3,
+  };
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Enrolled Students</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Enrolled Students
+            </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -51,7 +79,11 @@ function CourseDashboard() {
               <SheetContent>
                 <SheetHeader>
                   <SheetTitle>Course students</SheetTitle>
-                  <SheetDescription>View all students in this course, if you would like to add or remove you can from the management</SheetDescription>
+                  <SheetDescription>
+                    
+                    {/* here i will render all students */}
+                    < ViewAllStudents id={id} />
+                  </SheetDescription>
                 </SheetHeader>
               </SheetContent>
             </Sheet>
@@ -68,10 +100,14 @@ function CourseDashboard() {
                 <TableRow>
                   <TableCell>
                     <div className="font-medium">Liam Johnson</div>
-                    <div className="hidden text-sm text-muted-foreground md:inline">liam@example.com</div>
+                    <div className="hidden text-sm text-muted-foreground md:inline">
+                      liam@example.com
+                    </div>
                   </TableCell>
                   <TableCell>
-                    <div className="text-sm text-muted-foreground">2 days ago</div>
+                    <div className="text-sm text-muted-foreground">
+                      2 days ago
+                    </div>
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -84,41 +120,63 @@ function CourseDashboard() {
           </CardHeader>
           <CardContent className="grid gap-8">
             {/* here is the component for each message */}
-            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
+            <div
+              className="flex items-center gap-4 hover:bg-gray-100 cursor-pointer"
+              onClick={() => setShowModal(true)}
+            >
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/01.png" alt="Avatar" />
                 <AvatarFallback>OM</AvatarFallback>
               </Avatar>
               <div className="grid gap-1">
-                <p className="text-sm font-medium leading-none">Olivia Martin</p>
-                <p className="text-sm text-muted-foreground">olivia.martin@email.com</p>
+                <p className="text-sm font-medium leading-none">
+                  Olivia Martin
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  olivia.martin@email.com
+                </p>
               </div>
             </div>
 
-
             {/* here where we do call it */}
-            < AnnoucementPopUp isVisible={showModal} onClose={() => setShowModal(false)} selectedAnnouncement={tempAnnounce}/>
-            <div className="flex items-center gap-4" >
+            <AnnoucementPopUp
+              isVisible={showModal}
+              onClose={() => setShowModal(false)}
+              selectedAnnouncement={tempAnnounce}
+            />
+            <div className="flex items-center gap-4 hover:bg-gray-100 cursor-pointer" onClick={() => setShowModal(true)}>
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/02.png" alt="Avatar" />
                 <AvatarFallback>JL</AvatarFallback>
               </Avatar>
               <div className="grid gap-1">
                 <p className="text-sm font-medium leading-none">Jackson Lee</p>
-                <p className="text-sm text-muted-foreground">jackson.lee@email.com</p>
+                <p className="text-sm text-muted-foreground">
+                  jackson.lee@email.com
+                </p>
               </div>
             </div>
-            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
+            <div
+              className="flex items-center gap-4 hover:bg-gray-100 cursor-pointer"
+              onClick={() => setShowModal(true)}
+            >
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/03.png" alt="Avatar" />
                 <AvatarFallback>IN</AvatarFallback>
               </Avatar>
               <div className="grid gap-1">
-                <p className="text-sm font-medium leading-none">Isabella Nguyen</p>
-                <p className="text-sm text-muted-foreground">isabella.nguyen@email.com</p>
+                <p className="text-sm font-medium leading-none">
+                  Isabella Nguyen
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  isabella.nguyen@email.com
+                </p>
               </div>
             </div>
-            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
+            <div
+              className="flex items-center gap-4 hover:bg-gray-100 cursor-pointer"
+              onClick={() => setShowModal(true)}
+            >
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/04.png" alt="Avatar" />
                 <AvatarFallback>WK</AvatarFallback>
@@ -128,14 +186,19 @@ function CourseDashboard() {
                 <p className="text-sm text-muted-foreground">will@email.com</p>
               </div>
             </div>
-            <div className="flex items-center gap-4" onClick={() => setShowModal(true)}>
+            <div
+              className="flex items-center gap-4 hover:bg-gray-100 cursor-pointer"
+              onClick={() => setShowModal(true)}
+            >
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/05.png" alt="Avatar" />
                 <AvatarFallback>SD</AvatarFallback>
               </Avatar>
               <div className="grid gap-1">
                 <p className="text-sm font-medium leading-none">Sofia Davis</p>
-                <p className="text-sm text-muted-foreground">sofia.davis@email.com</p>
+                <p className="text-sm text-muted-foreground">
+                  sofia.davis@email.com
+                </p>
               </div>
             </div>
           </CardContent>
