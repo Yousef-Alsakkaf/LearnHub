@@ -13,6 +13,7 @@ import ViewItems from "../../pages/admin/Library/ViewItems";
 import AddItems from "../../pages/admin/Library/AddItems";
 import ViewAllCourses from "../../pages/admin/courses/ViewAllCourses";
 import AddCourse from "../../pages/admin/courses/AddCourse";
+import Analytics from "../../pages/admin/analytics/CharBar";
 
 const Admin = () => {
   return (
@@ -32,6 +33,9 @@ const Admin = () => {
           <Route path="/admin/settings" element={<Account></Account>}></Route>
           <Route path="/admin/Leaderboard" element={<Leaderboard />}></Route>
           <Route path="/admin/TasksYaman" element={<TasksYaman />}></Route>
+
+
+          <Route path="/admin/Analytics" element={<Analytics/>}></Route>
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Route>

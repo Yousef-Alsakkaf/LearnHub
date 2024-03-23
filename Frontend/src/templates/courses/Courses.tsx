@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import ChartBar from "../anayltics/Khra";
 
 interface CoursesProps {
   children: ReactNode;
@@ -63,6 +64,7 @@ function Courses({ children }: CoursesProps) {
         <div className="col-span-8 overflow-hidden rounded-xl sm:bg-gray-50 sm:px-8 sm:shadow">
           {children}
         </div>
+       
       </div>
     </div>
   );

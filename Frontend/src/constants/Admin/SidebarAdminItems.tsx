@@ -49,7 +49,7 @@ export const sidebarAdminItems = [
     key: "leaderboard",
   },
   {
-    path: "/",
+    path: "/admin/Analytics",
     icon: <MdOutlineAnalytics size={20} />,
     text: "Analytics",
     key: "analytics",
@@ -60,12 +60,12 @@ export const sidebarAdminItems = [
   //   text: "System Maintenance",
   //   key: "system",
   // },
-  {
-    path: "/",
-    icon: <MdOutlineAnnouncement size={18} />,
-    text: "Announcements",
-    key: "announcement",
-  },
+  // {
+  //   path: "/",
+  //   icon: <MdOutlineAnnouncement size={18} />,
+  //   text: "Announcements",
+  //   key: "announcement",
+  // },
   {
     path: "/admin/TasksYaman",
     icon: <MdOutlineManageSearch size={18} />,
