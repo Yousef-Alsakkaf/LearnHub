@@ -2,9 +2,10 @@ import { error } from "ajv/dist/vocabularies/applicator/dependencies.js";
 import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
 
-const command = new ServerCommandBuilder("get-announcements")
-  .setAccessLevel(UserAccessLevels.STUDENT)
-  .setOutgoingChannel("get-announcements-response")
+
+const command = new ServerCommandBuilder("get-unenrolled-students")
+  .setAccessLevel(UserAccessLevels.INSTRUCTOR)
+  .setOutgoingChannel("get-unenrolled-students-response")
   .setIncomingValidationSchema({
     type: "object",
     additionalProperties: false,
@@ -18,11 +19,13 @@ const command = new ServerCommandBuilder("get-announcements")
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const announcements = await Database.executeQuery(
-    `SELECT announcments.id, course_id, subject, message, sender_id,CONCAT(fName,' ',lName) AS name,image,date FROM announcments JOIN users ON users.id=sender_id WHERE course_id=?`,
-    [Data.course_id]
+  const course_id = Data.course_id;
+  const roaster = await Database.executeQuery(
+    "SELECT fName,lName,image,type,UID from users where type='student' and users.id NOT IN (select student_id from studies where course_id=?)",
+    [course_id]
   );
-  return announcements;
+  
+  return roaster;
 }
 
 export default command;

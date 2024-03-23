@@ -36,7 +36,7 @@ export function CourseManagementDashboard() {
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         {selectedTab === "Dashboard" && <CourseDashboard id={parseInt(courseName!)} />}
         {selectedTab === "Assignments" && <CourseAssignments />}
-        {selectedTab == "Roster" && <CourseRoster />}
+        {selectedTab == "Roster" && <CourseRoster id={parseInt(courseName!)} />}
       </main>
     </div>
   );
