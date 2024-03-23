@@ -29,42 +29,20 @@ import {
       text: "Course Management",
       key: "course",
     },
+   
     {
-      path: "/",
-      icon: <MdOutlineGrade size={18} />,
-      text: "Gradebook Management",
-      key: "grade",
-    },
-    {
-      path: "/",
-      icon: <MdOutlineCompress size={18} />,
-      text: "Attendance Management",
-      key: "attendance",
-    },
-    {
-      path: "/",
-      icon: <MdOutlineMessage size={18} />,
-      text: "Progress tracking",
-      key: "progress",
-    },
-    {
-      path: "/admin/Leaderboard",
+      path: "/instructor/Leader",
       icon: <MdOutlineLeaderboard size={20} />,
       text: "LeaderBoard",
       key: "leaderboard",
     },
     {
-      path: "/",
+      path: "/instructor/AnalyticsInstructor",
       icon: <MdOutlineAnalytics size={20} />,
       text: "Analytics",
       key: "analytics",
     },
-    {
-      path: "/",
-      icon: <MdOutlineMessage size={18} />,
-      text: "System Maintenance",
-      key: "system",
-    },
+   
     {
       path: "/",
       icon: <MdOutlineAnnouncement size={18} />,
@@ -72,7 +50,7 @@ import {
       key: "announcement",
     },
     {
-      path: "/admin/TasksYaman",
+      path: "/instructor/to-do-list",
       icon: <MdOutlineManageSearch size={18} />,
       text: "To do list",
       key: "todo",
