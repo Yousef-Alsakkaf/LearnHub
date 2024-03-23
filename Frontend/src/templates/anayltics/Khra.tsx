@@ -10,11 +10,12 @@ export default function ChartBar(): JSX.Element {
             "Student",
             "admin",
             "instructor",
+            "global"
           ],
           datasets: [
             {
               label: "users",
-              data: [5, 10, 20, 25, 30, 35, 49],
+              data: [20, 25, 30, 35, 49],
             },
           ],
         }}

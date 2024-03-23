@@ -7,13 +7,11 @@ export default function ChartLine(): JSX.Element {
       type="line"
       data={{
         labels: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
+          "first year",
+          "second year",
+          "third year",
+          "fourth year",
+          
         ],
         datasets: [
           {

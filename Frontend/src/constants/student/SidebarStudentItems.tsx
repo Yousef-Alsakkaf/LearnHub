@@ -42,7 +42,7 @@ export const sidebarStudentItems = [
     key: "library",
   },
   {
-    path: "/admin/Analytics",
+    path: "/student/StudentAnalytics",
     icon: <MdOutlineAnalytics size={20} />,
     text: "Analytics",
     key: "analytics",
