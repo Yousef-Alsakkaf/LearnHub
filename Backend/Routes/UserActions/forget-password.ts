@@ -24,12 +24,12 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
 
     try {
 
-        let password = Database.executeQuery('SELECT password FROM users WHERE email=?',[email]);
+        let password = await Database.executeQuery('SELECT password FROM users WHERE email=?',[email]);
         password = password[0]["password"];
         if(!password)
         throw new Error("Email not found");
 
-        EmailProvider.sendEmail({to:email,subject:"Forget Password", text:"Please click the link to reset your password"});
+        await EmailProvider.sendEmail({to:email,subject:"Forget Password", text:"Please click the link to reset your password"});
         return {
             notification: {
                 type: "success",
@@ -48,7 +48,7 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
                 },
                 error: true,
             };
-        }
+        }   
         
     }
 

@@ -17,7 +17,7 @@ const command = new ServerCommandBuilder("get-leaderboard")
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
     //uid,last name,first name,cgpa,major
-  const leaderboard = Database.executeQuery(`
+  const leaderboard = await Database.executeQuery(`
 SELECT UID AS id,lName AS lastName,fname AS firstName,0 AS CGPA,major AS Major
 FROM users
 WHERE type='student' AND active=1`,[]);
