@@ -26,12 +26,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { AuthProvider, useAuth } from "../../../../context/AuthProvider";
-import { useState } from "react";
+import React, { useState } from "react";
 import AnnoucementPopUp from "./AnnoucementPopUp";
 import ViewAllStudents from "./viewAllStudents";
-function CourseDashboard() {
+
+type id = {
+  id: number,
+}
+const CourseDashboard: React.FC<id> = ({id}) => {
   const [showModal, setShowModal] = useState(false);
 
+  console.log("This is the id from dash", id)
   const tempAnnounce = {
     sender: "yousef",
     message: "nothing to write in here for now",
@@ -77,7 +82,7 @@ function CourseDashboard() {
                   <SheetDescription>
                     
                     {/* here i will render all students */}
-                    < ViewAllStudents/>
+                    < ViewAllStudents id={id} />
                   </SheetDescription>
                 </SheetHeader>
               </SheetContent>

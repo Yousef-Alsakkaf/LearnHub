@@ -7,11 +7,17 @@ interface User {
   lName?: string;
 }
 
-const ViewAllStudents = () => {
+type id = {
+    id: number
+}
+
+const ViewAllStudents: React.FC<id> = ({id}) => {
   const [students, setStudents] = useState<User[]>([]);
 
+
+  console.log("this is the id", id);
   useEffect(() => {
-    socket.emit("get-course-roaster", { id: 1 });
+    socket.emit("get-course-roaster", { id: id });
     socket.on("get-course-roaster-response", (response: User[]) => {
       console.log("this is the response from get-users from roster", response);
       setStudents(response);
