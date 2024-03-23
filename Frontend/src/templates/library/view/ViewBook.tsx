@@ -31,7 +31,7 @@ const ViewMagazine: React.FC<BookModalProps> = ({
   isVisible,
   onClose,
   selectedBook,
-  setBook,
+  // setBook,
 }) => {
   return (
     <ViewModal isVisible={isVisible} onClose={onClose}>

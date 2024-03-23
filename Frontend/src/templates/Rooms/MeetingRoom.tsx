@@ -12,7 +12,7 @@ interface MeetingRoomProps {
 
 const MeetingRoom: React.FC<MeetingRoomProps> = ({
   id,
-  Reserver_SID,
+  // Reserver_SID,
   availablity,
   capacity,
   equipment,
