@@ -16,7 +16,7 @@ const command = new ServerCommandBuilder("get-all-majors")
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const majors = Database.executeQuery('SELECT * FROM majors',[]);
+  const majors = await Database.executeQuery('SELECT * FROM majors', []);
   return majors;
 }
 

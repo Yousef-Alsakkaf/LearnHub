@@ -42,8 +42,8 @@ function App() {
       <BrowserRouter>
         <ThemeProvider>
           <SidebarProvider>
+            <NotificationProvider />
             <AuthProvider>
-              <NotificationProvider />
               <Routes>
                 {Global()}
                 {Student()}
