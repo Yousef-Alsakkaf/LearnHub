@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { Container, TextField, Typography, Box, Button } from "@mui/material";
 import { BiSun, BiMoon } from "react-icons/bi";
-// import '../../App.scss'
+import '../../App.scss'
 import { Link } from "react-router-dom";
 import useLocalStorage from "use-local-storage";
 import socket from "../../socket";
