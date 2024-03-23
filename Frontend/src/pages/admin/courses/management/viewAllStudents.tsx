@@ -17,7 +17,7 @@ const ViewAllStudents: React.FC<id> = ({id}) => {
 
   console.log("this is the id", id);
   useEffect(() => {
-    socket.emit("get-course-roaster", { id: id });
+    socket.emit("get-course-roaster", { id: 1 });
     socket.on("get-course-roaster-response", (response: User[]) => {
       console.log("this is the response from get-users from roster", response);
       setStudents(response);

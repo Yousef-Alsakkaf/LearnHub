@@ -265,7 +265,7 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
       </ViewModal>
      
       <Roster isVisible={roster} onClose={() => setRoster(false)}></Roster>
-      <CourseDetails courses={selectedCourse} isVisible={true} onClose={() => setDetails(false)}/>
+      {/* <CourseDetails courses={selectedCourse} isVisible={true} onClose={() => setDetails(false)}/> */}
     </>
   );
 }
