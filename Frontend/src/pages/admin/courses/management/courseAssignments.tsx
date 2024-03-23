@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import EditAssignment from "./EditAssignment";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -37,6 +38,7 @@ function CourseAssignments({ id }: any) {
   const [showModal, setShowModal] = useState(false);
   const [assignments, setAssignments] = useState([]);
   const [selectedAssignment, setSelectedAssignment] = useState<any>(null);
+  const [hoveredAssignment, setHoveredAssignment] = useState<any>(null);
 
   const [triggerRefresh, setTriggerRefresh] = useState(false);
 
@@ -63,6 +65,18 @@ function CourseAssignments({ id }: any) {
     setTriggerRefresh(!triggerRefresh);
   };
 
+  const handleRemoveAssignment = (assignmentId: any, b: boolean) => {
+    console.log("remove", assignmentId)
+    // if(!b) {
+    //   socket.emit("delete-course-material", { id: assignmentId });
+    // } else {
+    //   if(window.confirm("Are you sure you want to delete this course material?")) {
+    //     socket.emit("delete-course-material", { id: assignmentId });
+    //   }
+    // }
+    setTriggerRefresh(!triggerRefresh);
+  };
+
   return (
     <>
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
@@ -72,11 +86,6 @@ function CourseAssignments({ id }: any) {
               <CardTitle>Assignments</CardTitle>
               <CardDescription>Here are all the assignments</CardDescription>
             </div>
-
-            <Button size="sm" className="ml-auto gap-1 bg-red-500 hover:bg-red-700">
-              Remove assignment
-              <SquarePlus className="h-4 w-4" />
-            </Button>
 
             <Sheet>
               <SheetTrigger className="ml-auto gap-1">
@@ -121,39 +130,48 @@ function CourseAssignments({ id }: any) {
               </TableHeader>
               <TableBody>
                 {assignments &&
-                  assignments.map((assignment: any) => (
-                    <TableRow
-                      onClick={() => {
-                        setSelectedAssignment(assignment);
-                        setShowModal(true);
-                      }}
-                    >
-                      <TableCell>
-                        <div className="font-medium">{assignment?.title}</div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="hidden text-sm text-muted-foreground md:inline">{assignment?.description}</div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm text-muted-foreground">{assignment?.weight}</div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm text-muted-foreground">
-                          <Badge variant={assignment?.weight == 0 && assignment?.deadline == null ? "default" : "secondary"}>
-                            {assignment?.weight == 0 && assignment?.deadline == null ? "Course Material" : "Assignment"}
-                          </Badge>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm text-muted-foreground">{assignment?.deadline == null ? "N/A" : formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true })}</div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  assignments
+                    .sort((a: any, b: any) => {
+                      if (a.weight !== 0 && b.weight === 0) return -1;
+                      if (a.weight === 0 && b.weight !== 0) return 1;
+                      return 0;
+                    })
+                    .map((assignment: any) => (
+                      <TableRow
+                        onClick={() => {
+                          setSelectedAssignment(assignment);
+                          setShowModal(true);
+                        }}
+                        onMouseEnter={() => setHoveredAssignment(assignment)}
+                      >
+                        <TableCell>
+                          <div className="flex items-center space-x-2">
+                            <Trash2 className={`text-red-500 h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "": "hidden"}`} onClick={() => handleRemoveAssignment(assignment, assignment?.weight == 0 && assignment?.deadline == null)} />
+                            <div className="font-medium">{assignment?.title}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="hidden text-sm text-muted-foreground md:inline">{assignment?.description}</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm text-muted-foreground">{parseInt(assignment?.weight) == 0 ? "" : assignment?.weight}</div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm text-muted-foreground">
+                            <Badge variant={assignment?.weight == 0 && assignment?.deadline == null ? "default" : "secondary"}>
+                              {assignment?.weight == 0 && assignment?.deadline == null ? "Course Material" : "Assignment"}
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm text-muted-foreground">{assignment?.deadline == null ? "" : formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true })}</div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
           </CardContent>
         </Card>
-        <EditAssignment onClose={() => setShowModal(false)} isVisible={showModal}></EditAssignment>
       </div>
     </>
   );
