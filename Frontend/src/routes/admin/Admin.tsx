@@ -15,7 +15,7 @@ import ViewAllCourses from "../../pages/admin/courses/ViewAllCourses";
 import AddCourse from "../../pages/admin/courses/AddCourse";
 import Analytics from "../../pages/admin/analytics/CharBar";
 import CourseDetails from "../../templates/courses/CourseDetails";
-import { CourseManagementDashboard } from "@/pages/admin/courses/courseManagement";
+import { CourseManagementDashboard } from "@/pages/admin/courses/management/courseManagement";
 
 const Admin = () => {
   return (
