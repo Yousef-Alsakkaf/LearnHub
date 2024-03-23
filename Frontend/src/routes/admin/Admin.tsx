@@ -16,12 +16,14 @@ import AddCourse from "../../pages/admin/courses/AddCourse";
 import Analytics from "../../pages/admin/analytics/CharBar";
 import CourseDetails from "../../templates/courses/CourseDetails";
 import { CourseManagementDashboard } from "@/pages/admin/courses/management/courseManagement";
-import MainAdmin from '../../pages/admin/Main/MainAdmin'
+import MainAdmin from "../../pages/admin/Main/MainAdmin";
+import LogOut from "../logout";
 
 const Admin = () => {
   return (
     <>
       <Route element={<Outlet />}>
+        <Route path="/logout" element={<LogOut />}></Route>
         <Route element={<BaseLayout />} path="/admin">
           {/* <Route path="/admin" element={<DashboardScreen />} /> */}
           <Route path="/admin" element={<MainAdmin></MainAdmin>}></Route>
@@ -38,9 +40,8 @@ const Admin = () => {
           <Route path="/admin/Leaderboard" element={<Leaderboard />}></Route>
           <Route path="/admin/TasksYaman" element={<TasksYaman />}></Route>
 
-
-          <Route path="/admin/Analytics" element={<Analytics/>}></Route>
-          <Route path="/admin/courseManagement" element={<CourseManagementDashboard/>}></Route>
+          <Route path="/admin/Analytics" element={<Analytics />}></Route>
+          <Route path="/admin/courseManagement/:courseName" element={<CourseManagementDashboard />} />
 
           {/* <Route path="/admin/courseDetails" element={<CourseDetails courses={null}/>}></Route> */}
           <Route path="*" element={<PageNotFound />} />

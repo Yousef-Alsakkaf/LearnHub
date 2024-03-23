@@ -26,17 +26,14 @@ function ViewAllCourses() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [showRoster, setShowRoster] = useState(false);
-  
+
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     socket.emit("get-all-courses", {});
     socket.on("get-all-courses-response", (response: Course[]) => {
-      console.log(
-        "This is the response from the get-all-courses command",
-        response
-      );
-      setCourses(response); 
+      console.log("This is the response from the get-all-courses command", response);
+      setCourses(response);
     });
 
     return () => {
@@ -44,14 +41,13 @@ function ViewAllCourses() {
     };
   }, []);
 
-
   const images = [first, second, third, fourth];
 
   const handleView = (course: Course) => {
     // setSelectedCourse(course);
     // setShowModal(true);
 
-    navigate("/admin/courseManagement", { state: { courseName: course.id } });
+    navigate(`/admin/courseManagement/${course.id}`);
   };
 
   return (
@@ -62,9 +58,9 @@ function ViewAllCourses() {
             courses.length > 0 &&
             courses.map((course, index) => (
               <div key={index} className="group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4">
-                <div className="flex h-48 flex-col justify-between overflow-hidden"> 
+                <div className="flex h-48 flex-col justify-between overflow-hidden">
                   <img
-                    src={images[index % images.length]} 
+                    src={images[index % images.length]}
                     className="group-hover:scale-110 h-full w-full object-cover duration-200 cursor-pointer"
                     alt={course.title}
                     onClick={() => handleView(course)}
@@ -74,15 +70,13 @@ function ViewAllCourses() {
                   <h5 className="group-hover:text-indigo-600 mb-4 text-xl font-bold cursor-pointer" onClick={() => handleView(course)}>
                     {course.title}
                   </h5>
-                  <p className="mb-8 text-gray-600">
-                    {course.description}
-                  </p>
+                  <p className="mb-8 text-gray-600">{course.description}</p>
                 </div>
               </div>
             ))}
         </div>
       </Courses>
-      <CoursesInfo courses={selectedCourse} onClose={() => setShowModal(false)} isVisible={showModal}/>
+      <CoursesInfo courses={selectedCourse} onClose={() => setShowModal(false)} isVisible={showModal} />
       {/* <CourseDetails onClose={() => setShowModal(false)} isVisible={showModal}></CourseDetails> */}
     </>
   );

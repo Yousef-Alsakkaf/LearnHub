@@ -8,9 +8,9 @@ export const SidebarSettingsItems = [
     key: "settings",
   },
   {
-    path: "/",
+    path: "/logout",
     icon: <MdOutlineLogout size={20} />,
     text: "Logout",
-    key: "logout",
+    key: "logout", 
   },
 ];

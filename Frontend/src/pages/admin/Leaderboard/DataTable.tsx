@@ -47,7 +47,7 @@ const DataTable = () => {
   const [rows, setRows] = useState([
     { id: "1", lastName: "Snow", firstName: "Jon", CGPA: 14, Major: null },
     { id: "2", lastName: "Lannister", firstName: "Cersei", CGPA: 31, Major: null },
-    { id: "3", lastName: "Lannister", firstName: "Jaime", CGPA: 31, Major: null },
+    { id: "3", lastName: "Lannister", firstName: "Jaigitme", CGPA: 31, Major: null },
     { id: "4", lastName: "Stark", firstName: "Arya", CGPA: 11, Major: null },
     { id: "5", lastName: "Targaryen", firstName: "Daenerys", CGPA: null, Major: null },
     { id: "6", lastName: "Melisandre", firstName: null, CGPA: 150, Major: null },

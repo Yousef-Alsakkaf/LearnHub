@@ -6,6 +6,7 @@ import PageNotFound from "../../screens/error/PageNotFound";
 import AccountStudent from "../../pages/student/settings/AccountStudent";
 import StudentAnalytics from "../../pages/student/analytics/Analytics";
 import ViewBooks from "../../pages/student/Library/ViewBooks";
+import LogOut from "../logout";
 
 const Student = () => {
   return (
@@ -19,6 +20,7 @@ const Student = () => {
 
           <Route path="/student/StudentAnalytics" element={<StudentAnalytics/>}></Route>
           <Route path="/student/Library" element={<ViewBooks/>}></Route>
+          <Route path="/logout" element={<LogOut />}></Route>
         </Route>
       </Route>
     </>

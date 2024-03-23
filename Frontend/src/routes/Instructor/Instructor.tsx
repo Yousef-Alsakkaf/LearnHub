@@ -8,6 +8,7 @@ import BaseLayout from "../../layout/instructor/BaseLayout";
 import Leaderboard from "../../pages/admin/Leaderboard/Leaderboard";
 import AnalyticsInstructor from "../../pages/instructor/Analytics/CharBar";
 import ViewBooks from '../../pages/instructor/Library/ViewBooks';
+import { LogOut } from "lucide-react";
 const Admin = () => {
   return (
     <>
@@ -21,6 +22,7 @@ const Admin = () => {
           <Route path="/student/Libraryinstructor" element={<ViewBooks/>}></Route>
           <Route path="*" element={<PageNotFound />} />
         </Route> */}
+                  <Route path="/logout" element={<LogOut />}></Route>
       </Route>
     </>
   );
