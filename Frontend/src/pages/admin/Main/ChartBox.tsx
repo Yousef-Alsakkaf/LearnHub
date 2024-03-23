@@ -24,8 +24,9 @@ const ChartBox = () => {
 
 
   return (
-    <div className="max-w-screen-md mx-auto p-6">
-      <h2 className="text-2xl font-semibold mb-4">Logs</h2>
+
+    <div className="max-h-[250px] max-w-screen-md mx-auto p-6 overflow-y-auto">
+      {/* <h4 className="text-md font-semibold mb-4 mt-0">Logs</h4> */}
       {logs && logs.length > 0 ? (
         <div className="grid gap-4">
           {logs.map((log, index) => (
