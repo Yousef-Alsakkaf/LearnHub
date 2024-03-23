@@ -12,14 +12,14 @@ const command = new ServerCommandBuilder("get-announcements")
         properties: {
             course_id: {type: "number"},
             
-        },       
+        },require:["course_id"]       
       })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const announcements = await Database.executeQuery(`SELECT announcments.id, course_id, subject, message, sender_id,CONCAT(fName,' ',lName) AS name,image FROM announcments JOIN users ON users.id=sender_id WHERE course_id=?`,[Data.course_id]);
+  const announcements = await Database.executeQuery(`SELECT announcments.id, course_id, subject, message, sender_id,CONCAT(fName,' ',lName) AS name,image,date FROM announcments JOIN users ON users.id=sender_id WHERE course_id=?`,[Data.course_id]);
   return announcements;
 }
 

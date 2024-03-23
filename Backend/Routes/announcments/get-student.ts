@@ -11,7 +11,7 @@ const command = new ServerCommandBuilder("get-student-announcements")
         additionalProperties: false,
         properties: {
             id: {type: "number"},           
-        },       
+        },require:["id"]       
       })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
@@ -19,7 +19,7 @@ const command = new ServerCommandBuilder("get-student-announcements")
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
   const announcements = await Database.executeQuery(
-    `SELECT announcments.id, course_id, subject, message, sender_id,CONCAT(fName,' ',lName) AS name,image
+    `SELECT announcments.id, course_id, subject, message, sender_id,CONCAT(fName,' ',lName) AS name,image,date
      FROM announcments
      JOIN users ON users.id=sender_id
      WHERE course_id IN (SELECT course_id from studies where student_id=?)`,[Data.id]);
