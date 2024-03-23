@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { formatDistanceToNow } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 
 function CourseAssignments({ id }: any) {
   const [name, setName] = useState("");
@@ -37,6 +38,8 @@ function CourseAssignments({ id }: any) {
   const [assignments, setAssignments] = useState([]);
   const [selectedAssignment, setSelectedAssignment] = useState<any>(null);
 
+  const [triggerRefresh, setTriggerRefresh] = useState(false);
+
   useEffect(() => {
     socket.emit("get-course-material", { id });
 
@@ -47,15 +50,17 @@ function CourseAssignments({ id }: any) {
     return () => {
       socket.off("get-course-material-response");
     };
-  }, []);
+  }, [triggerRefresh]);
 
   const handleAddAssignment = () => {
-    socket.emit("add-assignment", {
+    socket.emit("add-course-material", {
       course_id: id,
       weight: weight,
       title: name,
       deadline: dueDate,
     });
+
+    setTriggerRefresh(!triggerRefresh);
   };
 
   return (
@@ -107,7 +112,10 @@ function CourseAssignments({ id }: any) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Students</TableHead>
+                  <TableHead>Material</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Weight</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Date</TableHead>
                 </TableRow>
               </TableHeader>
@@ -122,11 +130,22 @@ function CourseAssignments({ id }: any) {
                     >
                       <TableCell>
                         <div className="font-medium">{assignment?.title}</div>
+                      </TableCell>
+                      <TableCell>
                         <div className="hidden text-sm text-muted-foreground md:inline">{assignment?.description}</div>
                       </TableCell>
                       <TableCell>
-                        {/* <div className="text-sm text-muted-foreground">2 days ago</div> */}
-                        <div className="text-sm text-muted-foreground">{formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true })}</div>
+                        <div className="text-sm text-muted-foreground">{assignment?.weight}</div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground">
+                          <Badge variant={assignment?.weight == 0 && assignment?.deadline == null ? "default" : "secondary"}>
+                            {assignment?.weight == 0 && assignment?.deadline == null ? "Course Material" : "Assignment"}
+                          </Badge>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground">{assignment?.deadline == null ? "N/A" : formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true })}</div>
                       </TableCell>
                     </TableRow>
                   ))}
