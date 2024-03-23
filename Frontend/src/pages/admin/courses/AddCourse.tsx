@@ -22,23 +22,11 @@ function AddCourse() {
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const title = (
-      event.currentTarget.elements.namedItem("title") as HTMLInputElement
-    )?.value;
-    const course_code = (
-      event.currentTarget.elements.namedItem("course_code") as HTMLInputElement
-    )?.value;
-    const academic_year = (
-      event.currentTarget.elements.namedItem(
-        "academic_year"
-      ) as HTMLInputElement
-    )?.value;
-    const description = (
-      event.currentTarget.elements.namedItem("description") as HTMLInputElement
-    )?.value;
-    const image = (
-      event.currentTarget.elements.namedItem("image") as HTMLInputElement
-    )?.value;
+    const title = (event.currentTarget.elements.namedItem("title") as HTMLInputElement)?.value;
+    const course_code = (event.currentTarget.elements.namedItem("course_code") as HTMLInputElement)?.value;
+    const academic_year = (event.currentTarget.elements.namedItem("academic_year") as HTMLInputElement)?.value;
+    const description = (event.currentTarget.elements.namedItem("description") as HTMLInputElement)?.value;
+    const image = (event.currentTarget.elements.namedItem("image") as HTMLInputElement)?.value;
 
     if (!title || !course_code || !academic_year || !image || !description) {
       console.log("fields' values are missing");
@@ -53,17 +41,12 @@ function AddCourse() {
     });
   };
   return (
-    <Courses>
+    <Courses name="addCourse">
       <div className="p-6" style={{ maxHeight: "700px", overflowY: "auto" }}>
-        <h3 className="text-xl font-semibold text-gray-900 mb-5">
-          Add a new course
-        </h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-5">Add a new course</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="title"
-              className="block text-gray-700 font-bold mb-2"
-            >
+            <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
               Title
             </label>
             <input
@@ -77,10 +60,7 @@ function AddCourse() {
           {/* course_code */}
 
           <div className="mb-4">
-            <label
-              htmlFor="course_code"
-              className="block text-gray-700 font-bold mb-2"
-            >
+            <label htmlFor="course_code" className="block text-gray-700 font-bold mb-2">
               course_code
             </label>
             <input
@@ -94,10 +74,7 @@ function AddCourse() {
 
           {/* academic_year */}
           <div className="mb-4">
-            <label
-              htmlFor="academic_year"
-              className="block text-gray-700 font-bold mb-2"
-            >
+            <label htmlFor="academic_year" className="block text-gray-700 font-bold mb-2">
               academic_year
             </label>
             <input
@@ -111,10 +88,7 @@ function AddCourse() {
           {/* image */}
 
           <div className="mb-4">
-            <label
-              htmlFor="image"
-              className="block text-gray-700 font-bold mb-2"
-            >
+            <label htmlFor="image" className="block text-gray-700 font-bold mb-2">
               Image
             </label>
             <input
@@ -128,10 +102,7 @@ function AddCourse() {
 
           {/* isbn */}
           <div className="mb-4">
-            <label
-              htmlFor="description"
-              className="block text-gray-700 font-bold mb-2"
-            >
+            <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
               description
             </label>
             <input
@@ -144,10 +115,7 @@ function AddCourse() {
           </div>
 
           <div className="mb-4 button">
-            <button
-              type="submit"
-              className="hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test"
-            >
+            <button type="submit" className="hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test">
               Add course
             </button>
           </div>

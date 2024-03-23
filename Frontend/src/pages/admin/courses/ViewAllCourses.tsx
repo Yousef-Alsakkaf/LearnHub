@@ -51,7 +51,7 @@ function ViewAllCourses() {
 
   return (
     <>
-      <Courses>
+      <Courses name="courses">
         <div className="mx-auto my-10 grid max-w-screen-xl gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {courses &&
             courses.length > 0 &&
@@ -60,27 +60,18 @@ function ViewAllCourses() {
                 <div className="flex h-48 flex-col justify-between overflow-hidden"> 
                   <img
                     src={images[index % images.length]} 
-                    className="group-hover:scale-110 h-full w-full object-cover duration-200"
+                    className="group-hover:scale-110 h-full w-full object-cover duration-200 cursor-pointer"
                     alt={course.title}
+                    onClick={() => handleView(course)}
                   />
                 </div>
                 <div className="flex-1 overflow-hidden bg-white px-6 py-8">
-                  <h5 className="group-hover:text-indigo-600 mb-4 text-xl font-bold">
+                  <h5 className="group-hover:text-indigo-600 mb-4 text-xl font-bold cursor-pointer" onClick={() => handleView(course)}>
                     {course.title}
                   </h5>
                   <p className="mb-8 text-gray-600">
                     {course.description}
                   </p>
-                  <div className="flex justify-between">
-                    <a
-                      href="#"
-                      className="group text-lg font-bold focus:text-indigo-600 hover:text-indigo-600"
-                    >
-                      <span className="underline" onClick={() => handleView(course)}>View course</span>
-                    </a>
-                    
-                    <div className="max-w-full flex-none lg:px-4"></div>
-                  </div>
                 </div>
               </div>
             ))}
