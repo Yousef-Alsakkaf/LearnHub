@@ -29,11 +29,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setAccessToken(storedAccessToken);
     }
 
-    if (!storedAccessToken || storedAccessToken == "") {
-      console.log("No access token stored", storedAccessToken)
-      return;
-    }
-
     console.log("Authenticating with stored access token", storedAccessToken)
 
     socket.emit("authenticate", { accessToken: storedAccessToken });

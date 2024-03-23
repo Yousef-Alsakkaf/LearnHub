@@ -88,7 +88,6 @@ function AllUsers() {
             <div key={student.id} className="max-w-sm">
               <div className="group rounded-lg border bg-white p-4 shadow-lg transition-transform transform hover:-translate-y-1 hover:shadow-xl">
                 <div className="relative mx-auto w-36 h-36 rounded-full overflow-hidden">
-                  <span className="absolute right-0 m-3 h-3 w-3 rounded-full bg-green-500 ring-2 ring-green-300 ring-offset-2 z-1000"></span>
                   <img className="object-cover h-full w-full z-0" src={student.image} alt="" />
                 </div>
 
