@@ -4,7 +4,7 @@ import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Co
 
 
 const command = new ServerCommandBuilder("get-unAssigned-instructors")
-  .setAccessLevel(UserAccessLevels.INSTRUCTOR)
+  .setAccessLevel(UserAccessLevels.ADMIN)
   .setOutgoingChannel("get-unAssigned-instructors-response")
   .setIncomingValidationSchema({
     type: "object",
