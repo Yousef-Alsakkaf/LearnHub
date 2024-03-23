@@ -7,53 +7,57 @@ const command = new ServerCommandBuilder("add-course-material")
   .setAccessLevel(UserAccessLevels.INSTRUCTOR)
   .setOutgoingChannel("add-course-material-response")
   .setIncomingValidationSchema({
-    type: "object",
-    additionalProperties: false,
-    //course_id, weight, title, deadline
-    properties: {
-      course_id: { type: "number" },
-      weight: { type: "number" },
-      title: { type: "string" },
-      deadline: { type: "string" },
-    },
-    required: ["course_id", "weight", "title", "deadline"],
-  })
+        type: "object",
+        additionalProperties: false,
+        //course_id, weight, title, deadline
+        properties: {
+            course_id: { type: "number"},
+            weight: { type: "number"},
+            title: { type: "string"},
+            deadline: { type: "string"},
+            description: { type: "string"}
+        },required:["course_id","weight","title","deadline"]       
+      })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
   .build();
 
-async function callback({ Client, Data, EmailProvider, Database }: CommandExecuteArguments) {
-  const { course_id, weight, title, deadline } = Data;
-  const id = Client.getId();
-  const user = Client.getName();
-  try {
+async function callback({ Client, Data,EmailProvider, Database }: CommandExecuteArguments) {
+    const{course_id, weight, title, deadline,description}=Data;
+    const id=Client.getId();
+    const user=Client.getName();
+ try {
     const doesCourseExist = await Database.doesCourseExist(course_id);
-    if (!doesCourseExist) throw new Error("Course does not exist");
-    const totalWeight = await Database.executeQuery("SELECT SUM(weight) AS total_weight FROM material WHERE course_id=?", [course_id]);
-    if (totalWeight[0].total_weight + weight > 100) throw new Error("Total weight of material exceeds 100%");
-
-    if (deadline != null && deadline != undefined && deadline != "") {
-      //handling the date
-      const date = new Date(deadline);
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const seconds = date.getSeconds();
-      const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-      if (date < new Date()) throw new Error("Invalid deadline");
-      await Database.executeQuery("INSERT INTO material (course_id, weight, title, deadline) VALUES (?,?,?,?)", [course_id, weight, title, formattedDate]);
-    } else if (deadline == null || deadline == undefined || deadline == "") {
-      await Database.executeQuery("INSERT INTO material (course_id, weight, title) VALUES (?,?,?)", [course_id, weight, title]);
-    }
-    const course = await Database.executeQuery("SELECT title FROM courses WHERE id=?", [course_id]);
-    const courseName = course[0].title;
-    await Database.createLog({ event: "Add Material", details: `User ${user} added ${title} To course ${courseName}`, initiator: id });
-    const students = await Database.getCourseStudents(course_id);
-    for (const student of students) {
-      const email = student["email"];
-      await EmailProvider.sendEmail({ to: email, subject: "new material", text: `New material ${title} has been added to course ${courseName}` });
+    if(!doesCourseExist)
+        throw new Error("Course does not exist");
+    const totalWeight = await Database.executeQuery('SELECT SUM(weight) AS total_weight FROM material WHERE course_id=?',[course_id]);
+    if(totalWeight[0].total_weight+weight>100)
+        throw new Error("Total weight of material exceeds 100%");
+    
+        if(deadline!=null&&deadline!=undefined&&deadline!=""){
+        //handling the date
+        const date = new Date(deadline);
+        const year = date.getFullYear();
+        const month = date.getMonth()+1;
+        const day = date.getDate();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        if(date<new Date())
+            throw new Error("Invalid deadline");
+        await Database.executeQuery('INSERT INTO material (course_id, weight, title, deadline,description) VALUES (?,?,?,?,?)',[course_id, weight, title, formattedDate,description]);
+        }
+        else if(deadline==null||deadline==undefined||deadline==""){
+            await Database.executeQuery('INSERT INTO material (course_id, weight, title,description) VALUES (?,?,?,?)',[course_id, weight, title,description]);
+        }
+        const course = await Database.executeQuery('SELECT title FROM courses WHERE id=?',[course_id]);
+        const courseName = course[0].title;
+        await Database.createLog({ event: "Add Material", details: `User ${user} added ${title} To course ${courseName}`, initiator: id });
+        const students = await Database.getCourseStudents(course_id)
+        for(const student of students){
+        const email = student["email"];
+        await EmailProvider.sendEmail({to:email,subject:"new material", text:`New material ${title} has been added to course ${courseName}`});
     }
     return {
       notification: {

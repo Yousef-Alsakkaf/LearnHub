@@ -33,7 +33,10 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
       };
     }
 
-    const material = await Database.executeQuery("SELECT course_id, weight, material.title, deadline FROM courses JOIN material ON courses.id=course_id WHERE course_id=?", [id]);
+
+    const material = await Database.executeQuery('SELECT  course_id, weight, material.title, deadline,description FROM courses JOIN material ON courses.id=course_id WHERE course_id=?',[id]);
+    return material;
+
     
     return material;
   } catch (error) {

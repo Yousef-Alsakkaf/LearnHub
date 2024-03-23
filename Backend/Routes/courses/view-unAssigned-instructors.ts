@@ -21,7 +21,7 @@ const command = new ServerCommandBuilder("get-unAssigned-instructors")
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
   const course_id = Data.course_id;
   const roaster = await Database.executeQuery(
-    "SELECT fName,lName,image,type,UID from users where type='instructor' and users.id NOT IN (select instructor_id from teaches where course_id=?)",
+    "SELECT fName,lName,image,type,UID,users.id from users where type='instructor' and users.id NOT IN (select instructor_id from teaches where course_id=?)",
     [course_id]
   );
   
