@@ -8,6 +8,7 @@ import first from "../../../assets/courses/first.jpg";
 import second from "../../../assets/courses/second.jpg";
 import third from "../../../assets/courses/third.jpg";
 import fourth from "../../../assets/courses/fourth.jpg";
+import CourseDetails from "../../../templates/courses/CourseDetails";
 
 interface Course {
   title: string;
@@ -86,6 +87,7 @@ function ViewAllCourses() {
         </div>
       </Courses>
       <CoursesInfo courses={selectedCourse} onClose={() => setShowModal(false)} isVisible={showModal}/>
+      {/* <CourseDetails onClose={() => setShowModal(false)} isVisible={showModal}></CourseDetails> */}
     </>
   );
 }

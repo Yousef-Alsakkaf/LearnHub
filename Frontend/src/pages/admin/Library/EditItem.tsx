@@ -1,119 +1,119 @@
-import React, { useState } from 'react'
-import socket from '../../../socket';
-import BookModal from '../../../components/modal/ViewMonal';
+import React, { useState } from "react";
+import socket from "../../../socket";
+import BookModal from "../../../components/modal/ViewMonal";
 
 type Book = {
-    id: number;
-    image: string;
-    genre: string;
-    title: string;
-    copies: number;
-    author: string;
-    barcode: number;
-    language: string;
-    year_of_prod: number;
-    publisher: string;
-    subjects: string;
-    price: number;
-    type: string;
-    no_of_pages: number;
-    isbn: string;
-    rack: string;
-  };
+  id: number;
+  image: string;
+  genre: string;
+  title: string;
+  copies: number;
+  author: string;
+  barcode: number;
+  language: string;
+  year_of_prod: number;
+  publisher: string;
+  subjects: string;
+  price: number;
+  type: string;
+  no_of_pages: number;
+  isbn: string;
+  rack: string;
+};
 type BookModalProps = {
-    isVisible: boolean;
-    onClose: () => void;
-    selectedBook: Book | null;
-  };
+  isVisible: boolean;
+  onClose: () => void;
+  selectedBook: Book | null;
+};
 const EditItem: React.FC<BookModalProps> = ({
-    isVisible,
-    onClose,
-    selectedBook,
-  }) => {
-    
-    let [updateData, setUpdateData] = useState({
-        title: selectedBook?.title,
-        author: selectedBook?.author,
-        barcode: selectedBook?.barcode,
-        language: selectedBook?.language,
-        year_of_prod: selectedBook?.year_of_prod,
-        publisher: selectedBook?.publisher,
-        subjects: selectedBook?.subjects,
-        no_of_pages: selectedBook?.no_of_pages,
-        price: selectedBook?.price,
-        rack: selectedBook?.rack,
-        image: selectedBook?.image,
-    
-      });
+  isVisible,
+  onClose,
+  selectedBook,
+}) => {
+  let [updateData, setUpdateData] = useState({
+    title: selectedBook?.title,
+    author: selectedBook?.author,
+    barcode: selectedBook?.barcode,
+    language: selectedBook?.language,
+    year_of_prod: selectedBook?.year_of_prod,
+    publisher: selectedBook?.publisher,
+    subjects: selectedBook?.subjects,
+    no_of_pages: selectedBook?.no_of_pages,
+    price: selectedBook?.price,
+    rack: selectedBook?.rack,
+    image: selectedBook?.image,
+  });
 
-      console.log("this is the selected book", selectedBook);
-      const handleUpdatingData = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-      
-        const formData = new FormData(event.currentTarget);
-      
-        const title = formData.get("title") as string;
-        const author = formData.get("author") as string;
-        const language = formData.get("language") as string;
-        const year_of_prod = formData.get("year_of_prod") as string;
-        const publisher = formData.get("publisher") as string;
-        const subjects = formData.get("subjects") as string;
-        const no_of_pages = formData.get("no_of_pages") as string;
-        const price = formData.get("price") as string;
-        const rack = formData.get("rack") as string;
-        const image = formData.get("image") as string;
-        
-        const barcode = formData.get("barcode") as string;
-      
-        if (
-          !title ||
-          !author ||
-          !language ||
-          !year_of_prod ||
-          !publisher ||
-          !subjects ||
-          !no_of_pages ||
-          !price ||
-          !rack ||
-          !image ||
-        
-          !barcode
-        ) {
-          console.log("fields' values are missing");
-          return;
-        }
-        console.log(updateData);
-        updateData.barcode = Number(updateData.barcode);
-        updateData.year_of_prod = Number(updateData.year_of_prod);
-        updateData.no_of_pages = Number(updateData.no_of_pages);
-        updateData.price = Number(updateData.price);
-        updateData.rack = (updateData.rack)?.toString();
-        
-      
-        console.log("this is what the update request get when updating", updateData);
-        socket.emit("update-book", updateData);
-      
-        socket.once("update-book-response", (response) => {
-          console.log("This is the response from the update  book request: ", response);
-          
-          
-        
-        });
-      };
-      
-    type Book = {
-        [key: string]: any;
-        
-    };
-    const handleUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setUpdateData(prevState => ({
-            ...prevState,
-            [name]: value.trim() === '' || Number(value) === 0 ? (selectedBook as Book)[name] : value
-        }));
-    };
+  console.log("this is the selected book", selectedBook);
+  const handleUpdatingData = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    
+    const formData = new FormData(event.currentTarget);
+
+    const title = formData.get("title") as string;
+    const author = formData.get("author") as string;
+    const language = formData.get("language") as string;
+    const year_of_prod = formData.get("year_of_prod") as string;
+    const publisher = formData.get("publisher") as string;
+    const subjects = formData.get("subjects") as string;
+    const no_of_pages = formData.get("no_of_pages") as string;
+    const price = formData.get("price") as string;
+    const rack = formData.get("rack") as string;
+    const image = formData.get("image") as string;
+
+    const barcode = formData.get("barcode") as string;
+
+    if (
+      !title ||
+      !author ||
+      !language ||
+      !year_of_prod ||
+      !publisher ||
+      !subjects ||
+      !no_of_pages ||
+      !price ||
+      !rack ||
+      !image ||
+      !barcode
+    ) {
+      console.log("fields' values are missing");
+      return;
+    }
+    console.log(updateData);
+    updateData.barcode = Number(updateData.barcode);
+    updateData.year_of_prod = Number(updateData.year_of_prod);
+    updateData.no_of_pages = Number(updateData.no_of_pages);
+    updateData.price = Number(updateData.price);
+    updateData.rack = updateData.rack?.toString();
+
+    console.log(
+      "this is what the update request get when updating",
+      updateData
+    );
+    socket.emit("update-book", updateData);
+
+    socket.once("update-book-response", (response) => {
+      console.log(
+        "This is the response from the update  book request: ",
+        response
+      );
+    });
+  };
+
+  type Book = {
+    [key: string]: any;
+  };
+  const handleUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUpdateData((prevState) => ({
+      ...prevState,
+      [name]:
+        value.trim() === "" || Number(value) === 0
+          ? (selectedBook as Book)[name]
+          : value,
+    }));
+  };
+
   return (
     <BookModal isVisible={isVisible} onClose={onClose}>
       <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" }}>
@@ -134,7 +134,7 @@ const EditItem: React.FC<BookModalProps> = ({
               name="title"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               onChange={handleUpdate}
-              defaultValue={selectedBook ? selectedBook.title : ''}
+              defaultValue={selectedBook ? selectedBook.title : ""}
             />
           </div>
           {/* author */}
@@ -326,8 +326,6 @@ const EditItem: React.FC<BookModalProps> = ({
             />
           </div>
 
-       
-
           <div className="mb-4">
             <button
               type="submit"
@@ -339,7 +337,7 @@ const EditItem: React.FC<BookModalProps> = ({
         </form>
       </div>
     </BookModal>
-  )
-}
+  );
+};
 
-export default EditItem
+export default EditItem;

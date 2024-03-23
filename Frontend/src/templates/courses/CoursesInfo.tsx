@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ViewModal from "../../components/modal/ViewMonal";
 import socket from "../../socket";
 import Roster from "../../templates/courses/Roster";
+import CourseDetails from "./CourseDetails";
 
 interface Course {
   title: string;
@@ -22,6 +23,7 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [roster, setRoster] = useState(false);
 
+  const [details, setDetails] = useState(false);
   console.log("This is the course", courses);
   let [updateData, setUpdateData] = useState({
     title: courses?.title,
@@ -150,10 +152,18 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
 
               <button
                 type="submit"
-                className="hover:bg-green-700 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test"
+                className="hover:bg-green-700 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test mr-5"
                 onClick={() => setRoster(true)}
               >
                 Roster
+              </button>
+
+              <button
+                type="submit"
+                className="hover:bg-green-700 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline test"
+                onClick={() => setDetails(true)}
+              >
+                Show details
               </button>
             </div>
           </div>
@@ -245,6 +255,7 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
         </div>
       </ViewModal>
       <Roster isVisible={roster} onClose={() => setRoster(false)}></Roster>
+      <CourseDetails onClose={() => setDetails(false)} isVisible={details} courses={selectedCourse}></CourseDetails>
     </>
   );
 }

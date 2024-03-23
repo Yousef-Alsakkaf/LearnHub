@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import BookModal from "../../../components/modal/ViewMonal";
+import CourseDetails from "../../../templates/courses/CourseDetails";
 type Book = {
   id: number;
   image: string;
@@ -31,6 +32,7 @@ const ViewItem: React.FC<BookModalProps> = ({
   onClose,
   selectedBook,
 }) => {
+    const [showModal, setShowModal] = useState(false);
   return (
     <BookModal isVisible={isVisible} onClose={onClose}>
       {selectedBook && (
@@ -149,8 +151,21 @@ const ViewItem: React.FC<BookModalProps> = ({
             </label>
             <p>{selectedBook.rack}</p>
           </div>
+
+          {/* <div className="mb-4">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => setShowModal(true)}
+            >
+              Details
+            </button>
+          </div> */}
         </div>
+        
       )}
+
+      {/* <CourseDetails onClose={() => setShowModal(false)} isVisible={showModal}></CourseDetails> */}
     </BookModal>
   );
 };
