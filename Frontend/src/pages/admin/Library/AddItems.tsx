@@ -76,7 +76,7 @@ function AddItems() {
           Book management settings
         </h1>
       </div>
-      <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" }}>
+      <div className="p-6" style={{ maxHeight: "800px", overflowY: "auto" }}>
         <h3 className="text-xl font-semibold text-gray-900 mb-5">
           Add New Book
         </h3>

@@ -30,7 +30,7 @@ function AddUsers() {
       <div className="pt-4 div" data-name="add-book-admin">
         <h1 className="py-2 text-2xl font-semibold">Add users settings</h1>
       </div>
-      <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" }}>
+      <div className="p-6" style={{ maxHeight: "700px", overflowY: "auto" }}>
         <h3 className="text-xl font-semibold text-gray-900 mb-5">Add a new user</h3>
         <form>
           <div className="mb-4">
@@ -42,6 +42,7 @@ function AddUsers() {
               type="text"
               id="username"
               name="username"
+              autoComplete="new-password"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -54,6 +55,7 @@ function AddUsers() {
               type="password"
               id="password"
               name="password"
+              autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
