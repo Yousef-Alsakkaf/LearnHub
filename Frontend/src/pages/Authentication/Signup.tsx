@@ -9,10 +9,7 @@ import {
   Link,
 } from "@mui/material";
 import { BiSun, BiMoon } from "react-icons/bi";
-import {
-  GoogleLoginButton,
-  GithubLoginButton,
-} from "react-social-login-buttons";
+
 // import '../../App.scss'
 import useLocalStorage from "use-local-storage";
 
