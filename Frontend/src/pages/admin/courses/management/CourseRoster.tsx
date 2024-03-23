@@ -40,8 +40,9 @@ const CourseRoster:React.FC<BookProps> = ({id}) => {
     link.click();
   };
   return (
-    <div className="w-screen mr-[500px]">
-      <div className="mx-auto mt-8 max-w-screen-lg mr-[450px]">
+    <div className="flex justify-center">
+    <div className="w-screen">
+      <div className="mx-auto mt-8 max-w-screen-lg">
         <div className="sm:flex sm:items-center sm:justify-between flex-col sm:flex-row">
           <p className="flex-1 text-base font-bold text-gray-900">Roster</p>
 
@@ -151,6 +152,7 @@ const CourseRoster:React.FC<BookProps> = ({id}) => {
           </table>
         </div>
       </div>
+    </div>
     </div>
   );
 };
