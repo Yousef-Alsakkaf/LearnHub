@@ -18,7 +18,7 @@ import {
       key: "users",
     },
     {
-      path: "/",
+      path: "/student/Libraryinstructor",
       icon: <MdOutlineLibraryBooks size={18} />,
       text: "Library Management",
       key: "library",
