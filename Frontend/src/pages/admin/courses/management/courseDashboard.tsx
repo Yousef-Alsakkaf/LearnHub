@@ -75,8 +75,7 @@ function CourseDashboard() {
                 <SheetHeader>
                   <SheetTitle>Course students</SheetTitle>
                   <SheetDescription>
-                    View all students in this course, if you would like to add
-                    or remove you can from the management
+                    
                     {/* here i will render all students */}
                     < ViewAllStudents/>
                   </SheetDescription>
