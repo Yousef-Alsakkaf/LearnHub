@@ -78,11 +78,17 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
 
   return (
     <>
+    {!details && (
+
       <ViewModal isVisible={isVisible} onClose={onClose}>
         {courses && (
           <div
             className="p-6"
-            style={{ maxHeight: "500px", overflowY: "auto" }}
+            style={{
+              maxHeight: "500px",
+              overflowY: "auto",
+              display: details ? "none" : "block" 
+            }}
           >
             <h3 className="text-xl font-semibold text-gray-900 mb-5">
               Course Info
@@ -169,8 +175,11 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
           </div>
         )}
       </ViewModal>
+)}
+    {!details && (
+
       <ViewModal onClose={() => setShowModal(false)} isVisible={showModal}>
-        <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" }}>
+        <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" ,display: details ? "none" : "block" }}>
           <h3 className="text-xl font-semibold text-gray-900 mb-5">
             Update a course
           </h3>
@@ -254,8 +263,9 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
           </form>
         </div>
       </ViewModal>
+      )}
       <Roster isVisible={roster} onClose={() => setRoster(false)}></Roster>
-      <CourseDetails onClose={() => setDetails(false)} isVisible={details} courses={selectedCourse}></CourseDetails>
+      <CourseDetails courses={selectedCourse} isVisible={true} onClose={() => setDetails(false)}/>
     </>
   );
 }

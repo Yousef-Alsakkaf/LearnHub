@@ -13,11 +13,11 @@ const NewModal: React.FC<ModalProps> = ({ isVisible, onClose, children }: ModalP
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center lg:ml-[200px]"
+      className=""
       id="wrapper"
       onClick={handleClose}
     >
-      <div className="bg-white p-4 rounded-lg relative" style={{ width: '70%', height: '80%' }}>
+      <div>
         <button
           className="text-gray-600 text-xl absolute top-2 right-2"
           onClick={() => onClose()}
