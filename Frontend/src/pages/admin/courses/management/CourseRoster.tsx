@@ -9,10 +9,10 @@ interface UserData {
   lName: string;
   type: string;
 }
-const CourseRoster = () => {
+const CourseRoster:React.FC<BookProps> = ({id}) => {
   const [students, setStudents] = React.useState<UserData[] | null>(null);
   useEffect(() => {
-    socket.emit("get-course-roaster", { id: 1 });
+    socket.emit("get-course-roaster", { id: id });
 
     socket.on("get-course-roaster-response", (data) => {
       console.log("this is the response from the roaster", data);
@@ -122,14 +122,14 @@ const CourseRoster = () => {
                       >
                         {user.fName} {user.lName}
                         <div className="mt-1 lg:hidden">
-                          <p className="font-normal text-gray-500">
-                            year {randomYear}
+                        <p className="font-normal text-gray-500">
+                        {user.type === "instructor" ? "" : "year"} {user.type === "instructor" ? "already graduate" :  randomYear}
                           </p>
                         </div>
                       </td>
 
                       <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                        year {randomYear}
+                       {user.type === "instructor" ? "" : "year"} {user.type === "instructor" ? "already graduate" :  randomYear}
                       </td>
 
                       <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
