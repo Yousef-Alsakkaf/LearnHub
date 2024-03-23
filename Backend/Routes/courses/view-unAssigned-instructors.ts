@@ -1,28 +1,28 @@
 import { error } from "ajv/dist/vocabularies/applicator/dependencies.js";
 import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
-import { v4 as uuid } from "uuid";
 
-const command = new ServerCommandBuilder("get-course-roaster")
-  .setAccessLevel(UserAccessLevels.STUDENT)
-  .setOutgoingChannel("get-course-roaster-response")
+
+const command = new ServerCommandBuilder("get-unAssigned-instructors")
+  .setAccessLevel(UserAccessLevels.ADMIN)
+  .setOutgoingChannel("get-unAssigned-instructors-response")
   .setIncomingValidationSchema({
     type: "object",
     additionalProperties: false,
     properties: {
-      id: { type: "number" },
+      course_id: { type: "number" },
     },
-    required: ["id"],
+    required: ["course_id"],
   })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-  const id = Data.id;
+  const course_id = Data.course_id;
   const roaster = await Database.executeQuery(
-    "SELECT fName,lName,image,type,UID from studies JOIN users ON student_id=users.id WHERE course_id=? UNION (SELECT fName,lName,image,type,UID from teaches JOIN users ON instructor_id=users.id WHERE course_id=?) ORDER BY type",
-    [id, id]
+    "SELECT fName,lName,image,type,UID from users where type='instructor' and users.id NOT IN (select instructor_id from teaches where course_id=?)",
+    [course_id]
   );
   
   return roaster;
