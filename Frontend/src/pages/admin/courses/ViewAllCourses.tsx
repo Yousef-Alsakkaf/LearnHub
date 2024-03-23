@@ -26,6 +26,7 @@ function ViewAllCourses() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [showRoster, setShowRoster] = useState(false);
+  
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -50,7 +51,7 @@ function ViewAllCourses() {
     // setSelectedCourse(course);
     // setShowModal(true);
 
-    navigate("/admin/courseManagement");
+    navigate("/admin/courseManagement", { state: { courseName: course.id } });
   };
 
   return (

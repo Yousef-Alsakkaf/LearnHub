@@ -6,7 +6,7 @@ interface SettingsProps {
   name?: string;
 }
 
-function ViewLibrary({ children, name }: SettingsProps) {
+function ViewLibrary({ children }: SettingsProps) {
   return (
     <div className="mx-4 min-h-screen max-w-screen-xl sm:mx-8 xl:mx-auto">
       <h1 className="border-b py-6 text-4xl font-semibold">Library Management</h1>

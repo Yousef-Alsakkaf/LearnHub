@@ -8,7 +8,7 @@ const Global = () => {
   return (
     <>
       <Route path="/" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
+      {/* <Route path="/signup" element={<SignupPage />} /> */}
     </>
   );
 };

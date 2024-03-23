@@ -8,113 +8,62 @@ type BookModalProps = {
 const EditAssignment: React.FC<BookModalProps> = ({ isVisible, onClose }) => {
   return (
     <BookModal onClose={onClose} isVisible={isVisible}>
-      <section className="shadow-blue-100 mx-auto max-w-screen-lg rounded-xl bg-white text-gray-600 shadow-lg sm:my-10 sm:border">
+      <section className="shadow-blue-100 mx-auto max-w-screen-lg rounded-xl text-gray-600 shadow-lg sm:my-10 sm:border">
         <div className="container mx-auto flex flex-col flex-wrap px-5 pb-12">
           <div className="flex w-full flex-col">
-            <h1 className="text-2xl font-semibold">Edit  Assignment</h1>
-            
+            <h1 className="text-2xl font-semibold">Edit Assignment</h1>
+
             <div className="mt-4 grid items-center gap-3 gap-y-5 sm:grid-cols-4">
               <div className="flex flex-col sm:col-span-3">
-                <label
-                  className="mb-1 ml-3 font-semibold text-gray-500"
-                  htmlFor=""
-                >
-                khra
+                <label className="mb-1 ml-3 font-semibold text-gray-500" htmlFor="">
+                  khra
                 </label>
-                <select
-                  className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring"
-                  name=""
-                  id=""
-                >
+                <select className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring" name="" id="">
                   <option value="khra">khra</option>
                 </select>
               </div>
               <div className="col-span-1 flex flex-col">
-                <label
-                  className="mb-1 ml-3 font-semibold text-gray-500"
-                  htmlFor=""
-                >
+                <label className="mb-1 ml-3 font-semibold text-gray-500" htmlFor="">
                   khra
                 </label>
-                <select
-                  className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring"
-                  name=""
-                  id=""
-                >
-                  <option value="khra">
-                  khra
-                  </option>
+                <select className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring" name="" id="">
+                  <option value="khra">khra</option>
                 </select>
               </div>
               <div className="flex flex-col sm:col-span-3">
-                <label
-                  className="mb-1 ml-3 font-semibold text-gray-500"
-                  htmlFor=""
-                >
+                <label className="mb-1 ml-3 font-semibold text-gray-500" htmlFor="">
                   khra
                 </label>
-                <select
-                  className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring"
-                  name=""
-                  id=""
-                >
+                <select className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring" name="" id="">
                   <option value="French Toast">khra</option>
                 </select>
               </div>
               <div className="col-span-1 flex flex-col">
-                <label
-                  className="mb-1 ml-3 font-semibold text-gray-500"
-                  htmlFor=""
-                >
+                <label className="mb-1 ml-3 font-semibold text-gray-500" htmlFor="">
                   khra
                 </label>
-                <select
-                  className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring"
-                  name=""
-                  id=""
-                >
+                <select className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring" name="" id="">
                   <option value="Toast with Strawberry Juice">khra</option>
                 </select>
               </div>
               <div className="flex flex-col sm:col-span-3">
-                <label
-                  className="mb-1 ml-3 font-semibold text-gray-500"
-                  htmlFor=""
-                >
+                <label className="mb-1 ml-3 font-semibold text-gray-500" htmlFor="">
                   khra
                 </label>
-                <select
-                  className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring"
-                  name=""
-                  id=""
-                >
+                <select className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring" name="" id="">
                   <option value="t">khra</option>
                 </select>
               </div>
               <div className="col-span-1 flex flex-col">
-                <label
-                  className="text-sm font-semibold uppercase text-gray-500"
-                  htmlFor=""
-                >
+                <label className="text-sm font-semibold uppercase text-gray-500" htmlFor="">
                   khra
                 </label>
-                <select
-                  className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring"
-                  name=""
-                  id=""
-                >
-                  <option value="Toast with Strawberry Juice">
-                  khra
-                  </option>
+                <select className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring" name="" id="">
+                  <option value="Toast with Strawberry Juice">khra</option>
                 </select>
               </div>
               <label className="mb-4 flex items-center" htmlFor="">
-                <input
-                  className="accent-blue-700 mr-3 h-5 w-5"
-                  type="checkbox"
-                  name=""
-                  id=""
-                />
+                <input className="accent-blue-700 mr-3 h-5 w-5" type="checkbox" name="" id="" />
                 khra
               </label>
             </div>
@@ -132,11 +81,7 @@ const EditAssignment: React.FC<BookModalProps> = ({ isVisible, onClose }) => {
                   stroke="currentColor"
                   stroke-width="2"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
             </div>
