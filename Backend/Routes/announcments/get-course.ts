@@ -12,7 +12,7 @@ const command = new ServerCommandBuilder("get-announcements")
         properties: {
             course_id: {type: "number"},
             
-        },require:["course_id"]       
+        },required:["course_id"]       
       })
   .setExecute(callback)
   .setOutgoingValidationSchema({})

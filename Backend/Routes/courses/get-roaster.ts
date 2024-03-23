@@ -21,7 +21,7 @@ const command = new ServerCommandBuilder("get-course-roaster")
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
   const id = Data.id;
   const roaster = await Database.executeQuery(
-    "SELECT fName,lName,image,type from studies JOIN users ON student_id=users.id WHERE course_id=? UNION (SELECT fName,lName,image,type from teaches JOIN users ON instructor_id=users.id WHERE course_id=?) ORDER BY type",
+    "SELECT fName,lName,image,type,UID from studies JOIN users ON student_id=users.id WHERE course_id=? UNION (SELECT fName,lName,image,type,UID from teaches JOIN users ON instructor_id=users.id WHERE course_id=?) ORDER BY type",
     [id, id]
   );
   
