@@ -48,7 +48,8 @@ FROM
   users u
 WHERE
   u.type = 'student'
-  AND u.active = 1;
+  AND u.active = 1
+  ORDER BY CGPA DESC
 `,[]);
 return leaderboard;
 }
