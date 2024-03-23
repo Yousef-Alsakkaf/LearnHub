@@ -10,10 +10,11 @@ import {
 } from "react-icons/md";
 import { SiStudyverse } from "react-icons/si";
 import { CiCalculator1 } from "react-icons/ci";
+import { MdOutlineDashboard } from "react-icons/md";
 export const sidebarAdminItems = [
   {
     path: "/admin/",
-    icon: <SiStudyverse size={18} />,
+    icon: <MdOutlineDashboard size={18} />,
     text: "Dashboard",
     key: "dash",
   },

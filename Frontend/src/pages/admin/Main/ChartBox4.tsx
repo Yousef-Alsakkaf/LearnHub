@@ -1,8 +1,9 @@
 import "../../../styles/chartBox.scss"
 import allUsers from "../../../assets/images/coursesIcon66.png"
 import { Link } from "react-router-dom"
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import socket from "@/socket";
 
 const data = [
     {
@@ -52,6 +53,18 @@ const data = [
 
 
 const ChartBox4 = () => {
+  const [coursesCount, setCoursesCount] = React.useState<number | null>(null);
+  useEffect(() => { 
+    socket.emit("get-stats", {});
+    socket.on("get-stats-response", (response) => {
+      setCoursesCount(response.courses);
+    console.log("this is response from get-stats", response );
+    });
+    return () => {
+      socket.off("get-stats-response");
+    };
+  },[])
+
   return (
     <div className="chartBox">
         <div className="boxInfo">
@@ -59,7 +72,7 @@ const ChartBox4 = () => {
                 <img src ={allUsers} alt=" "/>
                 <span>Total Courses</span>
             </div>
-            <h1>45</h1>
+            <h1>{coursesCount}</h1>
             {/* <Link to="">View All</Link> */}
         </div>
         <div className="chartInfo">
