@@ -39,6 +39,16 @@ export default function ChartBubble(): JSX.Element {
             ],
             backgroundColor: "rgba(66, 133, 244, 0.8)",
           },
+          {
+            label: "global",
+            data: [
+              {
+                x: 10,
+                y: 9,
+                r: 10,
+              },
+            ],
+          },
         ],
       }}
     />

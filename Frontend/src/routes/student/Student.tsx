@@ -4,6 +4,7 @@ import BaseLayout from "../../layout/student/BasyLayout";
 import DashboardScreen from "../../screens/student/Dashboard/DashboardScreen";
 import PageNotFound from "../../screens/error/PageNotFound";
 import AccountStudent from "../../pages/student/settings/AccountStudent";
+import StudentAnalytics from "../../pages/student/analytics/Analytics";
 
 const Student = () => {
   return (
@@ -14,6 +15,8 @@ const Student = () => {
           <Route path="*" element={<PageNotFound />} />
           
           <Route path="/student/settings" element={<AccountStudent/>}></Route>
+
+          <Route path="/student/StudentAnalytics" element={<StudentAnalytics/>}></Route>
         </Route>
       </Route>
     </>
