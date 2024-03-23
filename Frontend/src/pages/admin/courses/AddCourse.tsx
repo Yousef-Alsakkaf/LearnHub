@@ -54,7 +54,7 @@ function AddCourse() {
   };
   return (
     <Courses>
-      <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" }}>
+      <div className="p-6" style={{ maxHeight: "700px", overflowY: "auto" }}>
         <h3 className="text-xl font-semibold text-gray-900 mb-5">
           Add a new course
         </h3>
