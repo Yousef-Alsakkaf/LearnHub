@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import socket from "@/socket";
 import CourseDashboard from "./courseDashboard";
+import CourseAssignments from "./courseAssignments";
 
 export function CourseManagementDashboard({ location }: any) {
   const [courseName, setCourseName] = useState<string>(location?.state?.name);
@@ -64,6 +65,7 @@ export function CourseManagementDashboard({ location }: any) {
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         {selectedTab === 'Dashboard' && <CourseDashboard />}
+        {selectedTab === 'Assignments' && <CourseAssignments />}
       </main>
     </div>
   );
