@@ -11,7 +11,7 @@ const command = new ServerCommandBuilder("get-student-announcements")
         additionalProperties: false,
         properties: {
             id: {type: "number"},           
-        },       
+        },require:["id"]       
       })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
