@@ -27,7 +27,7 @@ const AnnoucementPopUp: React.FC<BookModalProps> = ({ isVisible, onClose, select
               <div className="ml-4 w-56">
                 <p className="text-slate-800 text-xl font-extrabold">{selectedAnnouncement.name}</p>
                 <p className="text-slate-500">{selectedAnnouncement.subject}</p>
-                <p className="text-slate-500">{selectedAnnouncement?.date}</p>
+                <p className="text-slate-500">{new Date(selectedAnnouncement?.date!).toLocaleDateString()}</p>
               </div>
             </div>
           </div>
