@@ -36,7 +36,7 @@ export const sidebarStudentItems = [
   //   key: "progress",
   // },
   {
-    path: "/",
+    path: "/student/Library",
     icon: <MdOutlineLibraryAdd size={20} />,
     text: "Library",
     key: "library",
