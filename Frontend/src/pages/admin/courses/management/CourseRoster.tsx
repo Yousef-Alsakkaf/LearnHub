@@ -1,18 +1,49 @@
 import socket from "@/socket";
 import React, { useEffect } from "react";
 
-type BookProps  = {
-    id: number; 
+type BookProps = {
+  id: number;
+};
+interface UserData {
+  fName: string;
+  lName: string;
+  type: string;
 }
 const CourseRoster = () => {
-    
+  const [students, setStudents] = React.useState<UserData[] | null>(null);
+  useEffect(() => {
+    socket.emit("get-course-roaster", { id: 1 });
+
+    socket.on("get-course-roaster-response", (data) => {
+      console.log("this is the response from the roaster", data);
+      setStudents(data);
+    });
+
+    return () => {
+      socket.off("get-course-roaster-response");
+      socket.off("get-course-roaster");
+    };
+  }, []);
+
+  const exportToCSV = () => {
+    if (!students) return;
+
+    const csvContent = "data:text/csv;charset=utf-8," + students.map((user) => {
+      return `${user.fName},${user.lName},${user.type}`;
+    }).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "course_roster.csv");
+    document.body.appendChild(link);
+    link.click();
+  };
   return (
     <div className="w-screen mr-[500px]">
       <div className="mx-auto mt-8 max-w-screen-lg mr-[450px]">
         <div className="sm:flex sm:items-center sm:justify-between flex-col sm:flex-row">
-          <p className="flex-1 text-base font-bold text-gray-900">
-            Latest Payments
-          </p>
+          <p className="flex-1 text-base font-bold text-gray-900">Roster</p>
 
           <div className="mt-4 sm:mt-0">
             <div className="flex items-center justify-start sm:justify-end">
@@ -21,20 +52,15 @@ const CourseRoster = () => {
                   htmlFor=""
                   className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
                 >
-                  {" "}
-                  Sort by:{" "}
+                
                 </label>
-                <select
-                  name=""
-                  className="sm: mr-4 block w-full whitespace-pre rounded-lg border p-1 pr-10 text-base outline-none focus:shadow sm:text-sm"
-                >
-                  <option className="whitespace-no-wrap text-sm">Recent</option>
-                </select>
+                
               </div>
 
               <button
                 type="button"
                 className="inline-flex cursor-pointer items-center rounded-lg border border-gray-400 bg-white py-2 px-3 text-center text-sm font-medium text-gray-800 shadow hover:bg-gray-100 focus:shadow"
+                onClick={exportToCSV}
               >
                 <svg
                   className="mr-1 h-4 w-4"
@@ -69,7 +95,7 @@ const CourseRoster = () => {
                 </td>
 
                 <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
-                    year
+                  year
                 </td>
 
                 <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">
@@ -83,160 +109,44 @@ const CourseRoster = () => {
             </thead>
 
             <tbody className="lg:border-gray-300">
-              <tr className="">
-                <td
-                  width="50%"
-                  className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
-                >
-                  Yousef Alsakkaf
-                  <div className="mt-1 lg:hidden">
-                    <p className="font-normal text-gray-500">
-                      year 1
-                    </p>
-                  </div>
-                </td>
+              {students &&
+                students.length > 0 &&
+                students.map((user, index) => {
+                  const randomYear = Math.floor(Math.random() * 4) + 1;
 
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                year 1
-                </td>
+                  return (
+                    <tr key={index} className="">
+                      <td
+                        width="50%"
+                        className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
+                      >
+                        {user.fName} {user.lName}
+                        <div className="mt-1 lg:hidden">
+                          <p className="font-normal text-gray-500">
+                            year {randomYear}
+                          </p>
+                        </div>
+                      </td>
 
-                <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-                  student
-                  <div className="flex mt-1 ml-auto w-fit items-center rounded-full bg-blue-600 py-2 px-3 text-left text-xs font-medium text-white lg:hidden">
-                    active
-                  </div>
-                </td>
+                      <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
+                        year {randomYear}
+                      </td>
 
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  <div className="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">
-                    active
-                  </div>
-                </td>
-              </tr>
+                      <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
+                        {user.type}
+                        <div className="flex mt-1 ml-auto w-fit items-center rounded-full bg-blue-600 py-2 px-3 text-left text-xs font-medium text-white lg:hidden">
+                          {index % 2 === 0 ? "active" : "inactive"}
+                        </div>
+                      </td>
 
-              <tr className="">
-                <td
-                  width="50%"
-                  className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
-                >
-                  Yousef Alsakkaf
-                  <div className="mt-1 lg:hidden">
-                    <p className="font-normal text-gray-500">
-                      year 1
-                    </p>
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                year 1
-                </td>
-
-                <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-                  student
-                  <div className="flex mt-1 ml-auto w-fit items-center rounded-full bg-blue-600 py-2 px-3 text-left text-xs font-medium text-white lg:hidden">
-                    active
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  <div className="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">
-                    active
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="">
-                <td
-                  width="50%"
-                  className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
-                >
-                  Yousef Alsakkaf
-                  <div className="mt-1 lg:hidden">
-                    <p className="font-normal text-gray-500">
-                      year 1
-                    </p>
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                year 1
-                </td>
-
-                <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-                  student
-                  <div className="flex mt-1 ml-auto w-fit items-center rounded-full bg-blue-600 py-2 px-3 text-left text-xs font-medium text-white lg:hidden">
-                    active
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  <div className="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">
-                    active
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="">
-                <td
-                  width="50%"
-                  className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
-                >
-                  Yousef Alsakkaf
-                  <div className="mt-1 lg:hidden">
-                    <p className="font-normal text-gray-500">
-                      year 1
-                    </p>
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                year 1
-                </td>
-
-                <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-                  student
-                  <div className="flex mt-1 ml-auto w-fit items-center rounded-full bg-blue-600 py-2 px-3 text-left text-xs font-medium text-white lg:hidden">
-                    active
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  <div className="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">
-                    active
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="">
-                <td
-                  width="50%"
-                  className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6"
-                >
-                  Yousef Alsakkaf
-                  <div className="mt-1 lg:hidden">
-                    <p className="font-normal text-gray-500">
-                      year 1
-                    </p>
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                year 1
-                </td>
-
-                <td className="whitespace-no-wrap py-4 px-6 text-right text-sm text-gray-600 lg:text-left">
-                  student
-                  <div className="flex mt-1 ml-auto w-fit items-center rounded-full bg-blue-600 py-2 px-3 text-left text-xs font-medium text-white lg:hidden">
-                    active
-                  </div>
-                </td>
-
-                <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                  <div className="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">
-                    active
-                  </div>
-                </td>
-              </tr>
+                      <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
+                        <div className="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">
+                          {index % 2 === 0 ? "active" : "inactive"}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
