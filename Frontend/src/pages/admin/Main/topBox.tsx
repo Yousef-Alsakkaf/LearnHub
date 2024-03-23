@@ -16,8 +16,8 @@ function TopBox() {
   const [rows, setRows] = useState<User [] | null>(null);
   useEffect(() => {
     socket.emit("get-leaderboard");
-    socket.on("get-leaderboard-response", (response) => {
-      setRows(response);
+    socket.on("get-leaderboard-response", (response:User[]) => { 
+      setRows(response.splice(0,5));
     });
     return () => {
       socket.off("get-leaderboard-response");
@@ -26,7 +26,7 @@ function TopBox() {
 
   return (
     <div className="topBox">
-       <h1>Top Students</h1>
+       <h1>Top 5 Students</h1>
        <div className="list">
         {rows && rows.map(row=>(
          <div className="listItem" key={row.id}>

@@ -1,5 +1,5 @@
 import "../../../styles/chartBox.scss"
-import allUsers from "../../../assets/images/totalUsersImage22.png"
+import allUsers from "../../../assets/images/studentsIcon66.png"
 import { Link } from "react-router-dom"
 import React, { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
