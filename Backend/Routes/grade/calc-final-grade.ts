@@ -6,7 +6,7 @@ import e from "express";
 
 
 const command = new ServerCommandBuilder("add-announcement")
-  .setAccessLevel(UserAccessLevels.INSTRUCTOR)
+  .setAccessLevel(UserAccessLevels.STUDENT)
   .setOutgoingChannel("add-announcement-response")
   .setIncomingValidationSchema({
         type: "object",

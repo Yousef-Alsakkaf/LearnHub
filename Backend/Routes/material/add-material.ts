@@ -21,7 +21,7 @@ const command = new ServerCommandBuilder("add-course-material")
   .setOutgoingValidationSchema({})
   .build();
 
-async function callback({ Client, Data, Database }: CommandExecuteArguments) {
+async function callback({ Client, Data,EmailProvider, Database }: CommandExecuteArguments) {
     const{course_id, weight, title, deadline}=Data;
     const id=Client.getId();
     const user=Client.getName();
@@ -53,6 +53,11 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
         const course = await Database.executeQuery('SELECT title FROM courses WHERE id=?',[course_id]);
         const courseName = course[0].title;
         await Database.createLog({ event: "Add Material", details: `User ${user} added ${title} To course ${courseName}`, initiator: id });
+        const students = await Database.getCourseStudents(course_id)
+        for(const student of students){
+        const email = student["email"];
+        await EmailProvider.sendEmail({to:email,subject:"new material", text:`New material ${title} has been added to course ${courseName}`});
+    }
         return {
             notification: {
               type: "success",
