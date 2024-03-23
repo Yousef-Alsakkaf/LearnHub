@@ -78,7 +78,7 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
 
   return (
     <>
-    {!details && (
+ 
 
       <ViewModal isVisible={isVisible} onClose={onClose}>
         {courses && (
@@ -175,8 +175,8 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
           </div>
         )}
       </ViewModal>
-)}
-    {!details && (
+
+   
 
       <ViewModal onClose={() => setShowModal(false)} isVisible={showModal}>
         <div className="p-6" style={{ maxHeight: "500px", overflowY: "auto" ,display: details ? "none" : "block" }}>
@@ -263,7 +263,7 @@ function CoursesInfo({ courses, isVisible, onClose }: Props) {
           </form>
         </div>
       </ViewModal>
-      )}
+     
       <Roster isVisible={roster} onClose={() => setRoster(false)}></Roster>
       <CourseDetails courses={selectedCourse} isVisible={true} onClose={() => setDetails(false)}/>
     </>

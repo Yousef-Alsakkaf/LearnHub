@@ -7,18 +7,14 @@ export default function ChartBar(): JSX.Element {
         type="bar"
         data={{
           labels: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
+            "Student",
+            "admin",
+            "instructor",
           ],
           datasets: [
             {
-              label: "Traffic",
-              data: [2112, 2343, 2545, 3423, 2365, 1985, 987],
+              label: "users",
+              data: [5, 10, 20, 25, 30, 35, 49],
             },
           ],
         }}

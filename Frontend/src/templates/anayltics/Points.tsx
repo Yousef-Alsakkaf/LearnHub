@@ -8,7 +8,7 @@ export default function ChartBubble(): JSX.Element {
       data={{
         datasets: [
           {
-            label: "John",
+            label: "student",
             data: [
               {
                 x: 3,
@@ -18,7 +18,7 @@ export default function ChartBubble(): JSX.Element {
             ],
           },
           {
-            label: "Peter",
+            label: "admin",
             data: [
               {
                 x: 5,
@@ -29,7 +29,7 @@ export default function ChartBubble(): JSX.Element {
             backgroundColor: "rgba(66, 133, 244, 0.2)",
           },
           {
-            label: "Donald",
+            label: "instructor",
             data: [
               {
                 x: 7,

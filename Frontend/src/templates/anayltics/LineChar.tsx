@@ -17,8 +17,8 @@ export default function ChartLine(): JSX.Element {
         ],
         datasets: [
           {
-            label: "Traffic",
-            data: [2112, 2343, 2545, 3423, 2365, 1985, 987],
+            label: "Attendance",
+            data: [0.2, 0.3, 0.5, 0.7, 0.8, 0.9, 1],
           },
         ],
       }}
