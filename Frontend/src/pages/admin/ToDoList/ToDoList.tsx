@@ -10,7 +10,7 @@ interface Props{
         doneTodos: Todo[];
         setIsDoneTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
-const TodoList: React.FC<Props> = ({ todos, setTodos, doneTodos, setIsDoneTodos } : Props) => {
+const TodoList: React.FC<Props> = ({ todos, setTodos } : Props) => {
         
     return(
          <div className="container">

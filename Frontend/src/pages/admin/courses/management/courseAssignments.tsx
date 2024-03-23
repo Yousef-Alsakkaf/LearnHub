@@ -66,15 +66,19 @@ function CourseAssignments({ id }: any) {
   };
 
   const handleRemoveAssignment = (assignmentId: any, b: boolean) => {
-    console.log("remove", assignmentId)
-    // if(!b) {
-    //   socket.emit("delete-course-material", { id: assignmentId });
-    // } else {
-    //   if(window.confirm("Are you sure you want to delete this course material?")) {
-    //     socket.emit("delete-course-material", { id: assignmentId });
-    //   }
-    // }
-    setTriggerRefresh(!triggerRefresh);
+    console.log(assignmentId.course_id)
+    
+    if(b) {
+      socket.emit("delete-course-material", { id: assignmentId.course_id });
+    } else {
+      if(window.confirm("Are you sure you want to delete this course material?")) {
+        socket.emit("delete-course-material", { id: assignmentId.course_id });
+      }
+    }
+
+    socket.once("delete-course-material-response", () => {
+      setTriggerRefresh(!triggerRefresh);
+    })
   };
 
   return (
