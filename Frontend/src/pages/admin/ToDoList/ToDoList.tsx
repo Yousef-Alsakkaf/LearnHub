@@ -34,25 +34,8 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, doneTodos, setIsDoneTodos 
                 )}
             </Droppable>
             
-            <Droppable droppableId="DoneTodosListttt">
-                {(provided)=>(
-            <div className="todos delete"
-            ref={provided.innerRef}
-            {...provided.droppableProps}>
-            <span className="todosHeading">Completed</span>
-            {
-                doneTodos.map((todo, index) => (
-                    <SingleTodo
-                    index={index}
-                    todo={todo}
-                    todos={doneTodos}
-                    key={todo.id}
-                    setTodos={setIsDoneTodos}/>
-                ))}
-                {provided.placeholder}
-            </div>     
-                    )}  
-            </Droppable>
+           
+            
          </div>
     );
 };

@@ -58,7 +58,7 @@ type Props = {
         )
       }
       
-      <div>
+      <div id = "allIcons">
         <span className="icons" onClick={() => {
           if(!edit && !todo.isDone){
             setEdit(!edit)

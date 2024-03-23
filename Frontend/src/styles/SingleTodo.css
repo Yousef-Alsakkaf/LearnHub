@@ -7,6 +7,7 @@
     background-repeat:no-repeat ;
     background-size: cover;
     transition: 0.2s;
+    height: 13vh;
 }
 .todosSingle:hover{
     box-shadow: 0 0 5px black;
@@ -14,28 +15,35 @@
 }
 .todosSingleText {
     flex: 1;
-    padding: 5px;
     border: none;
-    font-size: 20px;
-    margin-top: 15px;
+    font-size: 30px;
     color: black;
+    /* margin-left: 75px; */
 }
 .todosSingleText:focus {
     outline: none;
 }
 
 .icons {
-    margin-left: 10px;
+    margin-left: 5px;
     font-size: 25px;
     cursor: pointer;  
     display:flex; 
 }
 
+#allIcons{
+    display: flex;
+    margin-top: 5px;
+}
 
 
 @media (max-width: 768px){
     .todosSingle{
-        width: 95%;
-        margin-left: 10px;
+        width: 100%;
+        margin-left: 5px;
+    }
+
+    .todosSingleText {
+        font-size: 20px;
     }
 }
