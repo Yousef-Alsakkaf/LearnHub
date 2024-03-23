@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import socket from "@/socket";
 import {
   AlertDialog,
@@ -19,6 +19,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import EditAssignment from "./EditAssignment";
 
 function CourseAssignments({ courseName }: any) {
   useEffect(() => {
@@ -36,6 +37,8 @@ function CourseAssignments({ courseName }: any) {
   const handleAddAssignment = () => {
     socket.emit("add-assignment", { courseName: courseName });
   };
+
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -80,7 +83,7 @@ function CourseAssignments({ courseName }: any) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
+                <TableRow onClick={() => setShowModal(true)}>
                   <TableCell>
                     <div className="font-medium">Liam Johnson</div>
                     <div className="hidden text-sm text-muted-foreground md:inline">liam@example.com</div>
@@ -93,6 +96,7 @@ function CourseAssignments({ courseName }: any) {
             </Table>
           </CardContent>
         </Card>
+        <EditAssignment onClose={() => setShowModal(false)} isVisible={showModal}></EditAssignment>
       </div>
     </>
   );
