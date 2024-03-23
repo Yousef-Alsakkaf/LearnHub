@@ -51,7 +51,7 @@ function ViewAllCourses() {
 
   return (
     <>
-      <Courses>
+      <Courses name="courses">
         <div className="mx-auto my-10 grid max-w-screen-xl gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {courses &&
             courses.length > 0 &&

@@ -44,14 +44,14 @@ function Users({ children, name }: SettingsProps) {
                 name == "viewAllUsers" ? "border-l-2 border-l-blue-700" : ""
               } px-2 py-2 font-semibold text-blue-700 transition hover:border-l-blue-700 hover:text-blue-700`}
             >
-              <Link to="/admin/users">View all users</Link>
+              <Link className="pt-5 pb-5" to="/admin/users">View all users</Link>
             </li>
             <li
               className={`mt-5 cursor-pointer ${
                 name == "add-users" ? "border-l-2 border-l-blue-700" : ""
               } border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700`}
             >
-              <Link to="/admin/AddUsers">Add users</Link>
+              <Link className="pt-5 pb-5" to="/admin/AddUsers">Add users</Link>
             </li>
           </ul>
         </div>
