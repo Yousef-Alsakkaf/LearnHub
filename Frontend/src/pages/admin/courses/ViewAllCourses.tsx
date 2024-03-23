@@ -9,6 +9,7 @@ import second from "../../../assets/courses/second.jpg";
 import third from "../../../assets/courses/third.jpg";
 import fourth from "../../../assets/courses/fourth.jpg";
 import CourseDetails from "../../../templates/courses/CourseDetails";
+import { useNavigate } from "react-router-dom";
 
 interface Course {
   title: string;
@@ -25,6 +26,7 @@ function ViewAllCourses() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [showRoster, setShowRoster] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     socket.emit("get-all-courses", {});
@@ -45,8 +47,10 @@ function ViewAllCourses() {
   const images = [first, second, third, fourth];
 
   const handleView = (course: Course) => {
-    setSelectedCourse(course);
-    setShowModal(true);
+    // setSelectedCourse(course);
+    // setShowModal(true);
+
+    navigate("/admin/courseManagement");
   };
 
   return (
