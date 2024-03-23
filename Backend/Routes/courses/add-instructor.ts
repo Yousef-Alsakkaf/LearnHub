@@ -27,7 +27,7 @@ async function callback({ Client, Data, Database,EmailProvider }: CommandExecute
         const course = await Database.executeQuery('SELECT title FROM courses WHERE id=?',[course_id]);
         const instructor = await Database.executeQuery('SELECT CONCAT(fName," ",lName) AS name,email FROM users WHERE id=?',[instructor_id]);
 
-        await Database.executeQuery('INSERT INTO teaches (course_id,student_id) VALUES(?,?)',[course_id,instructor_id]);
+        await Database.executeQuery('INSERT INTO teaches (course_id,instructor_id) VALUES(?,?)',[course_id,instructor_id]);
         await Database.createLog({ event: "assign instructor", details: `User ${user} assigned instructor ${instructor[0].name} to Course ${course[0].title}`, initiator: id });
         await EmailProvider.sendEmail({to:instructor[0].email,subject:"Course Enrollment",text:`You have been assigned to ${course[0].title} course`});
         return{
