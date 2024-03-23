@@ -6,7 +6,7 @@ function Leaderboard() {
   return (
         <div className="users">
           <div className="info">
-            <h1>Leaderboard</h1>
+            <h1 id="leaderBoardTitle">Leaderboard</h1>
             {/* <button>Add New User</button> */}
           </div>
           <DataTable />

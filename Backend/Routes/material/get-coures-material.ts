@@ -7,47 +7,50 @@ const command = new ServerCommandBuilder("get-course-material")
   .setAccessLevel(UserAccessLevels.STUDENT)
   .setOutgoingChannel("get-course-material-response")
   .setIncomingValidationSchema({
-        type: "object",
-        additionalProperties: false,
-        properties: {
-            id: { type: "number" },// course id
-        },required:["id"]       
-      })
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      id: { type: "number" }, // course id
+    },
+    required: ["id"],
+  })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
- try {
-    
-    const id=Data.id;
+  try {
+    const id = Data.id;
     const doesCourseExist = await Database.doesCourseExist(id);
-    if(!doesCourseExist){
-        console.log("Course does not exist");
-        return {
-            notification: {
-              type: "error",
-              message: "Course does not exist!",
-            },
-            error: true,
-          };
+    if (!doesCourseExist) {
+      console.log("Course does not exist");
+      return {
+        notification: {
+          type: "error",
+          message: "Course does not exist!",
+        },
+        error: true,
+      };
     }
 
+<<<<<<< HEAD
     const material = await Database.executeQuery('SELECT  course_id, weight, material.title, deadline,description FROM courses JOIN material ON courses.id=course_id WHERE course_id=?',[id]);
     return material;
+=======
+    const material = await Database.executeQuery("SELECT course_id, weight, material.title, deadline FROM courses JOIN material ON courses.id=course_id WHERE course_id=?", [id]);
+>>>>>>> 3e74e31586ea0dc03604f6c2ea7b40d456d87bc7
     
- } catch (error) {
-
+    return material;
+  } catch (error) {
     console.log(error);
     return {
-        notification:{
-            title:"Error",
-            message:"An error occured while getting course material",
-            error:true
-        }
-    }
- }
-
+      notification: {
+        title: "Error",
+        message: "An error occured while getting course material",
+        error: true,
+      },
+    };
+  }
 }
 
 export default command;

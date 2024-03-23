@@ -59,55 +59,48 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
         const email = student["email"];
         await EmailProvider.sendEmail({to:email,subject:"new material", text:`New material ${title} has been added to course ${courseName}`});
     }
-        return {
-            notification: {
-              type: "success",
-              message: "Material added successfully!",
-            },
-            error: false,
-          };
-       
-
-    
- } catch (error) {
-    console.log(error.message);
-    if(error.message==="Total weight of material exceeds 100%")
-        return {
-            notification: {
-              type: "error",
-              message: "Total weight of material exceeds 100%!",
-            },
-            error: true,
-          };
-
-    else if(error.message==="Course does not exist")
-        return {
-            notification: {
-              type: "error",
-              message: "Course does not exist!",
-            },
-            error: true,
-          };
-    else if(error.message==="Invalid deadline")
-        return {
-            notification: {
-              type: "error",
-              message: "Deadline cannot be in the past!",
-            },
-            error: true,
-          };
-    
-    else
     return {
-        notification:{
-            title:"Error",
-            message:"Unable to add material",
-            error:true
-        }
-    }
- }
-
-
+      notification: {
+        type: "success",
+        message: "Material added successfully!",
+      },
+      error: false,
+    };
+  } catch (error) {
+    console.log(error.message);
+    if (error.message === "Total weight of material exceeds 100%")
+      return {
+        notification: {
+          type: "error",
+          message: "Total weight of material exceeds 100%!",
+        },
+        error: true,
+      };
+    else if (error.message === "Course does not exist")
+      return {
+        notification: {
+          type: "error",
+          message: "Course does not exist!",
+        },
+        error: true,
+      };
+    else if (error.message === "Invalid deadline")
+      return {
+        notification: {
+          type: "error",
+          message: "Deadline cannot be in the past!",
+        },
+        error: true,
+      };
+    else
+      return {
+        notification: {
+          title: "Error",
+          message: "Unable to add material",
+          error: true,
+        },
+      };
+  }
 }
 
 export default command;
