@@ -84,6 +84,17 @@ function CourseDetails({courses, isVisible, onClose} : Props) {
       >
         Roster
       </a>
+
+      <a
+        href="#"
+        className={`inline-flex whitespace-nowrap py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out ${
+          activeLink === 'Grades' ? 'border-b-2 border-transparent border-b-purple-600 text-purple-600' : 'text-gray-600 hover:border-b-purple-600 hover:text-purple-600'
+        
+        }`}
+        onClick={() => handleClick('Grades')}
+      >
+        Grades
+      </a>
     </nav>
 </div>
           <ul className="mt-2 space-y-4">
