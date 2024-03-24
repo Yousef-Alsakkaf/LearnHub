@@ -27,19 +27,14 @@ const BaseLayout = () => {
   }, [theme]);
   return (
     <main className="page-wrapper">
-      
       <Sidebar />
-     
+
       <div className="content-wrapper">
         <Outlet />
       </div>
 
       <button type="button" className="theme-toggle-btn" onClick={toggleTheme}>
-        <img
-          src={theme === LIGHT_THEME ? SunIcon : MoonIcon}
-          alt=""
-          className="theme-icon"
-        />
+        <img src={theme === LIGHT_THEME ? SunIcon : MoonIcon} alt="" className="theme-icon" />
       </button>
     </main>
   );
