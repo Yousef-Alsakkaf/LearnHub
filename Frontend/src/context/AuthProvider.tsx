@@ -7,6 +7,7 @@ interface AuthContextProps {
   accessToken: string | undefined;
   setUsername: (username: string | undefined) => void;
   setAccessToken: (accessToken: string | undefined) => void;
+  userType: string | undefined;
 }
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -15,6 +16,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
   const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [userType, setUserType] = useState<string | undefined>(undefined); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     socket.emit("authenticate", { accessToken: storedAccessToken });
 
     socket.on("authenticate-response", (response: any) => {
+      setUserType(response.type);
+      
       if (response.type === "student") {
         navigate("/student");
       } else if (response.type === "admin") {
@@ -76,7 +80,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setAccessToken(accessToken);
   };
 
-  return <AuthContext.Provider value={{ username, accessToken, setUsername: updateUsername, setAccessToken: updateAccessToken }}>{isLogged ? children: ""}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ username, accessToken, setUsername: updateUsername, setAccessToken: updateAccessToken, userType }}>{isLogged ? children: ""}</AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextProps => {

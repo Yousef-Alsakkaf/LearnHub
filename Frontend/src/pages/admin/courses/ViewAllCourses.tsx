@@ -10,6 +10,7 @@ import third from "../../../assets/courses/third.jpg";
 import fourth from "../../../assets/courses/fourth.jpg";
 import CourseDetails from "../../../templates/courses/CourseDetails";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthProvider";
 
 interface Course {
   title: string;
@@ -22,6 +23,7 @@ interface Course {
 }
 
 function ViewAllCourses() {
+  const { userType } = useAuth();
   const [courses, setCourses] = useState<Course[] | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +33,7 @@ function ViewAllCourses() {
 
   useEffect(() => {
     socket.emit("get-all-courses", {});
+
     socket.on("get-all-courses-response", (response: Course[]) => {
       console.log("This is the response from the get-all-courses command", response);
       setCourses(response);

@@ -15,7 +15,7 @@ export const SidebarInstructor = [
     key: "library",
   },
   {
-    path: "/",
+    path: "/instructor/courses",
     icon: <CiCalculator1 size={20} />,
     text: "Course Management",
     key: "course",
@@ -32,7 +32,6 @@ export const SidebarInstructor = [
     text: "Analytics",
     key: "analytics",
   },
-
   {
     path: "/",
     icon: <MdOutlineAnnouncement size={18} />,
