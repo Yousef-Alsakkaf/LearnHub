@@ -24,7 +24,7 @@ import {
       key: "library",
     },
     {
-      path: "/",
+      path: "/instructor/courses",
       icon: <CiCalculator1 size={20} />,
       text: "Course Management",
       key: "course",

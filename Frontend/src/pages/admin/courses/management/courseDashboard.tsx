@@ -88,7 +88,7 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
         </Card>
       </div>
 
-      <JaaSMeeting
+      {/* <JaaSMeeting
     appId = { "vpaas-magic-cookie-c5fe3f41ced041b2a410174bffd4a537" }
     roomName = moduleName
     jwt = { YOUR_VALID_JWT }
@@ -104,7 +104,7 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
     }}
     spinner = { SpinnerView }
     onApiReady = { (externalApi) => { ... } }
-/>
+/> */}
 
       
 
