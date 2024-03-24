@@ -27,7 +27,7 @@ function AllUsers() {
     socket.emit("get-all-users", {});
 
     socket.on("get-all-users-response", (response: UserData[]) => {
-      console.log("This is the response from the get-all-users command", response);
+    
 
       setStudents(response);
       setFilteredData(response);

@@ -20,7 +20,7 @@ function AccountStudent() {
       newpasswordConfirm: newpasswordConfirm,
     });
     socket.on("change-password-response", (message: any) => {
-      console.log("This is the response from changing the password: ", message);
+   
 
       navigate('/')
     });
