@@ -17,12 +17,18 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
   const [students, setStudents] = React.useState<UserData[] | null>(null);
   const [unenrolled, setunenrolled] = useState<UserData[] | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [showSecond, setShowSecond] = useState(false); 
-  let [selectedStudentId, setSelectedStudentId] = useState<number | null>(null); // State to store selected student's ID
+  const [showSecond, setShowSecond] = useState(false);
+  const [selectedStudentId, setSelectedStudentId] = useState<number>(); // State to store selected student's ID
 
-  const handleSelectChange = (e: any) => {
-    setSelectedStudentId(e.target.value);
-  };
+  function handleSelectChange(e: any) {
+    let temp = e.target.value;
+    console.log("this is the selected student id", temp);
+
+    setSelectedStudentId(Number(temp));
+  }
+  useEffect(() => {
+    console.log("this is the selected student id", selectedStudentId);
+  }, [selectedStudentId]);
   useEffect(() => {
     socket.emit("get-course-roaster", { id: id });
 
@@ -50,7 +56,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
       setunenrolled(data);
       console.log("This ois the get-unAssigned-instructors-responses", data);
     });
-  }
+  };
 
   const handleEnroll = (student_id: number | null) => {
     console.log("this is the student id", student_id);
@@ -68,8 +74,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
     console.log("this is the student id", student_id);
     socket.emit("add-instructor-to-course", {
       course_id: id,
-      instructor_id
-: student_id,
+      instructor_id: student_id,
     });
 
     socket.on("add-instructor-to-course-response", (data) => {
@@ -272,7 +277,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
               <div className="relative">
                 <select
                   className="block w-full px-4 py-2 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 max-h-300 overflow-y-auto"
-                  // onChange={handleSelectChange}
+                  onChange={handleSelectChange}
                   value={selectedStudentId?.toString()}
                 >
                   <option value="">Select a student</option>
@@ -286,7 +291,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
                       >
                         {`${student.fName} ${student.lName}`}
                         {"-"}
-                        {(selectedStudentId = student.id)}
+                        {student.id}
                       </option>
                     ))}
                 </select>
@@ -299,7 +304,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
                   Close
                 </button>
                 <button
-                  onClick={() => handleEnroll(selectedStudentId)}
+                  onClick={() => handleEnroll(Number(selectedStudentId))}
                   className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500"
                 >
                   Enroll
@@ -329,11 +334,11 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
                       <option
                         key={index}
                         value={student.id}
-                        onClick={() => setSelectedStudentId(Number(student.id))}
+                        // onClick={() => setSelectedStudentId(Number(student.id))}
                       >
                         {`${student.fName} ${student.lName}`}
                         {"-"}
-                        {(selectedStudentId = student.id)}
+                        {student.id}
                       </option>
                     ))}
                 </select>
@@ -346,7 +351,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
                   Close
                 </button>
                 <button
-                  onClick={() => handleAssign(selectedStudentId)}
+                  onClick={() => handleAssign(Number(selectedStudentId))}
                   className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500"
                 >
                   Enroll
