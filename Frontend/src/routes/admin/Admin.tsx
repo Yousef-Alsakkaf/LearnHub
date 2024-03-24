@@ -18,6 +18,7 @@ import CourseDetails from "../../templates/courses/CourseDetails";
 import { CourseManagementDashboard } from "@/pages/admin/courses/management/courseManagement";
 import MainAdmin from "../../pages/admin/Main/MainAdmin";
 import LogOut from "../logout";
+import CourseVideoCall from "@/pages/admin/courses/management/courseVideoCall";
 
 const Admin = () => {
   return (
@@ -42,6 +43,7 @@ const Admin = () => {
 
           <Route path="/admin/Analytics" element={<Analytics />}></Route>
           <Route path="/admin/courseManagement/:courseName" element={<CourseManagementDashboard />} />
+          <Route path="/admin/videocall" element={<CourseVideoCall />}></Route>
 
           {/* <Route path="/admin/courseDetails" element={<CourseDetails courses={null}/>}></Route> */}
           <Route path="*" element={<PageNotFound />} />

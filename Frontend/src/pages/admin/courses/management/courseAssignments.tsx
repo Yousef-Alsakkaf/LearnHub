@@ -59,7 +59,8 @@ function CourseAssignments({ id }: any) {
       course_id: id,
       weight: weight,
       title: name,
-      deadline: dueDate.toString(),
+      description: description,
+      deadline: !date ? "" : date!.toString(),
     });
 
     setTriggerRefresh(!triggerRefresh);
@@ -102,12 +103,14 @@ function CourseAssignments({ id }: any) {
                   <Input placeholder="Name" onChange={(e) => setName(e.target.value)} />
                   <Input placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
                   <Popover>
+                    
                     <PopoverTrigger asChild>
-                      <Button variant={"outline"} className={cn("w-[280px] justify-start text-left font-normal", !date && "text-muted-foreground")}>
+                      <Button variant={"outline"} className={cn("w-[280px] justify-start text-left font-normal", !date && "text-muted-foreground")} >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {date ? format(date, "PPP") : <span>Pick assignment due date</span>}
                       </Button>
                     </PopoverTrigger>
+
                     <PopoverContent className="w-auto p-0">
                       <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
                     </PopoverContent>

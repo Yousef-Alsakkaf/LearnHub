@@ -8,6 +8,7 @@ type course = {
   image: string;
   description: string;
 };
+
 function AddCourse() {
   const [formData, setFormData] = useState({
     title: "",
@@ -16,10 +17,12 @@ function AddCourse() {
     image: "",
     description: "",
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const title = (event.currentTarget.elements.namedItem("title") as HTMLInputElement)?.value;
@@ -40,6 +43,7 @@ function AddCourse() {
       console.log("this is the response from add-courses", response);
     });
   };
+
   return (
     <Courses name="addCourse">
       <div className="p-6" style={{ maxHeight: "700px", overflowY: "auto" }}>
