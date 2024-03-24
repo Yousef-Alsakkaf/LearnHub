@@ -17,7 +17,7 @@ const command = new ServerCommandBuilder("add-course-material")
       deadline: { type: "string" },
       description: { type: "string" },
     },
-    required: ["course_id", "weight", "title", "deadline"],
+    required: ["course_id", "weight", "title", "deadline", "description"],
   })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
@@ -47,9 +47,9 @@ async function callback({ Client, Data, EmailProvider, Database }: CommandExecut
       console.log(formattedDate);
       if (date < new Date()) throw new Error("Invalid deadline");
       await Database.executeQuery("INSERT INTO material (course_id, weight, title, deadline, description) VALUES (?,?,?,?,?)", [course_id, weight, title, formattedDate, description]);
-    } else if (deadline == null || deadline == undefined || deadline == "") {
+    } else  
       await Database.executeQuery("INSERT INTO material (course_id, weight, title, description) VALUES (?,?,?,?)", [course_id, weight, title, description]);
-    }
+    
     const course = await Database.executeQuery("SELECT title FROM courses WHERE id=?", [course_id]);
     const courseName = course[0].title;
     await Database.createLog({ event: "Add Material", details: `User ${user} added ${title} To course ${courseName}`, initiator: id });
