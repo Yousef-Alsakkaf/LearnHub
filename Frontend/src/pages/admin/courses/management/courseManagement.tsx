@@ -28,9 +28,9 @@ export function CourseManagementDashboard() {
           >
             Assignments
           </Link>
-          <Link to="#" onClick={() => setSelectedTab("Settings")} className={`transition-colors hover:text-foreground ${selectedTab === "Settings" ? "text-foreground" : "text-muted-foreground"}`}>
+          {/* <Link to="#" onClick={() => setSelectedTab("Settings")} className={`transition-colors hover:text-foreground ${selectedTab === "Settings" ? "text-foreground" : "text-muted-foreground"}`}>
             Settings
-          </Link>
+          </Link> */}
         </nav>
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">

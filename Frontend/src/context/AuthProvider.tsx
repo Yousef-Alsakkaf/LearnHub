@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     socket.on("authenticate-response", (response: any) => {
       setUserType(response.type);
-      
+
       if (response.type === "student") {
         navigate("/student");
       } else if (response.type === "admin") {
