@@ -31,7 +31,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import AssignmentPopUp from "./AssignmentPopUp";
 import { useAuth } from "@/context/AuthProvider";
-import FuckYou from "./FuckYou";
+
 import { ownerDocument } from "@mui/material";
 
 function CourseAssignments({ id }: any) {
@@ -265,7 +265,7 @@ function CourseAssignments({ id }: any) {
                     ))}
                 {}
                 {showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId} course_id={selectedcourseId}></AssignmentPopUp>}
-                {showPop && <FuckYou isVisible={showPop} onClose={() => setShowPop(false)}></FuckYou>}
+              
               </TableBody>
             </Table>
           </CardContent>
