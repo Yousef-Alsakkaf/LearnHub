@@ -1,4 +1,4 @@
-import { ArrowDownWideNarrow, ArrowUpRight, Users, SquarePlus } from "lucide-react";
+import { ArrowDownWideNarrow, ArrowUpRight, Users, SquarePlus, Send } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,7 +51,7 @@ function CourseAssignments({ id }: any) {
     socket.on("get-course-material-response", (response: any) => {
       setAssignments(response);
 
-      console.log("This is the response from the assignment", response)
+      console.log("This is the response from the assignment", response);
     });
 
     return () => {
@@ -151,6 +151,7 @@ function CourseAssignments({ id }: any) {
                     .map((assignment: any) => (
                       <TableRow
                         onClick={() => {
+                          if (userType == "student") return;
                           setSelectedAssignment(assignment);
                           setShowModal(true);
                           setId(assignment.id);
@@ -161,8 +162,14 @@ function CourseAssignments({ id }: any) {
                         <TableCell>
                           <div className="flex items-center space-x-2">
                             <Trash2
-                              className={`text-red-500 h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "" : "hidden"}`}
+                              className={`text-red-500 h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "" : "hidden"} ${userType == "student" ? "hidden" : ""}`}
                               onClick={() => handleRemoveAssignment(assignment, assignment?.weight == 0 && assignment?.deadline == null)}
+                            />
+                            <Send
+                              className={`h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "" : "hidden"} ${userType !== "student" ? "hidden" : ""} ${
+                                assignment?.weight == 0 && assignment?.deadline == null && !assignment?.grade ? "hidden" : ""
+                              }`}
+                              onClick={() => {}}
                             />
                             <div className="font-medium">{assignment?.title}</div>
                           </div>
@@ -170,8 +177,23 @@ function CourseAssignments({ id }: any) {
                         <TableCell>
                           <div className="hidden text-sm text-muted-foreground md:inline">{assignment?.description}</div>
                         </TableCell>
-                        <TableCell>
-                          <div className="text-sm text-muted-foreground">{parseInt(assignment?.weight) == 0 ? "" : assignment?.weight}</div>
+                        <TableCell className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
+                          <div
+                            className={`inline-flex items-center rounded-full py-2 px-3 text-xs text-white ${
+                              userType == "student" && assignment?.grade && assignment?.weight
+                                ? (assignment?.grade / assignment?.weight) * 100 > 80
+                                  ? "bg-green-600"
+                                  : (assignment?.grade / assignment?.weight) * 100 > 50
+                                  ? "bg-yellow-600"
+                                  : "bg-red-600"
+                                : assignment?.weight == 0 && assignment?.deadline == null
+                                ? ""
+                                : "bg-gray-600"
+                            }`}
+                          >
+                            {userType == "student" && assignment?.grade ? assignment?.grade + "/" : ""}
+                            {parseInt(assignment?.weight) == 0 ? "" : assignment?.weight}
+                          </div>
                         </TableCell>
                         <TableCell>
                           <div className="text-sm text-muted-foreground">
@@ -181,15 +203,14 @@ function CourseAssignments({ id }: any) {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div className="text-sm text-muted-foreground">{assignment?.deadline == null ? "" : formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true })}</div>
+                          <div className="text-sm text-muted-foregrou¢nd">
+                            {assignment?.deadline !== null ? formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true }) : assignment?.grade && userType == "student" ? "Graded" : ""}
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
-                    {}
-                    {
-                      showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId}></AssignmentPopUp>
-                    }
-                  
+                {}
+                {showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId}></AssignmentPopUp>}
               </TableBody>
             </Table>
           </CardContent>
