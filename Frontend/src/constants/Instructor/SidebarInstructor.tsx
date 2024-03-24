@@ -39,7 +39,7 @@ export const SidebarInstructor = [
     key: "announcement",
   },
   {
-    path: "/instructor/to-do-list",
+    path: "/instructor/TasksYaman",
     icon: <MdOutlineManageSearch size={18} />,
     text: "To do list",
     key: "todo",

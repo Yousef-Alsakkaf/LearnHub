@@ -21,7 +21,7 @@ export default function ChartBubble(): JSX.Element {
             label: "admin",
             data: [
               {
-                x: 5,
+                x: 9,
                 y: 7,
                 r: 10,
               },
@@ -32,8 +32,8 @@ export default function ChartBubble(): JSX.Element {
             label: "instructor",
             data: [
               {
-                x: 7,
-                y: 7,
+                x: 15,
+                y: 20,
                 r: 10,
               },
             ],
@@ -43,7 +43,7 @@ export default function ChartBubble(): JSX.Element {
             label: "global",
             data: [
               {
-                x: 10,
+                x: 19,
                 y: 9,
                 r: 10,
               },
