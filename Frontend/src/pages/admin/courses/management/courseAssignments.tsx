@@ -49,17 +49,21 @@ function CourseAssignments({ id }: any) {
     socket.emit("get-course-material", { id });
 
     socket.on("get-course-material-response", (response: any) => {
-      if(userType == "student") {
+      if (userType == "student") {
         setAssignments(
           response.map((response: any) => {
             const weight = parseInt(response?.weight.split(" / ")[1]);
             const grade = response?.weight.split(" / ")[0];
-  
+
             return { ...response, grade: grade == "-" ? null : parseInt(grade), type: weight == 0 ? "Course material" : "Assignment" };
           })
         );
       } else {
-        setAssignments(response)
+        setAssignments(
+          response.map((response: any) => {
+            return { ...response, weight: "-" + " / " + response?.weight, type: response?.weight == 0 ? "Course material" : "Assignment" };
+          })
+        );
       }
 
       console.log(assignments);
@@ -194,20 +198,20 @@ function CourseAssignments({ id }: any) {
                           <div
                             className={`inline-flex items-center rounded-full py-2 px-3 text-xs text-white ${
                               userType == "student" && assignment?.grade && assignment?.weight
-                                ? (assignment?.grade / parseInt(assignment?.weight.split(" / ")[1])) * 100 > 80
+                                ? (assignment?.grade / parseInt(assignment?.weight?.split(" / ")[1])) * 100 > 80
                                   ? "bg-green-600"
-                                  : (assignment?.grade / parseInt(assignment?.weight.split(" / ")[1])) * 100 > 50
+                                  : (assignment?.grade / parseInt(assignment?.weight?.split(" / ")[1])) * 100 > 50
                                   ? "bg-yellow-600"
                                   : "bg-red-600"
                                 : assignment?.weight == 0 && assignment?.deadline == null
                                 ? ""
-                                : parseInt(assignment?.weight.split(" / ")[1])
+                                : parseInt(assignment?.weight?.split(" / ")[1])
                                 ? "bg-gray-600"
                                 : ""
                             }`}
                           >
                             {userType == "student" && assignment?.grade ? "" : ""}
-                            {parseInt(assignment?.weight.split(" / ")[1]) == 0 ? "" : assignment?.weight}
+                            {parseInt(assignment?.weight?.split(" / ")[1]) == 0 ? "" : assignment?.weight}
                           </div>
                         </TableCell>
                         <TableCell>
@@ -217,7 +221,7 @@ function CourseAssignments({ id }: any) {
                         </TableCell>
                         <TableCell>
                           <div className="text-sm text-muted-foregrou¢nd">
-                            {assignment?.grade !== null
+                            {assignment?.grade !== null && userType == "student"
                               ? "Graded"
                               : assignment?.submission
                               ? "Submitted"
