@@ -25,14 +25,18 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
             throw new Error("Material weights do not add up to 100%");
         }
 
-        await Database.executeQuery('CALL calcFinalGrade(?)',[Data.course_id]);        
-        const email = await Database.getStudentEmail(Data.student_id);
-        const course = await Database.executeQuery('SELECT title FROM courses WHERE id=?',[Data.course_id]);
-        await EmailProvider.sendEmail({to:email,subject:"Final Grade posted",text:`Your Final Grade on course ${course[0].title} has been posted`});
+        await Database.executeQuery('CALL CalculateFinalGrade(?)',[Data.course_id]);
+        const course = await Database.executeQuery("SELECT title FROM courses WHERE id=?", [Data.course_id]);
+        const courseName = course[0].title;        
+        const students = await Database.getCourseStudents(Data.course_id);
+        for (const student of students) {
+            const email = student["email"];
+            await EmailProvider.sendEmail({ to: email, subject: "new material", text: ` Your final grade to ${courseName} has been posted` });
+        }
             return {
             notification: {
                 type: "success",
-                message: "Material graded successfully!",
+                message: "Final Grade Posted successfully!",
             },
             error: false,
         };
