@@ -89,31 +89,6 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
         </Card>
       </div>
 
-<<<<<<< HEAD
-      {/* <JaaSMeeting
-    appId = { "vpaas-magic-cookie-c5fe3f41ced041b2a410174bffd4a537" }
-    roomName = moduleName
-    jwt = { YOUR_VALID_JWT }
-    configOverwrite = {{
-        disableThirdPartyRequests: true,
-        disableLocalVideoFlip: true,
-        backgroundAlpha: 0.5
-    }}
-    interfaceConfigOverwrite = {{
-        VIDEO_LAYOUT_FIT: 'nocrop',
-        MOBILE_APP_PROMO: false,
-        TILE_VIEW_MAX_COLUMNS: 4
-    }}
-    spinner = { SpinnerView }
-    onApiReady = { (externalApi) => { ... } }
-/> */}
-
-      
-
-      
-
-=======
->>>>>>> de091df40b066c5803382c431272c05c2d425cea
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="xl:col-span-2">
           <CardHeader className="flex flex-row items-center">
