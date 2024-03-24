@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import socket from "@/socket";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,6 +32,7 @@ import { Badge } from "@/components/ui/badge";
 import AssignmentPopUp from "./AssignmentPopUp";
 import { useAuth } from "@/context/AuthProvider";
 import FuckYou from "./FuckYou";
+import { ownerDocument } from "@mui/material";
 
 function CourseAssignments({ id }: any) {
   const { userType } = useAuth();
@@ -86,6 +88,19 @@ function CourseAssignments({ id }: any) {
 
     setTriggerRefresh(!triggerRefresh);
   };
+
+  const submitAssignment = (assignment: any) => {
+    console.log(assignment)
+    socket.emit("submit-material", {
+      course_id: id,
+      material_id: assignment.id,
+      submission: description,
+    });
+
+    socket.once("submit-material-response", () => {
+      setTriggerRefresh(!triggerRefresh);
+    });
+  }
 
   const handleRemoveAssignment = (selectedAssignment: any, b: boolean) => {
     if (b) {
@@ -186,14 +201,24 @@ function CourseAssignments({ id }: any) {
                               className={`text-red-500 h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "" : "hidden"} ${userType == "student" ? "hidden" : ""}`}
                               onClick={() => handleRemoveAssignment(assignment, assignment?.weight == 0 && assignment?.deadline == null)}
                             />
-                            <Send
-                              className={`h-4 cursor-pointer w-4 ${assignment?.grade || assignment?.submission ? "hidden" : assignment?.type == "Course material" ? "hidden" : ""} ${
-                                hoveredAssignment == assignment ? "" : "hidden"
-                              } ${userType !== "student" ? "hidden" : ""} ${assignment?.weight == 0 && assignment?.deadline == null && !assignment?.grade ? "hidden" : ""}`}
-                              onClick={() => {
-                                setShowPop(true);
-                              }}
-                            />
+                            <Sheet>
+                              <SheetTrigger>
+                                {" "}
+                                <Send
+                                  className={`h-4 cursor-pointer w-4 ${assignment?.grade || assignment?.submission ? "hidden" : assignment?.type == "Course material" ? "hidden" : ""} ${
+                                    hoveredAssignment == assignment ? "" : "hidden"
+                                  } ${userType !== "student" ? "hidden" : ""} ${assignment?.weight == 0 && assignment?.deadline == null && !assignment?.grade ? "hidden" : ""}`}
+                                />
+                              </SheetTrigger>
+                              <SheetContent>
+                                <SheetHeader>
+                                  <SheetTitle>{assignment?.title}</SheetTitle>
+                                  <Input placeholder="Enter your submission here" onChange={(e) => setDescription(e.target.value)} style={{ height: "100px" }} />
+                                  <Button onClick={() => submitAssignment(assignment)}>Submit!</Button>
+                                </SheetHeader>
+                              </SheetContent>
+                            </Sheet>
+
                             <div className="font-medium">{assignment?.title}</div>
                           </div>
                         </TableCell>
