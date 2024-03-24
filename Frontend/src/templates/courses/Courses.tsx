@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import ChartBar from "../anayltics/Khra";
+import { useAuth } from "@/context/AuthProvider";
 
 interface CoursesProps {
   children: ReactNode;
@@ -8,6 +9,7 @@ interface CoursesProps {
 }
 
 function Courses({ children, name }: CoursesProps) {
+  const { userType } = useAuth();
   return (
     <div className="mx-4 min-h-screen max-w-screen-xl sm:mx-8 xl:mx-auto">
       <h1 className="border-b py-6 text-4xl font-semibold">Courses</h1>
@@ -44,7 +46,7 @@ function Courses({ children, name }: CoursesProps) {
               <Link className="pt-5 pb-5" to="/admin/courses">View all courses</Link> 
             </li>
 
-            <li className={`cursor-pointer ${name == "addCourse" ? "border-l-2 border-l-blue-700" : ""} px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white`}>
+            <li className={`cursor-pointer ${userType == "admin" ? "block" : "hidden" } ${name == "addCourse" ? "border-l-2 border-l-blue-700" : ""} px-3 py-2 text-sm text-slate-600 hover:bg-blue-700 hover:text-white`}>
               <Link className="pt-5 pb-5" to="/admin/addCourse">Add courses</Link> 
             </li>
           </ul>
@@ -56,7 +58,7 @@ function Courses({ children, name }: CoursesProps) {
               <Link className="pt-5 pb-5" to="/admin/courses">View all courses</Link> 
             </li>
 
-            <li className={`mt-5 cursor-pointer ${name == "addCourse" ? "border-l-2 border-l-blue-700" : ""} border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700`}>
+            <li className={`mt-5 cursor-pointer ${userType == "admin" ? "block" : "hidden" } ${name == "addCourse" ? "border-l-2 border-l-blue-700" : ""} border-transparent px-2 py-2 font-semibold transition hover:border-l-blue-700 hover:text-blue-700`}>
               <Link className="pt-5 pb-5" to="/admin/addCourse">Add courses</Link> 
             </li>
           </ul>
