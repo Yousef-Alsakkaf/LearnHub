@@ -25,6 +25,7 @@ const command = new ServerCommandBuilder("authenticate")
         required: ["accessToken"],
         additionalProperties: false,
       },
+      
     ],
   })
   .setExecute(callback)
