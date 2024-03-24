@@ -58,7 +58,7 @@ const AssignmentPopUp: React.FC<props> = ({ isVisible, onClose, id, course_id  }
                 <tr className="bg-blue-600 text-left text-xs font-semibold uppercase tracking-widest text-white">
                   <th className="px-5 py-3">ID</th>
                   <th className="px-5 py-3">Full Name</th>
-                  <th className="px-5 py-3">Grade</th>
+                  <th className="px-5 py-3">Weight</th>
                 </tr>
               </thead>
               <tbody className="text-gray-500">
@@ -88,16 +88,16 @@ const AssignmentPopUp: React.FC<props> = ({ isVisible, onClose, id, course_id  }
                               defaultValue={assignment.weight}
                               style={{ width: "calc(100% - 1rem)" }} 
                               
-                              onClick={() => {
+                              onChange={() => {
                                 setWeight(assignment.weight);
                                 setStudentId(assignment.student_id)
+                                handleGrade()
                               }}
-                              onChange={handleGrade}
+                              
                             />
                           ) : (
                             <p className="whitespace-no-wrap"onClick={() => {
-                                setWeight(assignment.weight);
-                                setStudentId(assignment.student_id)
+                   
                               }}>
                               {assignment.weight}
                             </p>
