@@ -59,6 +59,7 @@ function CourseAssignments({ id }: any) {
       course_id: id,
       weight: weight,
       title: name,
+      description: description,
       deadline: !date ? "" : date!.toString(),
     });
 
