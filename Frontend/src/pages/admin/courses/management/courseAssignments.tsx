@@ -29,8 +29,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import AssignmentPopUp from "./AssignmentPopUp";
+import { useAuth } from "@/context/AuthProvider";
 
 function CourseAssignments({ id }: any) {
+  const { userType } = useAuth();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -69,22 +71,22 @@ function CourseAssignments({ id }: any) {
     setTriggerRefresh(!triggerRefresh);
   };
 
-  const handleRemoveAssignment = (selectedAssignment: any, b: boolean) => {    
-    if(b) {
+  const handleRemoveAssignment = (selectedAssignment: any, b: boolean) => {
+    if (b) {
       socket.emit("delete-course-material", { id: selectedAssignment.id });
     } else {
-      if(window.confirm("Are you sure you want to delete this course material?")) {
+      if (window.confirm("Are you sure you want to delete this course material?")) {
         socket.emit("delete-course-material", { id: selectedAssignment.id });
       }
     }
 
     socket.once("delete-course-material-response", () => {
       setTriggerRefresh(!triggerRefresh);
-    })
+    });
   };
   const [showKhra, setShowKhra] = useState(false);
 
-  const [selectedId, Selectedid] = useState<number | null>(null);
+  const [selectedId, setId] = useState<number | null>(null);
 
   return (
     <>
@@ -98,7 +100,7 @@ function CourseAssignments({ id }: any) {
 
             <Sheet>
               <SheetTrigger className="ml-auto gap-1">
-                <Button size="sm" className="ml-auto gap-1">
+                <Button size="sm" className={`ml-auto gap-1 ${userType == "student" ? "hidden" : ""}`}>
                   Add assignment
                   <SquarePlus className="h-4 w-4" />
                 </Button>
@@ -109,9 +111,8 @@ function CourseAssignments({ id }: any) {
                   <Input placeholder="Name" onChange={(e) => setName(e.target.value)} />
                   <Input placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
                   <Popover>
-                    
                     <PopoverTrigger asChild>
-                      <Button variant={"outline"} className={cn("w-[280px] justify-start text-left font-normal", !date && "text-muted-foreground")} >
+                      <Button variant={"outline"} className={cn("w-[280px] justify-start text-left font-normal", !date && "text-muted-foreground")}>
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {date ? format(date, "PPP") : <span>Pick assignment due date</span>}
                       </Button>
@@ -152,15 +153,17 @@ function CourseAssignments({ id }: any) {
                         onClick={() => {
                           setSelectedAssignment(assignment);
                           setShowModal(true);
-                          Selectedid(assignment.id);
+                          setId(assignment.id);
                           setShowKhra(true);
                         }}
                         onMouseEnter={() => setHoveredAssignment(assignment)}
-                        
                       >
                         <TableCell>
                           <div className="flex items-center space-x-2">
-                            <Trash2 className={`text-red-500 h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "": "hidden"}`} onClick={() => handleRemoveAssignment(assignment, assignment?.weight == 0 && assignment?.deadline == null)} />
+                            <Trash2
+                              className={`text-red-500 h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "" : "hidden"}`}
+                              onClick={() => handleRemoveAssignment(assignment, assignment?.weight == 0 && assignment?.deadline == null)}
+                            />
                             <div className="font-medium">{assignment?.title}</div>
                           </div>
                         </TableCell>
@@ -183,7 +186,10 @@ function CourseAssignments({ id }: any) {
                       </TableRow>
                     ))}
                     {}
-                    <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId}></AssignmentPopUp>
+                    {
+                      showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId}></AssignmentPopUp>
+                    }
+                  
               </TableBody>
             </Table>
           </CardContent>

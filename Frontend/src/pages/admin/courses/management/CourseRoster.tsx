@@ -1,4 +1,5 @@
 import BookModal from "@/components/modal/ViewMonal";
+import { useAuth } from "@/context/AuthProvider";
 import socket from "@/socket";
 import React, { useEffect, useState } from "react";
 
@@ -14,6 +15,8 @@ interface UserData {
 }
 
 const CourseRoster: React.FC<BookProps> = ({ id }) => {
+  const {userType} = useAuth();
+  
   const [students, setStudents] = React.useState<UserData[] | null>(null);
   const [unenrolled, setunenrolled] = useState<UserData[] | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -118,7 +121,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
 
                 <button
                   type="button"
-                  className="inline-flex cursor-pointer items-center rounded-lg border border-gray-400 bg-white py-2 px-3 text-center text-sm font-medium text-gray-800 shadow hover:bg-gray-100 focus:shadow mr-5"
+                  className={`inline-flex cursor-pointer items-center rounded-lg border border-gray-400 bg-white py-2 px-3 text-center text-sm font-medium text-gray-800 shadow hover:bg-gray-100 focus:shadow mr-5 ${userType == "student" ? "hidden" : ""}`}
                   onClick={() => {
                     setShowModal(true);
                     unenrolledStudents();
@@ -143,7 +146,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
 
                 <button
                   type="button"
-                  className="inline-flex cursor-pointer items-center rounded-lg border border-gray-400 bg-white py-2 px-3 text-center text-sm font-medium text-gray-800 shadow hover:bg-gray-100 focus:shadow mr-5"
+                  className={`inline-flex cursor-pointer items-center rounded-lg border border-gray-400 bg-white py-2 px-3 text-center text-sm font-medium text-gray-800 shadow hover:bg-gray-100 focus:shadow mr-5 ${userType == "admin" ? "" : "hidden"}`}
                   onClick={() => {
                     setShowSecond(true);
                     showInstructors();
@@ -255,7 +258,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
                         </td>
 
                         <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                          <div className="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white">
+                          <div className={`inline-flex items-center rounded-full py-2 px-3 text-xs text-white ${index % 2 === 0 ? 'bg-green-600' : 'bg-red-600'}`}>
                             {index % 2 === 0 ? "active" : "inactive"}
                           </div>
                         </td>
