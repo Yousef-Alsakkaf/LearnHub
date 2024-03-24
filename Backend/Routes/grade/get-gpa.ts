@@ -11,15 +11,15 @@ const command = new ServerCommandBuilder("get-gpa")
         additionalProperties: false,
         properties: {
             course_id: { type: "number"},
-            student_id: { type: "number"}
-        },required: ["course_id","student_id"]       
+        },required: ["course_id"]       
       })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
   .build();
 
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
-    const {course_id,student_id} = Data;
+    const {course_id} = Data;
+    const student_id = Client.getId();
   const books = Database.executeQuery(`SELECT 
   u.UID AS id,
   u.lName AS lastName,
