@@ -21,7 +21,7 @@ const command = new ServerCommandBuilder("get-courses-info")
 async function callback({ Client, Data, Database }: CommandExecuteArguments) {
   const id = Data.id;
   const courses = await Database.executeQuery(
-    "SELECT courses.id, title, course_code, academic_year, image, description,COUNT(student_id) AS no_of_enrolled FROM courses  JOIN studies ON courses.id=student_id WHERE courses.id=? GROUP BY courses.id, title, course_code, academic_year, image, description",
+    "SELECT courses.id, title, course_code, academic_year, image, description,COUNT(student_id) AS no_of_enrolled FROM courses  LEFT OUTER JOIN studies ON courses.id=student_id WHERE courses.id=? GROUP BY courses.id, title, course_code, academic_year, image, description",
     [id]
   );
   return courses;
