@@ -48,6 +48,8 @@ function CourseAssignments({ id }: any) {
 
     socket.on("get-course-material-response", (response: any) => {
       setAssignments(response);
+
+      console.log("This is the response from the assignment", response)
     });
 
     return () => {
@@ -81,6 +83,8 @@ function CourseAssignments({ id }: any) {
     })
   };
   const [showKhra, setShowKhra] = useState(false);
+
+  const [selectedId, Selectedid] = useState<number | null>(null);
 
   return (
     <>
@@ -148,6 +152,7 @@ function CourseAssignments({ id }: any) {
                         onClick={() => {
                           setSelectedAssignment(assignment);
                           setShowModal(true);
+                          Selectedid(assignment.id);
                           setShowKhra(true);
                         }}
                         onMouseEnter={() => setHoveredAssignment(assignment)}
@@ -177,7 +182,8 @@ function CourseAssignments({ id }: any) {
                         </TableCell>
                       </TableRow>
                     ))}
-                    <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)}></AssignmentPopUp>
+                    {}
+                    <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId}></AssignmentPopUp>
               </TableBody>
             </Table>
           </CardContent>
