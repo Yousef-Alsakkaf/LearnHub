@@ -48,7 +48,7 @@ export const sidebarStudentItems = [
     key: "analytics",
   },
   {
-    path: "/",
+    path: "/student/TasksYaman",
     icon: <MdOutlineMessage size={18} />,
     text: "To do list",
     key: "todo",

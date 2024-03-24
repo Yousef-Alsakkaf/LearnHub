@@ -39,11 +39,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUserType(response.type);
 
       if (response.type === "student") {
-        navigate("/student");
+        navigate("/student/courses");
       } else if (response.type === "admin") {
         navigate("/admin/users");
       } else if (response.type === "instructor") {
-        navigate("/instructor");
+        navigate("/instructor/courses");
       }
 
       setIsLogged(true);

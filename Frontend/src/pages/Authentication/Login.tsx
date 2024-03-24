@@ -46,11 +46,11 @@ function Login({ changeState }: LoginPageProps) {
     socket.on("authenticate-response", (response: UserData) => {
       if (response.type === "student") {
         console.log("entered");
-        navigate("/student");
+        navigate("/student/courses");
       } else if (response.type === "admin") {
         navigate("/admin");
       } else if (response.type === "instructor") {
-        navigate("/instructor");
+        navigate("/instructor/courses");
       }
 
       localStorage.setItem("accessToken", response.accessToken);

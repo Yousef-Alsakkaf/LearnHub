@@ -1,4 +1,4 @@
-import { ArrowUpRight, Users, GraduationCap} from "lucide-react";
+import { ArrowUpRight, Users, GraduationCap } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,14 +32,15 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
     socket.emit("get-courses-info", { id });
     socket.emit("get-course-roaster", { id });
     socket.emit("get-announcements", { course_id: id });
-    if(userType == "student") {
+
+    if (userType == "student") {
       socket.emit("get-gpa", { course_id: id });
     }
 
     socket.on("get-gpa-response", (response) => {
-      console.log(response)
+      console.log(response);
       setStudentGpa(response[0].CGPA);
-    })
+    });
 
     socket.on("get-courses-info-response", (response: any) => {
       setModuleName(response[0].title);
@@ -63,6 +64,10 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
       socket.off("get-gpa-response");
     };
   }, []);
+
+  const calculateFinalGrade = () => {
+    socket.emit("final-grade", { course_id: id });
+  }
 
   return (
     <>
@@ -91,9 +96,7 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
               <GraduationCap className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className={`text-2xl font-bold ${studentGpa >= 3.5 ? 'text-green-500' : studentGpa >= 2.5 ? 'text-yellow-500' : 'text-red-500'}`}>
-                {studentGpa}/4.0
-              </div>
+              <div className={`text-2xl font-bold ${studentGpa >= 3.5 ? "text-green-500" : studentGpa >= 2.5 ? "text-yellow-500" : "text-red-500"}`}>{studentGpa}/4.0</div>
             </CardContent>
           </Card>
         )}
@@ -113,6 +116,22 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
           </CardContent>
         </Card>
       </div>
+
+      {userType == "admin" || userType == "instructor" ? (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Calculate final grade</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <Button size="sm" className="ml-auto gap-1" onClick={() => calculateFinalGrade()}>
+                Calculate!
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div></div>
+        )}
 
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="xl:col-span-2">

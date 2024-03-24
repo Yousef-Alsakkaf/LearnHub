@@ -78,6 +78,7 @@ function App() {
                     <Route path="/student/settings" element={<AccountStudent />}></Route>
                     <Route path="/student/courseManagement/:courseName" element={<CourseManagementDashboard />} />
 
+                    <Route path="/student/TasksYaman" element={<TasksYaman />}></Route>
                     <Route path="/student/StudentAnalytics" element={<StudentAnalytics />}></Route>
                     <Route path="/student/Library" element={<ViewBooks />}></Route>
                     <Route path="/logout" element={<LogOut />}></Route>
@@ -118,6 +119,7 @@ function App() {
                     <Route path="/instructor/Leader" element={<Leaderboard />}></Route>
                     <Route path="/instructor/AnalyticsInstructor" element={<AnalyticsInstructor />}></Route>
                     <Route path="/instructor/courses" element={<ViewAllCourses></ViewAllCourses>}></Route>
+                    <Route path="/instructor/TasksYaman" element={<TasksYaman />}></Route>
                     <Route path="/instructor/courseManagement/:courseName" element={<CourseManagementDashboard />} />
                     {/* <Route path="/student/Libraryinstructor" element={<ViewBooks />}></Route> */}
                   </Route>
