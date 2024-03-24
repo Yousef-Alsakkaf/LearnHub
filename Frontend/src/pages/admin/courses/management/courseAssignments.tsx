@@ -174,6 +174,7 @@ function CourseAssignments({ id }: any) {
                           setShowKhra(true);
                           setCourse(assignment.course_id);
                         }}
+                        className="cursor-pointer"
                         onMouseEnter={() => setHoveredAssignment(assignment)}
                       >
                         <TableCell>
