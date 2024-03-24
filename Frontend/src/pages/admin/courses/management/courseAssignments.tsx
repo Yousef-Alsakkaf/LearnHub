@@ -30,6 +30,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import AssignmentPopUp from "./AssignmentPopUp";
 import { useAuth } from "@/context/AuthProvider";
+import FuckYou from "./FuckYou";
 
 function CourseAssignments({ id }: any) {
   const { userType } = useAuth();
@@ -49,17 +50,21 @@ function CourseAssignments({ id }: any) {
     socket.emit("get-course-material", { id });
 
     socket.on("get-course-material-response", (response: any) => {
-      if(userType == "student") {
+      if (userType == "student") {
         setAssignments(
           response.map((response: any) => {
             const weight = parseInt(response?.weight.split(" / ")[1]);
             const grade = response?.weight.split(" / ")[0];
-  
+
             return { ...response, grade: grade == "-" ? null : parseInt(grade), type: weight == 0 ? "Course material" : "Assignment" };
           })
         );
       } else {
-        setAssignments(response)
+        setAssignments(
+          response.map((response: any) => {
+            return { ...response, weight: "-" + " / " + response?.weight, type: response?.weight == 0 ? "Course material" : "Assignment" };
+          })
+        );
       }
 
       console.log(assignments);
@@ -99,6 +104,8 @@ function CourseAssignments({ id }: any) {
 
   const [selectedId, setId] = useState<number | null>(null);
   const [selectedcourseId, setCourse] = useState<number | null>(null);
+
+  const [showPop, setShowPop] = useState(false);
 
   return (
     <>
@@ -170,6 +177,7 @@ function CourseAssignments({ id }: any) {
                           setShowKhra(true);
                           setCourse(assignment.course_id);
                         }}
+                        className="cursor-pointer"
                         onMouseEnter={() => setHoveredAssignment(assignment)}
                       >
                         <TableCell>
@@ -182,7 +190,9 @@ function CourseAssignments({ id }: any) {
                               className={`h-4 cursor-pointer w-4 ${assignment?.grade || assignment?.submission ? "hidden" : assignment?.type == "Course material" ? "hidden" : ""} ${
                                 hoveredAssignment == assignment ? "" : "hidden"
                               } ${userType !== "student" ? "hidden" : ""} ${assignment?.weight == 0 && assignment?.deadline == null && !assignment?.grade ? "hidden" : ""}`}
-                              onClick={() => {}}
+                              onClick={() => {
+                                setShowPop(true);
+                              }}
                             />
                             <div className="font-medium">{assignment?.title}</div>
                           </div>
@@ -194,20 +204,20 @@ function CourseAssignments({ id }: any) {
                           <div
                             className={`inline-flex items-center rounded-full py-2 px-3 text-xs text-white ${
                               userType == "student" && assignment?.grade && assignment?.weight
-                                ? (assignment?.grade / parseInt(assignment?.weight.split(" / ")[1])) * 100 > 80
+                                ? (assignment?.grade / parseInt(assignment?.weight?.split(" / ")[1])) * 100 > 80
                                   ? "bg-green-600"
-                                  : (assignment?.grade / parseInt(assignment?.weight.split(" / ")[1])) * 100 > 50
+                                  : (assignment?.grade / parseInt(assignment?.weight?.split(" / ")[1])) * 100 > 50
                                   ? "bg-yellow-600"
                                   : "bg-red-600"
                                 : assignment?.weight == 0 && assignment?.deadline == null
                                 ? ""
-                                : parseInt(assignment?.weight.split(" / ")[1])
+                                : parseInt(assignment?.weight?.split(" / ")[1])
                                 ? "bg-gray-600"
                                 : ""
                             }`}
                           >
                             {userType == "student" && assignment?.grade ? "" : ""}
-                            {parseInt(assignment?.weight.split(" / ")[1]) == 0 ? "" : assignment?.weight}
+                            {parseInt(assignment?.weight?.split(" / ")[1]) == 0 ? "" : assignment?.weight}
                           </div>
                         </TableCell>
                         <TableCell>
@@ -217,7 +227,7 @@ function CourseAssignments({ id }: any) {
                         </TableCell>
                         <TableCell>
                           <div className="text-sm text-muted-foregrou¢nd">
-                            {assignment?.grade !== null
+                            {assignment?.grade !== null && userType == "student"
                               ? "Graded"
                               : assignment?.submission
                               ? "Submitted"
@@ -230,6 +240,7 @@ function CourseAssignments({ id }: any) {
                     ))}
                 {}
                 {showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId} course_id={selectedcourseId}></AssignmentPopUp>}
+                {showPop && <FuckYou isVisible={showPop} onClose={() => setShowPop(false)}></FuckYou>}
               </TableBody>
             </Table>
           </CardContent>

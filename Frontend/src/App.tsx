@@ -50,7 +50,6 @@ function App() {
 
     socket.on("disconnect", () => setIsConnected(false));
 
-    // Clean up the event listeners when the component is unmounted
     return () => {
       socket.off("connect");
       socket.off("disconnect");
