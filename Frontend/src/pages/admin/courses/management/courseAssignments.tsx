@@ -87,6 +87,7 @@ function CourseAssignments({ id }: any) {
   const [showKhra, setShowKhra] = useState(false);
 
   const [selectedId, setId] = useState<number | null>(null);
+  const [selectedcourseId, setCourse] = useState<number | null>(null);
 
   return (
     <>
@@ -155,6 +156,7 @@ function CourseAssignments({ id }: any) {
                           setShowModal(true);
                           setId(assignment.id);
                           setShowKhra(true);
+                          setCourse(assignment.course_id);
                         }}
                         onMouseEnter={() => setHoveredAssignment(assignment)}
                       >
@@ -187,7 +189,7 @@ function CourseAssignments({ id }: any) {
                     ))}
                     {}
                     {
-                      showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId}></AssignmentPopUp>
+                      showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId} course_id={selectedcourseId}></AssignmentPopUp>
                     }
                   
               </TableBody>
