@@ -1,20 +1,16 @@
 import { error } from "ajv/dist/vocabularies/applicator/dependencies.js";
 import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
-import emailProvider from "Applications/Email/emailProvider.js";
-import e from "express";
 
 
-const command = new ServerCommandBuilder("add-announcement")
-  .setAccessLevel(UserAccessLevels.STUDENT)
-  .setOutgoingChannel("add-announcement-response")
+const command = new ServerCommandBuilder("final-grade")
+  .setAccessLevel(UserAccessLevels.INSTRUCTOR)
+  .setOutgoingChannel("final-grade-response")
   .setIncomingValidationSchema({
         type: "object",
         additionalProperties: false,
         properties: {
             course_id: {type: "number"},
-            subject: {type: "string"},
-            message: {type: "string"},
         },       
       })
   .setExecute(callback)
@@ -22,24 +18,49 @@ const command = new ServerCommandBuilder("add-announcement")
   .build();
 
 async function callback({ Client, Data,EmailProvider, Database }: CommandExecuteArguments) {
-    const { course_id, subject, message } = Data;
-    const user = Client.getName();
-    const id= Client.getId();
-    await Database.executeQuery('INSERT INTO announcments (course_id, subject, message, sender_id) VALUES (?,?,?,?)',[course_id, subject, message, id]);
-    await Database.createLog({ event: "Add announcement", details: `User ${user} added announcement ${subject}`, initiator:id });
-    const students = await Database.getCourseStudents(course_id)
-    console.log(students);
-    for(const student of students){
-        const email = student["email"];
-        await EmailProvider.sendEmail({to:email,subject, text:message});
+
+    try {
+        const weight=await Database.executeQuery('SELECT sum(weight) AS weight FROM material where course_id=?',[Data.course_id]);
+        if(weight[0].weight!=100){
+            throw new Error("Material weights do not add up to 100%");
+        }
+
+        await Database.executeQuery('CALL calcFinalGrade(?)',[Data.course_id]);        
+        const email = await Database.getStudentEmail(Data.student_id);
+        const course = await Database.executeQuery('SELECT title FROM courses WHERE id=?',[Data.course_id]);
+        await EmailProvider.sendEmail({to:email,subject:"Final Grade posted",text:`Your Final Grade on course ${course[0].title} has been posted`});
+            return {
+            notification: {
+                type: "success",
+                message: "Material graded successfully!",
+            },
+            error: false,
+        };
+        
+    } catch (error) {
+
+        if(error.message){
+            return {
+                notification: {
+                    type: "error",
+                    message: error.message,
+                },
+                error: true,
+            };
+        }
+        else{
+            return {
+                notification: {
+                    type: "error",
+                    message: "An error occured",
+                },
+                error: true,
+            };
+        }
+        
     }
-    return {
-        notification: {
-            type: "success",
-            message: "Announcement Added successfully!",
-        },
-        error: false,
-    };
+
+    
 }
 
 export default command;
