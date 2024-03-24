@@ -8,15 +8,16 @@ type props = {
 };
 
 const AssignmentPopUp: React.FC<props> = ({ isVisible, onClose, id }) => {
-  
+  useEffect(() => {
     console.log("This is the id", typeof id);
     console.log("This is the id", id);
     socket.emit("get-submissions", { material_id: id });
     socket.on("get-submissions-response", (response) => {
       console.log("This is the response from the get assignment", response);
     });
-    console.log("ended")
- 
+    console.log("ended");
+  }, [id]);
+
   return (
     <BookModal onClose={onClose} isVisible={isVisible}>
       <div className="mx-auto max-w-screen-lg px-4 py-8 sm:px-8">
