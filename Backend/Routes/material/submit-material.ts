@@ -13,7 +13,7 @@ const command = new ServerCommandBuilder("submit-material")
             material_id: { type: "number" },
             course_id: { type: "number" },
             submission: { type: "string" },
-        },required:["course_id","student_id","material_id","submission"]       
+        },required:["course_id","material_id","submission"]       
       })
   .setExecute(callback)
   .setOutgoingValidationSchema({})
