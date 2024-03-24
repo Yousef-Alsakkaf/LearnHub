@@ -9,14 +9,14 @@ import { AuthProvider, useAuth } from "../../../../context/AuthProvider";
 import React, { useEffect, useState } from "react";
 import AnnoucementPopUp from "./AnnoucementPopUp";
 import ViewAllStudents from "./viewAllStudents";
+import { useNavigate } from "react-router-dom";
 import socket from "@/socket";
-import {JaaSMeeting} from "@jitsi/react-sdk";
-
 
 type id = {
   id: number;
 };
 const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [enrolledStudents, setEnrolledStudents] = useState(0);
   const [moduleName, setModuleName] = useState("");
@@ -80,35 +80,14 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              <Button size="sm" className="ml-auto gap-1">
-                  JOIN
-                  <ArrowUpRight className="h-4 w-4" />
-                </Button></div>
+              <Button size="sm" className="ml-auto gap-1" onClick={() => navigate("/admin/videocall")}>
+                JOIN
+                <ArrowUpRight className="h-4 w-4" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
-
-      <JaaSMeeting
-    appId = { "vpaas-magic-cookie-c5fe3f41ced041b2a410174bffd4a537" }
-    roomName = moduleName
-    jwt = { YOUR_VALID_JWT }
-    configOverwrite = {{
-        disableThirdPartyRequests: true,
-        disableLocalVideoFlip: true,
-        backgroundAlpha: 0.5
-    }}
-    interfaceConfigOverwrite = {{
-        VIDEO_LAYOUT_FIT: 'nocrop',
-        MOBILE_APP_PROMO: false,
-        TILE_VIEW_MAX_COLUMNS: 4
-    }}
-    spinner = { SpinnerView }
-    onApiReady = { (externalApi) => { ... } }
-/>
-
-      
-
-      
 
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="xl:col-span-2">
@@ -172,8 +151,8 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
                 <div
                   className="flex items-center gap-4 hover:bg-gray-100 cursor-pointer p-2 rounded-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
                   onClick={() => {
-                    setSelectedAnnouncement(announcement)
-                    setShowModal(true)
+                    setSelectedAnnouncement(announcement);
+                    setShowModal(true);
                   }}
                 >
                   <Avatar className="hidden h-9 w-9 sm:flex">
