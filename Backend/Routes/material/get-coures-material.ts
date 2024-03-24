@@ -33,7 +33,7 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
       };
     }
 
-    let type =await Database.executeQuery('SELECT type FROM courses WHERE id=?',[id]);
+    let type =await Database.executeQuery('SELECT type FROM users WHERE id=?',[id]);
     type = type[0].type;
     if(type === 'student'){
       const user = Client.getId();
