@@ -49,14 +49,18 @@ function CourseAssignments({ id }: any) {
     socket.emit("get-course-material", { id });
 
     socket.on("get-course-material-response", (response: any) => {
-      setAssignments(
-        response.map((response: any) => {
-          const weight = parseInt(response?.weight.split(" / ")[1]);
-          const grade = response?.weight.split(" / ")[0];
-
-          return { ...response, grade: grade == "-" ? null : parseInt(grade), type: weight == 0 ? "Course material" : "Assignment" };
-        })
-      );
+      if(userType == "student") {
+        setAssignments(
+          response.map((response: any) => {
+            const weight = parseInt(response?.weight.split(" / ")[1]);
+            const grade = response?.weight.split(" / ")[0];
+  
+            return { ...response, grade: grade == "-" ? null : parseInt(grade), type: weight == 0 ? "Course material" : "Assignment" };
+          })
+        );
+      } else {
+        setAssignments(response)
+      }
 
       console.log(assignments);
     });
