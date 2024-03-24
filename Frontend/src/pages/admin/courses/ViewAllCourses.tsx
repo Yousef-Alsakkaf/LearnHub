@@ -50,7 +50,7 @@ function ViewAllCourses() {
     // setSelectedCourse(course);
     // setShowModal(true);
 
-    navigate(`/admin/courseManagement/${course.id}`);
+    navigate(`/${userType}/courseManagement/${course.id}`);
   };
 
   return (

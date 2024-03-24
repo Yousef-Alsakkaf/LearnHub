@@ -1,4 +1,4 @@
-import { ArrowUpRight, Users } from "lucide-react";
+import { ArrowUpRight, Users, GraduationCap} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +16,7 @@ type id = {
   id: number;
 };
 const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
+  const { userType } = useAuth();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [enrolledStudents, setEnrolledStudents] = useState(0);
@@ -25,6 +26,7 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
   const [moduleStudents, setModuleStudents] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<any>(null);
+  const [studentGpa, setStudentGpa] = useState(0);
 
   useEffect(() => {
     socket.emit("get-courses-info", { id });
@@ -45,6 +47,7 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
     socket.on("get-announcements-response", (response: any) => {
       setAnnouncements(response);
     });
+    
 
     return () => {
       socket.off("get-courses-info-response");
@@ -63,15 +66,29 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
       <h2>{moduleDescription}</h2>
 
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Enrolled Students</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+{enrolledStudents}</div>
-          </CardContent>
-        </Card>
+        {userType == "admin" || userType == "instructor" ? (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Enrolled Students</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">+{enrolledStudents}</div>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">GPA</CardTitle>
+              <GraduationCap className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className={`text-2xl font-bold ${studentGpa >= 3.5 ? 'text-green-500' : studentGpa >= 2.5 ? 'text-yellow-500' : 'text-red-500'}`}>
+                {studentGpa}/4.0
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

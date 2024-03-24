@@ -11,7 +11,7 @@ import { CiCalculator1 } from "react-icons/ci";
 
 export const sidebarStudentItems = [
   {
-    path: "/",
+    path: "/student/courses",
     icon: <SiStudyverse size={18} />,
     text: "Course List",
     key: "courses",
