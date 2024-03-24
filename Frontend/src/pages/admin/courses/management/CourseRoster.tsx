@@ -291,7 +291,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
                       >
                         {`${student.fName} ${student.lName}`}
                         {"-"}
-                        {student.id}
+                    
                       </option>
                     ))}
                 </select>
@@ -338,7 +338,7 @@ const CourseRoster: React.FC<BookProps> = ({ id }) => {
                       >
                         {`${student.fName} ${student.lName}`}
                         {"-"}
-                        {student.id}
+                       
                       </option>
                     ))}
                 </select>
