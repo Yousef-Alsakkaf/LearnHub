@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 import AnnoucementPopUp from "./AnnoucementPopUp";
 import ViewAllStudents from "./viewAllStudents";
 import socket from "@/socket";
+import {JaaSMeeting} from "@jitsi/react-sdk";
+
 
 type id = {
   id: number;
@@ -70,7 +72,43 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
             <div className="text-2xl font-bold">+{enrolledStudents}</div>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Course Meeting</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              <Button size="sm" className="ml-auto gap-1">
+                  JOIN
+                  <ArrowUpRight className="h-4 w-4" />
+                </Button></div>
+          </CardContent>
+        </Card>
       </div>
+
+      <JaaSMeeting
+    appId = { "vpaas-magic-cookie-c5fe3f41ced041b2a410174bffd4a537" }
+    roomName = moduleName
+    jwt = { YOUR_VALID_JWT }
+    configOverwrite = {{
+        disableThirdPartyRequests: true,
+        disableLocalVideoFlip: true,
+        backgroundAlpha: 0.5
+    }}
+    interfaceConfigOverwrite = {{
+        VIDEO_LAYOUT_FIT: 'nocrop',
+        MOBILE_APP_PROMO: false,
+        TILE_VIEW_MAX_COLUMNS: 4
+    }}
+    spinner = { SpinnerView }
+    onApiReady = { (externalApi) => { ... } }
+/>
+
+      
+
+      
 
       <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="xl:col-span-2">

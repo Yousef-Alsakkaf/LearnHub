@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Yousef-Alsakkaf/LearnHub/issues"
   },
-  "homepage": "https://github.com/Yousef-Alsakkaf/LearnHub#readme"
+  "homepage": "https://github.com/Yousef-Alsakkaf/LearnHub#readme",
+  "dependencies": {
+    "@jitsi/react-sdk": "^1.4.0"
+  }
 }
