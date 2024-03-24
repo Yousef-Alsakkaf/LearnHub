@@ -49,9 +49,16 @@ function CourseAssignments({ id }: any) {
     socket.emit("get-course-material", { id });
 
     socket.on("get-course-material-response", (response: any) => {
-      setAssignments(response);
+      setAssignments(
+        response.map((response: any) => {
+          const weight = parseInt(response?.weight.split(" / ")[1]);
+          const grade = response?.weight.split(" / ")[0];
 
-      console.log("This is the response from the assignment", response);
+          return { ...response, grade: grade == "-" ? null : parseInt(grade), type: weight == 0 ? "Course material" : "Assignment" };
+        })
+      );
+
+      console.log(assignments);
     });
 
     return () => {
@@ -145,8 +152,8 @@ function CourseAssignments({ id }: any) {
                 {assignments &&
                   assignments
                     .sort((a: any, b: any) => {
-                      if (a.weight !== 0 && b.weight === 0) return -1;
-                      if (a.weight === 0 && b.weight !== 0) return 1;
+                      if (a?.grade !== undefined && b?.grade === undefined) return -1;
+                      if (a?.grade === undefined && b?.grade !== undefined) return 1;
                       return 0;
                     })
                     .map((assignment: any) => (
@@ -168,9 +175,9 @@ function CourseAssignments({ id }: any) {
                               onClick={() => handleRemoveAssignment(assignment, assignment?.weight == 0 && assignment?.deadline == null)}
                             />
                             <Send
-                              className={`h-4 cursor-pointer w-4 ${hoveredAssignment == assignment ? "" : "hidden"} ${userType !== "student" ? "hidden" : ""} ${
-                                assignment?.weight == 0 && assignment?.deadline == null && !assignment?.grade ? "hidden" : ""
-                              }`}
+                              className={`h-4 cursor-pointer w-4 ${assignment?.grade || assignment?.submission ? "hidden" : assignment?.type == "Course material" ? "hidden" : ""} ${
+                                hoveredAssignment == assignment ? "" : "hidden"
+                              } ${userType !== "student" ? "hidden" : ""} ${assignment?.weight == 0 && assignment?.deadline == null && !assignment?.grade ? "hidden" : ""}`}
                               onClick={() => {}}
                             />
                             <div className="font-medium">{assignment?.title}</div>
@@ -183,39 +190,42 @@ function CourseAssignments({ id }: any) {
                           <div
                             className={`inline-flex items-center rounded-full py-2 px-3 text-xs text-white ${
                               userType == "student" && assignment?.grade && assignment?.weight
-                                ? (assignment?.grade / assignment?.weight) * 100 > 80
+                                ? (assignment?.grade / parseInt(assignment?.weight.split(" / ")[1])) * 100 > 80
                                   ? "bg-green-600"
-                                  : (assignment?.grade / assignment?.weight) * 100 > 50
+                                  : (assignment?.grade / parseInt(assignment?.weight.split(" / ")[1])) * 100 > 50
                                   ? "bg-yellow-600"
                                   : "bg-red-600"
                                 : assignment?.weight == 0 && assignment?.deadline == null
                                 ? ""
-                                : "bg-gray-600"
+                                : parseInt(assignment?.weight.split(" / ")[1])
+                                ? "bg-gray-600"
+                                : ""
                             }`}
                           >
-                            {userType == "student" && assignment?.grade ? assignment?.grade + "/" : ""}
-                            {parseInt(assignment?.weight) == 0 ? "" : assignment?.weight}
+                            {userType == "student" && assignment?.grade ? "" : ""}
+                            {parseInt(assignment?.weight.split(" / ")[1]) == 0 ? "" : assignment?.weight}
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="text-sm text-muted-foreground">
-                            <Badge variant={assignment?.weight == 0 && assignment?.deadline == null ? "default" : "secondary"}>
-                              {assignment?.weight == 0 && assignment?.deadline == null ? "Course Material" : "Assignment"}
-                            </Badge>
+                            <Badge variant={assignment?.weight == 0 && assignment?.deadline == null ? "default" : "secondary"}>{assignment?.type}</Badge>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="text-sm text-muted-foregrou¢nd">
-                            {assignment?.deadline !== null ? formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true }) : assignment?.grade && userType == "student" ? "Graded" : ""}
+                            {assignment?.grade !== null
+                              ? "Graded"
+                              : assignment?.submission
+                              ? "Submitted"
+                              : assignment?.deadline !== null
+                              ? formatDistanceToNow(new Date(assignment?.deadline), { addSuffix: true })
+                              : ""}
                           </div>
                         </TableCell>
                       </TableRow>
                     ))}
-                    {}
-                    {
-                      showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId} course_id={selectedcourseId}></AssignmentPopUp>
-                    }
-                  
+                {}
+                {showKhra && <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)} id={selectedId} course_id={selectedcourseId}></AssignmentPopUp>}
               </TableBody>
             </Table>
           </CardContent>
