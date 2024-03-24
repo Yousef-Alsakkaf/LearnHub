@@ -59,20 +59,18 @@ function CourseAssignments({ id }: any) {
       course_id: id,
       weight: weight,
       title: name,
-      deadline: dueDate,
+      deadline: dueDate.toString(),
     });
 
     setTriggerRefresh(!triggerRefresh);
   };
 
-  const handleRemoveAssignment = (assignmentId: any, b: boolean) => {
-    console.log(assignmentId.course_id)
-    
+  const handleRemoveAssignment = (selectedAssignment: any, b: boolean) => {    
     if(b) {
-      socket.emit("delete-course-material", { id: assignmentId.course_id });
+      socket.emit("delete-course-material", { id: selectedAssignment.id });
     } else {
       if(window.confirm("Are you sure you want to delete this course material?")) {
-        socket.emit("delete-course-material", { id: assignmentId.course_id });
+        socket.emit("delete-course-material", { id: selectedAssignment.id });
       }
     }
 

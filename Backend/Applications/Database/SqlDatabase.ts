@@ -902,6 +902,9 @@ GROUP BY
   }
   async doesMaterialExist(id: number): Promise<boolean> {
     const results = await this.connection.execute(`SELECT * FROM material WHERE id=?`, [id]);
+    console.log(id)
+    console.log("result[0] is ",results[0]);
+    console.log("length is : ",results[0].length);
     return results[0].length > 0;
   }
 

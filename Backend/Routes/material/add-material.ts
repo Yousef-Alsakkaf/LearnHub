@@ -36,6 +36,7 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
     
         if(deadline!=null&&deadline!=undefined&&deadline!=""){
         //handling the date
+        console.log(deadline);
         const date = new Date(deadline);
         const year = date.getFullYear();
         const month = date.getMonth()+1;
@@ -44,6 +45,7 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
         const minutes = date.getMinutes();
         const seconds = date.getSeconds();
         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        console.log(formattedDate);
         if(date<new Date())
             throw new Error("Invalid deadline");
         await Database.executeQuery('INSERT INTO material (course_id, weight, title, deadline,description) VALUES (?,?,?,?,?)',[course_id, weight, title, formattedDate,description]);
