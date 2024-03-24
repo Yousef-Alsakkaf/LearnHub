@@ -25,7 +25,7 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
             throw new Error("Material weights do not add up to 100%");
         }
 
-        await Database.executeQuery('CALL calcFinalGrade(?)',[Data.course_id]);
+        await Database.executeQuery('CALL CalculateFinalGrade(?)',[Data.course_id]);
         const course = await Database.executeQuery("SELECT title FROM courses WHERE id=?", [Data.course_id]);
         const courseName = course[0].title;        
         const students = await Database.getCourseStudents(Data.course_id);
