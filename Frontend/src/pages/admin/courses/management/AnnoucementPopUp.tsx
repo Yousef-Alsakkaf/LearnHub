@@ -1,5 +1,6 @@
 import BookModal from "@/components/modal/ViewMonal";
 import React from "react";
+import AssignmentPopUp from "./AssignmentPopUp";
 
 type Announcement = {
   image: string;
@@ -34,6 +35,8 @@ const AnnoucementPopUp: React.FC<BookModalProps> = ({ isVisible, onClose, select
           <div className="flex justify-between py-8">{selectedAnnouncement.message}</div>
         </div>
       )}
+
+     
     </BookModal>
   );
 };

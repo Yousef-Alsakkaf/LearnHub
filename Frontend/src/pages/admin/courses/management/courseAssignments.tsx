@@ -28,6 +28,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import AssignmentPopUp from "./AssignmentPopUp";
 
 function CourseAssignments({ id }: any) {
   const [name, setName] = useState("");
@@ -79,6 +80,7 @@ function CourseAssignments({ id }: any) {
       setTriggerRefresh(!triggerRefresh);
     })
   };
+  const [showKhra, setShowKhra] = useState(false);
 
   return (
     <>
@@ -146,8 +148,10 @@ function CourseAssignments({ id }: any) {
                         onClick={() => {
                           setSelectedAssignment(assignment);
                           setShowModal(true);
+                          setShowKhra(true);
                         }}
                         onMouseEnter={() => setHoveredAssignment(assignment)}
+                        
                       >
                         <TableCell>
                           <div className="flex items-center space-x-2">
@@ -173,6 +177,7 @@ function CourseAssignments({ id }: any) {
                         </TableCell>
                       </TableRow>
                     ))}
+                    <AssignmentPopUp isVisible={showKhra} onClose={() => setShowKhra(false)}></AssignmentPopUp>
               </TableBody>
             </Table>
           </CardContent>
