@@ -33,12 +33,24 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
       };
     }
 
-
+    let type =await Database.executeQuery('SELECT type FROM courses WHERE id=?',[id]);
+    type = type[0].type;
+    if(type === 'student'){
+      const user = Client.getId();
+      const material = await Database.executeQuery(`SELECT  studies.student_id,material.id, material.course_id, CONCAT (IFNULL(m.grade,"-"),' / ', weight) AS 'weight', material.title, material.deadline, material.description, m.submission
+      FROM studies
+      JOIN material ON studies.course_id = material.course_id 
+      LEFT OUTER JOIN m_grade m ON material.id = m.material_id AND studies.student_id=m.student_id
+      WHERE  studies.course_id = ? AND studies.student_id=? `,[id,user]);
+      
+      return material;
+      
+    }
     const material = await Database.executeQuery('SELECT  material.id,course_id, weight, material.title, deadline,material.description FROM courses JOIN material ON courses.id=course_id WHERE course_id=?',[id]);
     return material;
 
     
-    return material;
+    
   } catch (error) {
     console.log(error);
     return {
