@@ -2,6 +2,7 @@ import { error } from "ajv/dist/vocabularies/applicator/dependencies.js";
 import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
 import { v4 as uuid } from "uuid";
+import { log } from "winston";
 
 const command = new ServerCommandBuilder("get-course-material")
   .setAccessLevel(UserAccessLevels.STUDENT)
@@ -33,8 +34,11 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
       };
     }
 
-    let type =await Database.executeQuery('SELECT type FROM users WHERE id=?',[id]);
+    const user = Client.getId();
+    let type =await Database.executeQuery('SELECT type FROM users WHERE id=?',[user]);
     type = type[0].type;
+  
+
     if(type === 'student'){
       const user = Client.getId();
       const material = await Database.executeQuery(`SELECT  studies.student_id,material.id, material.course_id, CONCAT (IFNULL(m.grade,"-"),' / ', weight) AS 'weight', material.title, material.deadline, material.description, m.submission
@@ -46,8 +50,13 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
       return material;
       
     }
-    const material = await Database.executeQuery('SELECT  material.id,course_id, weight, material.title, deadline,material.description FROM courses JOIN material ON courses.id=course_id WHERE course_id=?',[id]);
-    return material;
+
+    else{
+      console.log("Instructor");
+      const material = await Database.executeQuery('SELECT  material.id,course_id, weight, material.title, deadline,material.description FROM courses JOIN material ON courses.id=course_id WHERE course_id=?',[id]);
+      return material;
+    }
+   
 
     
     
