@@ -32,6 +32,14 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
     socket.emit("get-courses-info", { id });
     socket.emit("get-course-roaster", { id });
     socket.emit("get-announcements", { course_id: id });
+    if(userType == "student") {
+      socket.emit("get-gpa", { course_id: id });
+    }
+
+    socket.on("get-gpa-response", (response) => {
+      console.log(response)
+      setStudentGpa(response[0].CGPA);
+    })
 
     socket.on("get-courses-info-response", (response: any) => {
       setModuleName(response[0].title);
@@ -47,12 +55,12 @@ const CourseDashboard: React.FC<id> = ({ id }: { id: number }) => {
     socket.on("get-announcements-response", (response: any) => {
       setAnnouncements(response);
     });
-    
 
     return () => {
       socket.off("get-courses-info-response");
       socket.off("get-course-roaster-response");
       socket.off("get-announcements-response");
+      socket.off("get-gpa-response");
     };
   }, []);
 
