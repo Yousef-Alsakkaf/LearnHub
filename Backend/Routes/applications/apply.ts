@@ -38,7 +38,7 @@ async function callback({ Client, Data,EmailProvider, Database }: CommandExecute
         return{
               notification: {
               type: "success",
-              message: "Application submitted successfully!",
+              message: "Application submitted Check Your Email",
               },
               error: false,
          }
