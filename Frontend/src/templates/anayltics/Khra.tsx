@@ -24,10 +24,10 @@ export default function ChartBar(): JSX.Element {
         type="bar"
         data={{
           labels: [
-            "Student",
-            "admin",
-            "instructor",
-            "global"
+            "Students",
+            "Instructors",
+            "Admin",
+            "Global"
           ],
           datasets: [
             {
