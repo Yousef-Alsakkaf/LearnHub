@@ -39,7 +39,7 @@ const AssignmentPopUp: React.FC<props> = ({ isVisible, onClose, id, course_id })
       student_id: studentId,
     });
 
-    socket.on("grade-material-response", (response) => {});
+    socket.on("grade-material-response", () => {});
   };
 
   useEffect(() => {

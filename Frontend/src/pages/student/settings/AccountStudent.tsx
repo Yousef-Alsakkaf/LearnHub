@@ -19,9 +19,7 @@ function AccountStudent() {
       newPassword: newPassword,
       newpasswordConfirm: newpasswordConfirm,
     });
-    socket.on("change-password-response", (message: any) => {
-   
-
+    socket.on("change-password-response", () => {
       navigate('/')
     });
   };

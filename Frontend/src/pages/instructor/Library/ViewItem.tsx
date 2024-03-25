@@ -37,7 +37,7 @@ const ViewItem: React.FC<BookModalProps> = ({
 
     const handleBorrow = (id: number) => {
       socket.emit("borrow-book", { id: id });
-      socket.on("borrow-book-response", (response) => {
+      socket.on("borrow-book-response", () => {
 
       })
     }
