@@ -60,11 +60,11 @@ async function callback({
       "SELECT title FROM courses WHERE id=?",
       [course_id]
     );
-    // await EmailProvider.sendEmail({
-    //   to: email,
-    //   subject: "Final Grade posted",
-    //   text: `Your Final Grade on course ${course[0].title} has been posted`,
-    // });
+    await EmailProvider.sendEmail({
+      to: email,
+      subject: "Final Grade posted",
+      text: `Your Final Grade on course ${course[0].title} has been posted`,
+    });
     return {
       notification: {
         type: "success",
