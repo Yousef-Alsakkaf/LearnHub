@@ -4,7 +4,7 @@ import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Co
 
 
 const command = new ServerCommandBuilder("get-stats")
-  .setAccessLevel(UserAccessLevels.ADMIN)
+  .setAccessLevel(UserAccessLevels.STUDENT)
   .setOutgoingChannel("get-stats-response")
   .setIncomingValidationSchema({
         type: "object",

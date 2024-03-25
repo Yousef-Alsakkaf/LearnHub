@@ -23,11 +23,18 @@ const command = new ServerCommandBuilder("apply")
   .setOutgoingValidationSchema({})
   .build();
 
-async function callback({ Client, Data, Database }: CommandExecuteArguments) {
+async function callback({ Client, Data,EmailProvider, Database }: CommandExecuteArguments) {
 
     const {username, email, major, fName, lName, letter} =Data;
     try {
-        await Database.executeQuery('INSERT INTO requests (username, email, major, fName, lName, letter) VALUES (?,?,?,?,?,?)',[username, email, major, fName, lName, letter]);       
+           
+        let password = uuid();
+        password=password.substring(0,8);
+        const UID=await Database.generateUID("student"); 
+        await Database.executeQuery('INSERT INTO users(username, password, fName, lName, UID, type, email,major) Values (?,?,?,?,?,?,?,?)',[username, password, fName, lName,UID,"student",email,"Computer Science"]);
+        await EmailProvider.sendEmail({to:email, subject: "Application Accepted", text: `Congratulations! Your application has been accepted. Your username is ${username} your password is ${password} Your UID is ${UID}. Please login to your account and change your password.`});
+        
+        
         return{
               notification: {
               type: "success",
@@ -37,6 +44,7 @@ async function callback({ Client, Data, Database }: CommandExecuteArguments) {
          }
         
     } catch (error) {
+        console.log(error);
         if(error.code === 'ER_DUP_ENTRY'){
             return{
                 notification: {
