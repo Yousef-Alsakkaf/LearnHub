@@ -2,7 +2,6 @@ import { error } from "ajv/dist/vocabularies/applicator/dependencies.js";
 import { ServerCommandBuilder } from "../../Applications/Commands/Builder.js";
 import { UserAccessLevels, CommandExecuteArguments } from "../../Applications/Commands/Context.js";
 import jsonwebtoken from "jsonwebtoken";
-import fs from "fs";
 const key = `-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCHMyEiAGReu1UL
 9/pLgE6pOuHweiDBEIx9fvp9PcL2kT9JTa9DaF6cW4gSYd7kRao7VauEb4N9N8/3
